@@ -1,0 +1,2 @@
+1|administrador|Acceso total al sistema
+2|cliente|Acceso a juegos y saldo

@@ -1,0 +1,6 @@
+C:\Users\PC\source\repos\CASINO_VIRTUAL\ENTITY\bin\Debug\ENTITY.dll
+C:\Users\PC\source\repos\CASINO_VIRTUAL\ENTITY\bin\Debug\ENTITY.pdb
+C:\Users\PC\source\repos\CASINO_VIRTUAL\ENTITY\obj\Debug\ENTITY.csproj.AssemblyReference.cache
+C:\Users\PC\source\repos\CASINO_VIRTUAL\ENTITY\obj\Debug\ENTITY.csproj.CoreCompileInputs.cache
+C:\Users\PC\source\repos\CASINO_VIRTUAL\ENTITY\obj\Debug\ENTITY.dll
+C:\Users\PC\source\repos\CASINO_VIRTUAL\ENTITY\obj\Debug\ENTITY.pdb

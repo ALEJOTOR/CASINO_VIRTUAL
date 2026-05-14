@@ -1,0 +1,1 @@
+1|Minas|Juego tipo minas con apuestas|activo

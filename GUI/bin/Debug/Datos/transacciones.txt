@@ -1,0 +1,2 @@
+1|2|depósito|1000.00|2026-05-13 21:07:32|Recarga de saldo
+2|2|pérdida|1.00|2026-05-13 21:07:48|Apuesta partida juego 1
