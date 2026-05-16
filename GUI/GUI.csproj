@@ -46,31 +46,42 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmAdmin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmAdmin.Designer.cs" />
-    <Compile Include="FrmCliente.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmCliente.Designer.cs" />
-    <Compile Include="FrmLogin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmLogin.Designer.cs" />
-    <Compile Include="FrmMinas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmMinas.Designer.cs" />
-    <Compile Include="FrmRegistro.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmRegistro.Designer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FrmRegistro.resx">
-      <DependentUpon>FrmRegistro.cs</DependentUpon>
-    </EmbeddedResource>
+    <!-- vistaLogin -->
+    <Compile Include="vistaAdmin\FrmAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vistaAdmin\FrmAdmin.Designer.cs" />
+    <Compile Include="vistaCliente\FrmCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vistaCliente\FrmCliente.Designer.cs" />
+    <Compile Include="vistaInputs\FrmInputSaldo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vistaInputs\FrmInputSaldo.Designer.cs" />
+    <Compile Include="vistaInputs\FrmInputTexto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vistaInputs\FrmInputTexto.Designer.cs" />
+    <!-- vistaRegistro -->
+    <Compile Include="vistaLogin\FrmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vistaLogin\FrmLogin.Designer.cs" />
+    <Compile Include="vistaMinas\FrmMinas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vistaMinas\FrmMinas.Designer.cs" />
+    <!-- vistaCliente -->
+    <!-- vistaAdmin -->
+    <!-- vistaMinas -->
+    <!-- vistaInputs -->
+    <Compile Include="vistaRegistro\FrmRegistro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vistaRegistro\FrmRegistro.Designer.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -103,5 +114,6 @@
       <Name>ENTITY</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

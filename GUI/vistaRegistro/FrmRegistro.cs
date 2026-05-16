@@ -31,28 +31,11 @@ namespace GUI
             };
 
             var (ok, msg) = _bll.Registrar(u);
-            MessageBox.Show(msg, ok ? "Éxito" : "Error",
-                MessageBoxButtons.OK,
+            MessageBox.Show(msg, ok ? "Éxito" : "Error", MessageBoxButtons.OK,
                 ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
-
             if (ok) this.Close();
         }
 
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            // 
-            // FrmRegistro
-            // 
-            this.ClientSize = new System.Drawing.Size(521, 521);
-            this.Name = "FrmRegistro";
-            this.ResumeLayout(false);
-
-        }
+        private void btnCancelar_Click(object sender, EventArgs e) => this.Close();
     }
 }

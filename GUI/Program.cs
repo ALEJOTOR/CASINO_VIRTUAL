@@ -11,10 +11,7 @@ namespace GUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            // Inicializar archivos de datos si no existen
             new InicializadorBLL().InicializarTodo();
-
             Application.Run(new FrmLogin());
         }
     }

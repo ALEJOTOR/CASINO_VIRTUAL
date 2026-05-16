@@ -22,17 +22,22 @@ namespace GUI
         {
             var u = _usuarioBll.ObtenerPorId(_usuario.IdUsuario);
             if (u != null) _usuario.Saldo = u.Saldo;
-
             lblBienvenida.Text = $"Bienvenido, {_usuario.Nombre1} {_usuario.Apellido1}";
-            lblSaldo.Text      = $"Saldo: ${_usuario.Saldo:N2}";
+            lblSaldo.Text      = $"Saldo disponible: ${_usuario.Saldo:N2}";
             CargarHistorial();
+            CargarTransacciones();
         }
 
         private void CargarHistorial()
         {
-            var partidas = _partidaBll.ObtenerPartidasUsuario(_usuario.IdUsuario);
             dgvPartidas.DataSource = null;
-            dgvPartidas.DataSource = partidas;
+            dgvPartidas.DataSource = _partidaBll.ObtenerPartidasUsuario(_usuario.IdUsuario);
+        }
+
+        private void CargarTransacciones()
+        {
+            dgvTransacciones.DataSource = null;
+            dgvTransacciones.DataSource = _partidaBll.ObtenerTransacciones(_usuario.IdUsuario);
         }
 
         private void btnDepositar_Click(object sender, EventArgs e)
@@ -43,16 +48,10 @@ namespace GUI
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             var (ok, msg) = _partidaBll.RealizarDeposito(_usuario.IdUsuario, monto);
             MessageBox.Show(msg, ok ? "Éxito" : "Error", MessageBoxButtons.OK,
                 ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
-
-            if (ok)
-            {
-                txtMonto.Clear();
-                CargarDatos();
-            }
+            if (ok) { txtMonto.Clear(); CargarDatos(); }
         }
 
         private void btnJugarMinas_Click(object sender, EventArgs e)

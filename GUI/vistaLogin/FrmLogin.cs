@@ -16,18 +16,14 @@ namespace GUI
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            string user = txtUsername.Text.Trim();
-            string pass = txtPassword.Text;
-
-            if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass))
+            if (string.IsNullOrWhiteSpace(txtUsername.Text) || string.IsNullOrWhiteSpace(txtPassword.Text))
             {
                 MessageBox.Show("Complete todos los campos.", "Aviso",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            Usuario u = _bll.Login(user, pass);
-
+            Usuario u = _bll.Login(txtUsername.Text.Trim(), txtPassword.Text);
             if (u == null)
             {
                 MessageBox.Show("Usuario o contraseña incorrectos.", "Error",
@@ -35,7 +31,7 @@ namespace GUI
                 return;
             }
 
-            if (u.Rol?.NombreRol == "administrador")
+            if (u.IdRol == 1)
                 new FrmAdmin(u).Show();
             else
                 new FrmCliente(u).Show();
