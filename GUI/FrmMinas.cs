@@ -63,10 +63,10 @@ namespace GUI
             { MessageBox.Show("Minas: entre 1 y 20.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
 
             _destapadas = 0; _multiplicador = 1m; _activa = true;
-            lblEstado.Text = "Elige una celda!";
+            lblEstado.Text        = "Elige una celda!";
             lblMultiplicador.Text = "Multiplicador: x1.00";
-            btnIniciar.Enabled = false;
-            btnRetirar.Enabled = true;
+            btnIniciar.Enabled    = false;
+            btnRetirar.Enabled    = true;
             ColocarMinas();
             HabilitarCeldas(true);
         }
@@ -74,7 +74,7 @@ namespace GUI
         private void ColocarMinas()
         {
             _esMina = new bool[FILAS, COLS];
-            var rnd = new Random();
+            var rnd   = new Random();
             var usadas = new List<int>();
             while (usadas.Count < _nMinas) { int p = rnd.Next(TOTAL); if (!usadas.Contains(p)) usadas.Add(p); }
             foreach (int p in usadas) _esMina[p / COLS, p % COLS] = true;
@@ -89,6 +89,7 @@ namespace GUI
             var btn = (Button)sender;
             int idx = (int)btn.Tag;
             btn.Enabled = false;
+
             if (_esMina[idx / COLS, idx % COLS])
             { btn.Text = "X"; btn.BackColor = Color.Crimson; TerminarPartida(false); }
             else
@@ -110,14 +111,19 @@ namespace GUI
 
         private void TerminarPartida(bool gano)
         {
-            _activa = false;
+            _activa            = false;
             btnIniciar.Enabled = true;
             btnRetirar.Enabled = false;
             HabilitarCeldas(false);
             MostrarMinas();
+
             decimal ganancia = gano ? Math.Round(_apuesta * _multiplicador, 2) : 0;
-            var p = new Partida { IdUsuario = _usuario.IdUsuario, IdJuego = 1, IdEstado = gano ? 2 : 3,
-                                  Apuesta = _apuesta, Ganancia = ganancia, Resultado = gano ? "gano" : "perdio" };
+            var p = new Partida
+            {
+                IdUsuario = _usuario.IdUsuario, IdJuego  = 1,
+                IdEstado  = gano ? 2 : 3,       Apuesta  = _apuesta,
+                Ganancia  = ganancia,            Resultado = gano ? "gano" : "perdio"
+            };
             _bll.RegistrarPartida(p);
             lblEstado.Text = gano ? $"Ganaste ${ganancia:N2}!" : $"Mina! Perdiste ${_apuesta:N2}";
             MessageBox.Show(lblEstado.Text, gano ? "Victoria" : "Perdiste",

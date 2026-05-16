@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|c:\\users\\pc\\source\\repos\\casino_virtual\\gui\\vistalogin\\frmlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|solutionrelative:gui\\vistalogin\\frmlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{67B9FD79-84AC-4287-A062-0663C4C2195F}|DAL\\DAL.csproj|c:\\users\\pc\\source\\repos\\casino_virtual\\dal\\rutaarchivos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67B9FD79-84AC-4287-A062-0663C4C2195F}|DAL\\DAL.csproj|solutionrelative:dal\\rutaarchivos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{67B9FD79-84AC-4287-A062-0663C4C2195F}|DAL\\DAL.csproj|c:\\users\\pc\\source\\repos\\casino_virtual\\dal\\usuariodal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67B9FD79-84AC-4287-A062-0663C4C2195F}|DAL\\DAL.csproj|solutionrelative:dal\\usuariodal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|c:\\users\\pc\\source\\repos\\casino_virtual\\gui\\frmminas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|solutionrelative:gui\\frmminas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|c:\\users\\pc\\source\\repos\\casino_virtual\\gui\\frmlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|solutionrelative:gui\\frmlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,13 +31,51 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "FrmLogin.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\GUI\\vistaLogin\\FrmLogin.cs",
-              "RelativeDocumentMoniker": "GUI\\vistaLogin\\FrmLogin.cs",
-              "ToolTip": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\GUI\\vistaLogin\\FrmLogin.cs [Dise\u00F1o]",
-              "RelativeToolTip": "GUI\\vistaLogin\\FrmLogin.cs [Dise\u00F1o]",
+              "Title": "RutaArchivos.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\DAL\\RutaArchivos.cs",
+              "RelativeDocumentMoniker": "DAL\\RutaArchivos.cs",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\DAL\\RutaArchivos.cs",
+              "RelativeToolTip": "DAL\\RutaArchivos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T14:45:43.813Z",
+              "WhenOpened": "2026-05-16T21:12:44.362Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UsuarioDAL.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\DAL\\UsuarioDAL.cs",
+              "RelativeDocumentMoniker": "DAL\\UsuarioDAL.cs",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\DAL\\UsuarioDAL.cs",
+              "RelativeToolTip": "DAL\\UsuarioDAL.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAQwDcAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-16T21:11:49.487Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FrmMinas.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\GUI\\FrmMinas.cs",
+              "RelativeDocumentMoniker": "GUI\\FrmMinas.cs",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\GUI\\FrmMinas.cs [Dise\u00F1o]",
+              "RelativeToolTip": "GUI\\FrmMinas.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-16T21:10:02.898Z",
+              "EditorCaption": " [Dise\u00F1o]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FrmLogin.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\GUI\\FrmLogin.cs",
+              "RelativeDocumentMoniker": "GUI\\FrmLogin.cs",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\GUI\\FrmLogin.cs [Dise\u00F1o]",
+              "RelativeToolTip": "GUI\\FrmLogin.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-16T21:09:57.639Z",
               "EditorCaption": " [Dise\u00F1o]"
             }
           ]

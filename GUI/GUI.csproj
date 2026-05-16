@@ -48,40 +48,56 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <!-- vistaLogin -->
-    <Compile Include="vistaAdmin\FrmAdmin.cs">
+
+    <Compile Include="FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="vistaAdmin\FrmAdmin.Designer.cs" />
-    <Compile Include="vistaCliente\FrmCliente.cs">
+    <Compile Include="FrmLogin.Designer.cs">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </Compile>
+
+    <Compile Include="FrmRegistro.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="vistaCliente\FrmCliente.Designer.cs" />
-    <Compile Include="vistaInputs\FrmInputSaldo.cs">
+    <Compile Include="FrmRegistro.Designer.cs">
+      <DependentUpon>FrmRegistro.cs</DependentUpon>
+    </Compile>
+
+    <Compile Include="FrmCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="vistaInputs\FrmInputSaldo.Designer.cs" />
-    <Compile Include="vistaInputs\FrmInputTexto.cs">
+    <Compile Include="FrmCliente.Designer.cs">
+      <DependentUpon>FrmCliente.cs</DependentUpon>
+    </Compile>
+
+    <Compile Include="FrmAdmin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="vistaInputs\FrmInputTexto.Designer.cs" />
-    <!-- vistaRegistro -->
-    <Compile Include="vistaLogin\FrmLogin.cs">
+    <Compile Include="FrmAdmin.Designer.cs">
+      <DependentUpon>FrmAdmin.cs</DependentUpon>
+    </Compile>
+
+    <Compile Include="FrmMinas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="vistaLogin\FrmLogin.Designer.cs" />
-    <Compile Include="vistaMinas\FrmMinas.cs">
+    <Compile Include="FrmMinas.Designer.cs">
+      <DependentUpon>FrmMinas.cs</DependentUpon>
+    </Compile>
+
+    <Compile Include="FrmInputSaldo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="vistaMinas\FrmMinas.Designer.cs" />
-    <!-- vistaCliente -->
-    <!-- vistaAdmin -->
-    <!-- vistaMinas -->
-    <!-- vistaInputs -->
-    <Compile Include="vistaRegistro\FrmRegistro.cs">
+    <Compile Include="FrmInputSaldo.Designer.cs">
+      <DependentUpon>FrmInputSaldo.cs</DependentUpon>
+    </Compile>
+
+    <Compile Include="FrmInputTexto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="vistaRegistro\FrmRegistro.Designer.cs" />
+    <Compile Include="FrmInputTexto.Designer.cs">
+      <DependentUpon>FrmInputTexto.cs</DependentUpon>
+    </Compile>
+
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

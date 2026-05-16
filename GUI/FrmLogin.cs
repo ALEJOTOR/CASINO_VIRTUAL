@@ -26,7 +26,7 @@ namespace GUI
             Usuario u = _bll.Login(txtUsername.Text.Trim(), txtPassword.Text);
             if (u == null)
             {
-                MessageBox.Show("Usuario o contraseña incorrectos.", "Error",
+                MessageBox.Show("Usuario o contrasena incorrectos.", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }

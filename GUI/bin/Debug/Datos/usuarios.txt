@@ -1,2 +1,2 @@
-1|admin|240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a|Admin||Casino||admin@casino.com|1990-01-01|0.00|1|2026-05-13|activo
-2|ALEJANDRO|a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3|Alejandro|Jose|Torres|Contreras|alejandrojtorres@gmail.com|2006-06-13|0.00|2|2026-05-13|activo
+1|admin|6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b|Admin||Casino||admin@casino.com|1990-01-01|0.00|1|2026-05-16|activo
+2|ALEJO|6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b|Alejandro|Jose|Torres|Contreras|alejandrojoset604@gmail.com|2006-06-13|9000.00|2|2026-05-16|activo

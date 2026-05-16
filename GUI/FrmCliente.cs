@@ -44,12 +44,12 @@ namespace GUI
         {
             if (!decimal.TryParse(txtMonto.Text, out decimal monto) || monto <= 0)
             {
-                MessageBox.Show("Ingrese un monto válido.", "Aviso",
+                MessageBox.Show("Ingrese un monto valido.", "Aviso",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             var (ok, msg) = _partidaBll.RealizarDeposito(_usuario.IdUsuario, monto);
-            MessageBox.Show(msg, ok ? "Éxito" : "Error", MessageBoxButtons.OK,
+            MessageBox.Show(msg, ok ? "Exito" : "Error", MessageBoxButtons.OK,
                 ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
             if (ok) { txtMonto.Clear(); CargarDatos(); }
         }

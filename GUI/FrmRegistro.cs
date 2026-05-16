@@ -31,7 +31,7 @@ namespace GUI
             };
 
             var (ok, msg) = _bll.Registrar(u);
-            MessageBox.Show(msg, ok ? "Éxito" : "Error", MessageBoxButtons.OK,
+            MessageBox.Show(msg, ok ? "Exito" : "Error", MessageBoxButtons.OK,
                 ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
             if (ok) this.Close();
         }

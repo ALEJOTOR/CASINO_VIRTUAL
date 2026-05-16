@@ -17,7 +17,7 @@ namespace GUI
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             if (!decimal.TryParse(txtSaldo.Text, out decimal val) || val < 0)
-            { MessageBox.Show("Ingrese un monto valido (mayor o igual a 0).", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            { MessageBox.Show("Ingrese un monto valido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             NuevoSaldo   = val;
             DialogResult = DialogResult.OK;
             this.Close();

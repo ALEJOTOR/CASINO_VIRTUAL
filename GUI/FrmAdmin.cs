@@ -48,10 +48,10 @@ namespace GUI
             var u = ObtenerSeleccionado();
             if (u == null) return;
             if (u.IdRol == 1) { MessageBox.Show("No se puede eliminar a un administrador.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
-            if (MessageBox.Show($"¿Eliminar al usuario '{u.Username}'?", "Confirmar",
+            if (MessageBox.Show($"Eliminar al usuario '{u.Username}'?", "Confirmar",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             var (ok, msg) = _usuarioBll.Eliminar(u.IdUsuario);
-            MessageBox.Show(msg, ok ? "Éxito" : "Error", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+            MessageBox.Show(msg, ok ? "Exito" : "Error", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
             if (ok) CargarUsuarios();
         }
 
@@ -62,7 +62,7 @@ namespace GUI
             if (u.IdRol == 1) { MessageBox.Show("No se puede suspender a un administrador.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             string nuevoEstado = u.Estado == "suspendido" ? "activo" : "suspendido";
             var (ok, msg) = _usuarioBll.CambiarEstado(u.IdUsuario, nuevoEstado);
-            MessageBox.Show(msg, ok ? "Éxito" : "Error", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+            MessageBox.Show(msg, ok ? "Exito" : "Error", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
             if (ok) CargarUsuarios();
         }
 
@@ -74,7 +74,7 @@ namespace GUI
             {
                 if (frm.ShowDialog() != DialogResult.OK) return;
                 var (ok, msg) = _usuarioBll.ModificarSaldoAdmin(u.IdUsuario, frm.NuevoSaldo);
-                MessageBox.Show(msg, ok ? "Éxito" : "Error", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+                MessageBox.Show(msg, ok ? "Exito" : "Error", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
                 if (ok) CargarUsuarios();
             }
         }
@@ -87,7 +87,7 @@ namespace GUI
             {
                 if (frm.ShowDialog() != DialogResult.OK || string.IsNullOrWhiteSpace(frm.Valor)) return;
                 var (ok, msg) = _usuarioBll.CambiarPassword(u.IdUsuario, frm.Valor);
-                MessageBox.Show(msg, ok ? "Éxito" : "Error", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+                MessageBox.Show(msg, ok ? "Exito" : "Error", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
             }
         }
 
