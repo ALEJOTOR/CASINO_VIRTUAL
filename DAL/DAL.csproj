@@ -41,11 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UsuarioDAL.cs" />
-    <Compile Include="OtrosDAL.cs" />
+    <Compile Include="ArchivoBase.cs" />
+    <Compile Include="EstadoPartidaRepositorio.cs" />
+    <Compile Include="JuegoRepositorio.cs" />
+    <Compile Include="PartidaRepositorio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RolDAL.cs" />
+    <Compile Include="RolRepositorio.cs" />
     <Compile Include="RutaArchivos.cs" />
+    <Compile Include="TransaccionRepositorio.cs" />
+    <Compile Include="UsuarioRepositorio.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ENTITY\ENTITY.csproj">

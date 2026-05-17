@@ -9,8 +9,8 @@ namespace GUI
 {
     public partial class FrmMinas : Form
     {
-        private readonly Usuario    _usuario;
-        private readonly PartidaBLL _bll = new PartidaBLL();
+        private readonly Usuario         _usuario;
+        private readonly PartidaServicio _servicio = new PartidaServicio();
 
         private const int FILAS = 5, COLS = 5, TOTAL = 25;
         private const int TAM = 68, SEP = 4;
@@ -58,12 +58,12 @@ namespace GUI
         private void btnIniciar_Click(object sender, EventArgs e)
         {
             if (!decimal.TryParse(txtApuesta.Text, out _apuesta) || _apuesta <= 0)
-            { MessageBox.Show("Apuesta invalida.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+            { MessageBox.Show("Apuesta inválida.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             if (!int.TryParse(txtMinas.Text, out _nMinas) || _nMinas < 1 || _nMinas > 20)
             { MessageBox.Show("Minas: entre 1 y 20.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
 
             _destapadas = 0; _multiplicador = 1m; _activa = true;
-            lblEstado.Text        = "Elige una celda!";
+            lblEstado.Text        = "¡Elige una celda!";
             lblMultiplicador.Text = "Multiplicador: x1.00";
             btnIniciar.Enabled    = false;
             btnRetirar.Enabled    = true;
@@ -74,7 +74,7 @@ namespace GUI
         private void ColocarMinas()
         {
             _esMina = new bool[FILAS, COLS];
-            var rnd   = new Random();
+            var rnd    = new Random();
             var usadas = new List<int>();
             while (usadas.Count < _nMinas) { int p = rnd.Next(TOTAL); if (!usadas.Contains(p)) usadas.Add(p); }
             foreach (int p in usadas) _esMina[p / COLS, p % COLS] = true;
@@ -95,7 +95,7 @@ namespace GUI
             else
             {
                 _destapadas++;
-                btn.Text = "*"; btn.BackColor = Color.LimeGreen;
+                btn.Text = "★"; btn.BackColor = Color.LimeGreen;
                 _multiplicador *= 1m + (_nMinas * 0.05m);
                 lblMultiplicador.Text = $"Multiplicador: x{_multiplicador:N2}";
                 if (_destapadas >= TOTAL - _nMinas) TerminarPartida(true);
@@ -118,16 +118,23 @@ namespace GUI
             MostrarMinas();
 
             decimal ganancia = gano ? Math.Round(_apuesta * _multiplicador, 2) : 0;
-            var p = new Partida
+            Partida p = new Partida
             {
-                IdUsuario = _usuario.IdUsuario, IdJuego  = 1,
-                IdEstado  = gano ? 2 : 3,       Apuesta  = _apuesta,
-                Ganancia  = ganancia,            Resultado = gano ? "gano" : "perdio"
+                IdUsuario = _usuario.IdUsuario,
+                IdJuego   = 1,
+                IdEstado  = gano ? 2 : 3,
+                Apuesta   = _apuesta,
+                Ganancia  = ganancia,
+                Resultado = gano ? "gano" : "perdio"
             };
-            _bll.RegistrarPartida(p);
-            lblEstado.Text = gano ? $"Ganaste ${ganancia:N2}!" : $"Mina! Perdiste ${_apuesta:N2}";
-            MessageBox.Show(lblEstado.Text, gano ? "Victoria" : "Perdiste",
-                MessageBoxButtons.OK, gano ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+            _servicio.RegistrarPartida(p);
+            lblEstado.Text = gano
+                ? $"¡Ganaste ${ganancia:N2}!"
+                : $"¡Mina! Perdiste ${_apuesta:N2}";
+            MessageBox.Show(lblEstado.Text,
+                gano ? "¡Victoria!" : "Perdiste",
+                MessageBoxButtons.OK,
+                gano ? MessageBoxIcon.Information : MessageBoxIcon.Error);
         }
 
         private void MostrarMinas()

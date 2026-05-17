@@ -1,4 +1,3 @@
-using System;
 using System.Windows.Forms;
 using BLL;
 using ENTITY;
@@ -7,9 +6,9 @@ namespace GUI
 {
     public partial class FrmCliente : Form
     {
-        private readonly Usuario    _usuario;
-        private readonly PartidaBLL _partidaBll = new PartidaBLL();
-        private readonly UsuarioBLL _usuarioBll = new UsuarioBLL();
+        private readonly Usuario         _usuario;
+        private readonly PartidaServicio _partidaSvc  = new PartidaServicio();
+        private readonly UsuarioServicio _usuarioSvc  = new UsuarioServicio();
 
         public FrmCliente(Usuario usuario)
         {
@@ -20,7 +19,7 @@ namespace GUI
 
         private void CargarDatos()
         {
-            var u = _usuarioBll.ObtenerPorId(_usuario.IdUsuario);
+            Usuario u = _usuarioSvc.ObtenerPorId(_usuario.IdUsuario);
             if (u != null) _usuario.Saldo = u.Saldo;
             lblBienvenida.Text = $"Bienvenido, {_usuario.Nombre1} {_usuario.Apellido1}";
             lblSaldo.Text      = $"Saldo disponible: ${_usuario.Saldo:N2}";
@@ -31,36 +30,37 @@ namespace GUI
         private void CargarHistorial()
         {
             dgvPartidas.DataSource = null;
-            dgvPartidas.DataSource = _partidaBll.ObtenerPartidasUsuario(_usuario.IdUsuario);
+            dgvPartidas.DataSource = _partidaSvc.ObtenerPorUsuario(_usuario.IdUsuario);
         }
 
         private void CargarTransacciones()
         {
             dgvTransacciones.DataSource = null;
-            dgvTransacciones.DataSource = _partidaBll.ObtenerTransacciones(_usuario.IdUsuario);
+            dgvTransacciones.DataSource = _partidaSvc.ObtenerTransaccionesPorUsuario(_usuario.IdUsuario);
         }
 
-        private void btnDepositar_Click(object sender, EventArgs e)
+        private void btnDepositar_Click(object sender, System.EventArgs e)
         {
             if (!decimal.TryParse(txtMonto.Text, out decimal monto) || monto <= 0)
             {
-                MessageBox.Show("Ingrese un monto valido.", "Aviso",
+                MessageBox.Show("Ingrese un monto válido.", "Aviso",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            var (ok, msg) = _partidaBll.RealizarDeposito(_usuario.IdUsuario, monto);
-            MessageBox.Show(msg, ok ? "Exito" : "Error", MessageBoxButtons.OK,
-                ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+            string resultado = _partidaSvc.RealizarDeposito(_usuario.IdUsuario, monto);
+            bool ok = resultado == "Depósito realizado correctamente.";
+            MessageBox.Show(resultado, ok ? "Éxito" : "Error",
+                MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
             if (ok) { txtMonto.Clear(); CargarDatos(); }
         }
 
-        private void btnJugarMinas_Click(object sender, EventArgs e)
+        private void btnJugarMinas_Click(object sender, System.EventArgs e)
         {
             new FrmMinas(_usuario).ShowDialog();
             CargarDatos();
         }
 
-        private void btnCerrarSesion_Click(object sender, EventArgs e)
+        private void btnCerrarSesion_Click(object sender, System.EventArgs e)
         {
             new FrmLogin().Show();
             this.Close();

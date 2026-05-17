@@ -18,7 +18,22 @@ namespace ENTITY
         public DateTime FechaRegistro { get; set; }
         public string Estado { get; set; }
 
-        // Navegación
-        public Rol Rol { get; set; }
+        public override string ToString()
+        {
+            return string.Join("|",
+                IdUsuario,
+                Username,
+                Password,
+                Nombre1,
+                Nombre2 ?? "",
+                Apellido1,
+                Apellido2 ?? "",
+                Correo,
+                FechaNacimiento.ToString("yyyy-MM-dd"),
+                Saldo.ToString("F2"),
+                IdRol,
+                FechaRegistro.ToString("yyyy-MM-dd"),
+                Estado);
+        }
     }
 }

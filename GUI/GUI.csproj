@@ -46,58 +46,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-
-    <Compile Include="FrmLogin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmLogin.Designer.cs">
-      <DependentUpon>FrmLogin.cs</DependentUpon>
-    </Compile>
-
-    <Compile Include="FrmRegistro.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmRegistro.Designer.cs">
-      <DependentUpon>FrmRegistro.cs</DependentUpon>
-    </Compile>
-
-    <Compile Include="FrmCliente.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmCliente.Designer.cs">
-      <DependentUpon>FrmCliente.cs</DependentUpon>
-    </Compile>
-
     <Compile Include="FrmAdmin.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmAdmin.Designer.cs">
       <DependentUpon>FrmAdmin.cs</DependentUpon>
     </Compile>
-
-    <Compile Include="FrmMinas.cs">
+    <Compile Include="FrmCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmMinas.Designer.cs">
-      <DependentUpon>FrmMinas.cs</DependentUpon>
+    <Compile Include="FrmCliente.Designer.cs">
+      <DependentUpon>FrmCliente.cs</DependentUpon>
     </Compile>
-
     <Compile Include="FrmInputSaldo.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmInputSaldo.Designer.cs">
       <DependentUpon>FrmInputSaldo.cs</DependentUpon>
     </Compile>
-
     <Compile Include="FrmInputTexto.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmInputTexto.Designer.cs">
       <DependentUpon>FrmInputTexto.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="FrmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmLogin.Designer.cs">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMinas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMinas.Designer.cs">
+      <DependentUpon>FrmMinas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmRegistro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRegistro.Designer.cs">
+      <DependentUpon>FrmRegistro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

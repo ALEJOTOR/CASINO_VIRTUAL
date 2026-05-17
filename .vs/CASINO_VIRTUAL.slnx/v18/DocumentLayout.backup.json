@@ -1,22 +1,66 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\",
+  "WorkspaceRootPath": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{67B9FD79-84AC-4287-A062-0663C4C2195F}|DAL\\DAL.csproj|c:\\users\\pc\\source\\repos\\casino_virtual\\dal\\rutaarchivos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{67B9FD79-84AC-4287-A062-0663C4C2195F}|DAL\\DAL.csproj|solutionrelative:dal\\rutaarchivos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|c:\\users\\sebas\\documents\\github\\casino_virtual\\gui\\frmregistro.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|solutionrelative:gui\\frmregistro.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{67B9FD79-84AC-4287-A062-0663C4C2195F}|DAL\\DAL.csproj|c:\\users\\pc\\source\\repos\\casino_virtual\\dal\\usuariodal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{67B9FD79-84AC-4287-A062-0663C4C2195F}|DAL\\DAL.csproj|solutionrelative:dal\\usuariodal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|c:\\users\\sebas\\documents\\github\\casino_virtual\\gui\\frmregistro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|solutionrelative:gui\\frmregistro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|c:\\users\\pc\\source\\repos\\casino_virtual\\gui\\frmminas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|c:\\users\\sebas\\documents\\github\\casino_virtual\\gui\\frmlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|solutionrelative:gui\\frmlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|c:\\users\\sebas\\documents\\github\\casino_virtual\\gui\\frminputtexto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|solutionrelative:gui\\frminputtexto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|c:\\users\\sebas\\documents\\github\\casino_virtual\\gui\\frmcliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|solutionrelative:gui\\frmcliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|c:\\users\\sebas\\documents\\github\\casino_virtual\\gui\\frminputsaldo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|solutionrelative:gui\\frminputsaldo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|c:\\users\\sebas\\documents\\github\\casino_virtual\\gui\\frmregistro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|solutionrelative:gui\\frmregistro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|c:\\users\\sebas\\documents\\github\\casino_virtual\\gui\\frmminas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|solutionrelative:gui\\frmminas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|c:\\users\\pc\\source\\repos\\casino_virtual\\gui\\frmlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|solutionrelative:gui\\frmlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|c:\\users\\sebas\\documents\\github\\casino_virtual\\gui\\frmadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}|GUI\\GUI.csproj|solutionrelative:gui\\frmadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14050B6F-D548-430E-8809-23657BF0144C}|ENTITY\\ENTITY.csproj|c:\\users\\sebas\\documents\\github\\casino_virtual\\entity\\rol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{14050B6F-D548-430E-8809-23657BF0144C}|ENTITY\\ENTITY.csproj|solutionrelative:entity\\rol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{67B9FD79-84AC-4287-A062-0663C4C2195F}|DAL\\DAL.csproj|c:\\users\\sebas\\documents\\github\\casino_virtual\\dal\\rutaarchivos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67B9FD79-84AC-4287-A062-0663C4C2195F}|DAL\\DAL.csproj|solutionrelative:dal\\rutaarchivos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{67B9FD79-84AC-4287-A062-0663C4C2195F}|DAL\\DAL.csproj|c:\\users\\sebas\\documents\\github\\casino_virtual\\dal\\archivobase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67B9FD79-84AC-4287-A062-0663C4C2195F}|DAL\\DAL.csproj|solutionrelative:dal\\archivobase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0905B4D5-574F-4E87-B370-40A7DF43158B}|BLL\\BLL.csproj|c:\\users\\sebas\\documents\\github\\casino_virtual\\bll\\usuarioservicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0905B4D5-574F-4E87-B370-40A7DF43158B}|BLL\\BLL.csproj|solutionrelative:bll\\usuarioservicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0905B4D5-574F-4E87-B370-40A7DF43158B}|BLL\\BLL.csproj|c:\\users\\sebas\\documents\\github\\casino_virtual\\bll\\partidaservicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0905B4D5-574F-4E87-B370-40A7DF43158B}|BLL\\BLL.csproj|solutionrelative:bll\\partidaservicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0905B4D5-574F-4E87-B370-40A7DF43158B}|BLL\\BLL.csproj|c:\\users\\sebas\\documents\\github\\casino_virtual\\bll\\inicializadorservicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0905B4D5-574F-4E87-B370-40A7DF43158B}|BLL\\BLL.csproj|solutionrelative:bll\\inicializadorservicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,57 +70,207 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 8,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "RutaArchivos.cs",
-              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\DAL\\RutaArchivos.cs",
-              "RelativeDocumentMoniker": "DAL\\RutaArchivos.cs",
-              "ToolTip": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\DAL\\RutaArchivos.cs",
-              "RelativeToolTip": "DAL\\RutaArchivos.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T21:12:44.362Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UsuarioDAL.cs",
-              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\DAL\\UsuarioDAL.cs",
-              "RelativeDocumentMoniker": "DAL\\UsuarioDAL.cs",
-              "ToolTip": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\DAL\\UsuarioDAL.cs",
-              "RelativeToolTip": "DAL\\UsuarioDAL.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAAAQwDcAAABCAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "FrmCliente.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmCliente.cs",
+              "RelativeDocumentMoniker": "GUI\\FrmCliente.cs",
+              "ToolTip": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmCliente.cs [Dise\u00F1o]",
+              "RelativeToolTip": "GUI\\FrmCliente.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T21:11:49.487Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-17T18:58:46.277Z",
+              "EditorCaption": " [Dise\u00F1o]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "FrmMinas.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\GUI\\FrmMinas.cs",
-              "RelativeDocumentMoniker": "GUI\\FrmMinas.cs",
-              "ToolTip": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\GUI\\FrmMinas.cs [Dise\u00F1o]",
-              "RelativeToolTip": "GUI\\FrmMinas.cs [Dise\u00F1o]",
+              "DocumentIndex": 5,
+              "Title": "FrmInputSaldo.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmInputSaldo.cs",
+              "RelativeDocumentMoniker": "GUI\\FrmInputSaldo.cs",
+              "ToolTip": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmInputSaldo.cs [Dise\u00F1o]",
+              "RelativeToolTip": "GUI\\FrmInputSaldo.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T21:10:02.898Z",
+              "WhenOpened": "2026-05-17T18:58:44.937Z",
               "EditorCaption": " [Dise\u00F1o]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "FrmInputTexto.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmInputTexto.cs",
+              "RelativeDocumentMoniker": "GUI\\FrmInputTexto.cs",
+              "ToolTip": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmInputTexto.cs [Dise\u00F1o]",
+              "RelativeToolTip": "GUI\\FrmInputTexto.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T18:58:42.677Z",
+              "EditorCaption": " [Dise\u00F1o]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "FrmLogin.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\GUI\\FrmLogin.cs",
+              "DocumentMoniker": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmLogin.cs",
               "RelativeDocumentMoniker": "GUI\\FrmLogin.cs",
-              "ToolTip": "C:\\Users\\PC\\source\\repos\\CASINO_VIRTUAL\\GUI\\FrmLogin.cs [Dise\u00F1o]",
+              "ToolTip": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmLogin.cs [Dise\u00F1o]",
               "RelativeToolTip": "GUI\\FrmLogin.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T21:09:57.639Z",
+              "WhenOpened": "2026-05-17T18:58:52.764Z",
               "EditorCaption": " [Dise\u00F1o]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FrmRegistro.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmRegistro.cs",
+              "RelativeDocumentMoniker": "GUI\\FrmRegistro.cs",
+              "ToolTip": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmRegistro.cs [Dise\u00F1o]",
+              "RelativeToolTip": "GUI\\FrmRegistro.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T18:58:56.782Z",
+              "EditorCaption": " [Dise\u00F1o]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FrmRegistro.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmRegistro.Designer.cs",
+              "RelativeDocumentMoniker": "GUI\\FrmRegistro.Designer.cs",
+              "ToolTip": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmRegistro.Designer.cs*",
+              "RelativeToolTip": "GUI\\FrmRegistro.Designer.cs*",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAswC4AAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T18:59:03.036Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FrmRegistro.cs",
+              "DocumentMoniker": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmRegistro.cs",
+              "RelativeDocumentMoniker": "GUI\\FrmRegistro.cs",
+              "ToolTip": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmRegistro.cs",
+              "RelativeToolTip": "GUI\\FrmRegistro.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T18:59:32.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "FrmAdmin.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmAdmin.cs",
+              "RelativeDocumentMoniker": "GUI\\FrmAdmin.cs",
+              "ToolTip": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmAdmin.cs [Dise\u00F1o]",
+              "RelativeToolTip": "GUI\\FrmAdmin.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T18:58:51.301Z",
+              "EditorCaption": " [Dise\u00F1o]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FrmMinas.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmMinas.cs",
+              "RelativeDocumentMoniker": "GUI\\FrmMinas.cs",
+              "ToolTip": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\GUI\\FrmMinas.cs [Dise\u00F1o]",
+              "RelativeToolTip": "GUI\\FrmMinas.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T18:58:54.244Z",
+              "EditorCaption": " [Dise\u00F1o]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Rol.cs",
+              "DocumentMoniker": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\ENTITY\\Rol.cs",
+              "RelativeDocumentMoniker": "ENTITY\\Rol.cs",
+              "ToolTip": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\ENTITY\\Rol.cs",
+              "RelativeToolTip": "ENTITY\\Rol.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T18:53:32.707Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "RutaArchivos.cs",
+              "DocumentMoniker": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\DAL\\RutaArchivos.cs",
+              "RelativeDocumentMoniker": "DAL\\RutaArchivos.cs",
+              "ToolTip": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\DAL\\RutaArchivos.cs",
+              "RelativeToolTip": "DAL\\RutaArchivos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T18:51:28.886Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ArchivoBase.cs",
+              "DocumentMoniker": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\DAL\\ArchivoBase.cs",
+              "RelativeDocumentMoniker": "DAL\\ArchivoBase.cs",
+              "ToolTip": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\DAL\\ArchivoBase.cs",
+              "RelativeToolTip": "DAL\\ArchivoBase.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T18:50:46.351Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "UsuarioServicio.cs",
+              "DocumentMoniker": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\BLL\\UsuarioServicio.cs",
+              "RelativeDocumentMoniker": "BLL\\UsuarioServicio.cs",
+              "ToolTip": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\BLL\\UsuarioServicio.cs",
+              "RelativeToolTip": "BLL\\UsuarioServicio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAM8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T18:50:09.851Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "PartidaServicio.cs",
+              "DocumentMoniker": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\BLL\\PartidaServicio.cs",
+              "RelativeDocumentMoniker": "BLL\\PartidaServicio.cs",
+              "ToolTip": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\BLL\\PartidaServicio.cs",
+              "RelativeToolTip": "BLL\\PartidaServicio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T18:49:50.821Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "InicializadorServicio.cs",
+              "DocumentMoniker": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\BLL\\InicializadorServicio.cs",
+              "RelativeDocumentMoniker": "BLL\\InicializadorServicio.cs",
+              "ToolTip": "C:\\Users\\sebas\\Documents\\GitHub\\CASINO_VIRTUAL\\BLL\\InicializadorServicio.cs",
+              "RelativeToolTip": "BLL\\InicializadorServicio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T18:48:51.929Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -1,4 +1,3 @@
-using System;
 using System.Windows.Forms;
 using BLL;
 using ENTITY;
@@ -7,16 +6,16 @@ namespace GUI
 {
     public partial class FrmRegistro : Form
     {
-        private readonly UsuarioBLL _bll = new UsuarioBLL();
+        private readonly UsuarioServicio _servicio = new UsuarioServicio();
 
         public FrmRegistro()
         {
             InitializeComponent();
         }
 
-        private void btnGuardar_Click(object sender, EventArgs e)
+        private void btnGuardar_Click(object sender, System.EventArgs e)
         {
-            var u = new Usuario
+            Usuario u = new Usuario
             {
                 Username        = txtUsername.Text.Trim(),
                 Password        = txtPassword.Text,
@@ -30,12 +29,15 @@ namespace GUI
                 IdRol           = 2
             };
 
-            var (ok, msg) = _bll.Registrar(u);
-            MessageBox.Show(msg, ok ? "Exito" : "Error", MessageBoxButtons.OK,
+            string resultado = _servicio.Registrar(u);
+            bool ok = resultado == "Guardado correctamente.";
+            MessageBox.Show(ok ? "Usuario registrado correctamente." : resultado,
+                ok ? "Éxito" : "Error",
+                MessageBoxButtons.OK,
                 ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
             if (ok) this.Close();
         }
 
-        private void btnCancelar_Click(object sender, EventArgs e) => this.Close();
+        private void btnCancelar_Click(object sender, System.EventArgs e) => this.Close();
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Windows.Forms;
 using BLL;
 using ENTITY;
@@ -7,9 +6,9 @@ namespace GUI
 {
     public partial class FrmAdmin : Form
     {
-        private readonly Usuario    _admin;
-        private readonly UsuarioBLL _usuarioBll = new UsuarioBLL();
-        private readonly PartidaBLL _partidaBll = new PartidaBLL();
+        private readonly Usuario         _admin;
+        private readonly UsuarioServicio _usuarioSvc = new UsuarioServicio();
+        private readonly PartidaServicio _partidaSvc = new PartidaServicio();
 
         public FrmAdmin(Usuario admin)
         {
@@ -22,84 +21,109 @@ namespace GUI
         private void CargarUsuarios()
         {
             dgvUsuarios.DataSource = null;
-            dgvUsuarios.DataSource = _usuarioBll.ObtenerTodos();
+            dgvUsuarios.DataSource = _usuarioSvc.ObtenerTodos();
         }
 
         private void CargarPartidas()
         {
             dgvPartidas.DataSource = null;
-            dgvPartidas.DataSource = _partidaBll.ObtenerTodasPartidas();
+            dgvPartidas.DataSource = _partidaSvc.ObtenerTodas();
         }
 
         private void CargarTransacciones()
         {
             dgvTransacciones.DataSource = null;
-            dgvTransacciones.DataSource = _partidaBll.ObtenerTodasTransacciones();
+            dgvTransacciones.DataSource = _partidaSvc.ObtenerTodasTransacciones();
         }
 
-        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        private void tabControl_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             if (tabControl.SelectedTab == tabPartidas)      CargarPartidas();
             if (tabControl.SelectedTab == tabTransacciones) CargarTransacciones();
         }
 
-        private void btnEliminarUsuario_Click(object sender, EventArgs e)
+        private void btnEliminarUsuario_Click(object sender, System.EventArgs e)
         {
-            var u = ObtenerSeleccionado();
+            Usuario u = ObtenerSeleccionado();
             if (u == null) return;
-            if (u.IdRol == 1) { MessageBox.Show("No se puede eliminar a un administrador.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
-            if (MessageBox.Show($"Eliminar al usuario '{u.Username}'?", "Confirmar",
+            if (u.IdRol == 1)
+            {
+                MessageBox.Show("No se puede eliminar a un administrador.", "Aviso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (MessageBox.Show($"¿Eliminar al usuario '{u.Username}'?", "Confirmar",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            var (ok, msg) = _usuarioBll.Eliminar(u.IdUsuario);
-            MessageBox.Show(msg, ok ? "Exito" : "Error", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+
+            string resultado = _usuarioSvc.Eliminar(u.IdUsuario);
+            bool ok = resultado == "Guardado correctamente.";
+            MessageBox.Show(ok ? "Usuario eliminado." : resultado,
+                ok ? "Éxito" : "Error", MessageBoxButtons.OK,
+                ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
             if (ok) CargarUsuarios();
         }
 
-        private void btnSuspender_Click(object sender, EventArgs e)
+        private void btnSuspender_Click(object sender, System.EventArgs e)
         {
-            var u = ObtenerSeleccionado();
+            Usuario u = ObtenerSeleccionado();
             if (u == null) return;
-            if (u.IdRol == 1) { MessageBox.Show("No se puede suspender a un administrador.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+            if (u.IdRol == 1)
+            {
+                MessageBox.Show("No se puede suspender a un administrador.", "Aviso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             string nuevoEstado = u.Estado == "suspendido" ? "activo" : "suspendido";
-            var (ok, msg) = _usuarioBll.CambiarEstado(u.IdUsuario, nuevoEstado);
-            MessageBox.Show(msg, ok ? "Exito" : "Error", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+            string resultado   = _usuarioSvc.CambiarEstado(u.IdUsuario, nuevoEstado);
+            bool ok = resultado == "Guardado correctamente.";
+            MessageBox.Show(ok ? $"Estado cambiado a '{nuevoEstado}'." : resultado,
+                ok ? "Éxito" : "Error", MessageBoxButtons.OK,
+                ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
             if (ok) CargarUsuarios();
         }
 
-        private void btnModificarSaldo_Click(object sender, EventArgs e)
+        private void btnModificarSaldo_Click(object sender, System.EventArgs e)
         {
-            var u = ObtenerSeleccionado();
+            Usuario u = ObtenerSeleccionado();
             if (u == null) return;
-            using (var frm = new FrmInputSaldo(u.Username, u.Saldo))
+            using (FrmInputSaldo frm = new FrmInputSaldo(u.Username, u.Saldo))
             {
                 if (frm.ShowDialog() != DialogResult.OK) return;
-                var (ok, msg) = _usuarioBll.ModificarSaldoAdmin(u.IdUsuario, frm.NuevoSaldo);
-                MessageBox.Show(msg, ok ? "Exito" : "Error", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+                string resultado = _usuarioSvc.ModificarSaldoAdmin(u.IdUsuario, frm.NuevoSaldo);
+                bool ok = resultado == "Guardado correctamente.";
+                MessageBox.Show(ok ? "Saldo modificado correctamente." : resultado,
+                    ok ? "Éxito" : "Error", MessageBoxButtons.OK,
+                    ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
                 if (ok) CargarUsuarios();
             }
         }
 
-        private void btnCambiarPassword_Click(object sender, EventArgs e)
+        private void btnCambiarPassword_Click(object sender, System.EventArgs e)
         {
-            var u = ObtenerSeleccionado();
+            Usuario u = ObtenerSeleccionado();
             if (u == null) return;
-            using (var frm = new FrmInputTexto("Cambiar contrasena", $"Nueva contrasena para '{u.Username}':"))
+            using (FrmInputTexto frm = new FrmInputTexto("Cambiar contraseña",
+                $"Nueva contraseña para '{u.Username}':"))
             {
-                if (frm.ShowDialog() != DialogResult.OK || string.IsNullOrWhiteSpace(frm.Valor)) return;
-                var (ok, msg) = _usuarioBll.CambiarPassword(u.IdUsuario, frm.Valor);
-                MessageBox.Show(msg, ok ? "Exito" : "Error", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+                if (frm.ShowDialog() != DialogResult.OK ||
+                    string.IsNullOrWhiteSpace(frm.Valor)) return;
+                string resultado = _usuarioSvc.CambiarPassword(u.IdUsuario, frm.Valor);
+                bool ok = resultado == "Guardado correctamente.";
+                MessageBox.Show(ok ? "Contraseña cambiada." : resultado,
+                    ok ? "Éxito" : "Error", MessageBoxButtons.OK,
+                    ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
             }
         }
 
-        private void btnRefrescar_Click(object sender, EventArgs e) => CargarUsuarios();
+        private void btnRefrescar_Click(object sender, System.EventArgs e) => CargarUsuarios();
 
-        private void btnReporteUsuarios_Click(object sender, EventArgs e)
-            => txtReporte.Text = _usuarioBll.GenerarReporteUsuarios();
+        private void btnReporteUsuarios_Click(object sender, System.EventArgs e)
+            => txtReporte.Text = _usuarioSvc.GenerarReporte();
 
-        private void btnReportePartidas_Click(object sender, EventArgs e)
-            => txtReporte.Text = _partidaBll.GenerarReportePartidas();
+        private void btnReportePartidas_Click(object sender, System.EventArgs e)
+            => txtReporte.Text = _partidaSvc.GenerarReporte();
 
-        private void btnCerrarSesion_Click(object sender, EventArgs e)
+        private void btnCerrarSesion_Click(object sender, System.EventArgs e)
         {
             new FrmLogin().Show();
             this.Close();
@@ -108,7 +132,11 @@ namespace GUI
         private Usuario ObtenerSeleccionado()
         {
             if (dgvUsuarios.CurrentRow == null)
-            { MessageBox.Show("Seleccione un usuario.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return null; }
+            {
+                MessageBox.Show("Seleccione un usuario.", "Aviso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
             return dgvUsuarios.CurrentRow.DataBoundItem as Usuario;
         }
     }
