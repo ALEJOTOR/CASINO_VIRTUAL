@@ -1,38 +1,46 @@
 using ENTITY;
+using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
-using System.IO;
 
 namespace DAL
 {
-    public class EstadoPartidaRepositorio : ArchivoBase<EstadoPartida>
+    /// <summary>
+    /// Repositorio de estados de partida en Oracle.
+    /// </summary>
+    public class EstadoPartidaRepositorio : OracleBase<EstadoPartida>
     {
-        public EstadoPartidaRepositorio() : base(RutaArchivos.EstadoPartidas) { }
-
         public override IList<EstadoPartida> Consultar()
         {
             IList<EstadoPartida> lista = new List<EstadoPartida>();
-            if (!File.Exists(_nombreArchivo)) return lista;
 
-            StreamReader lector = new StreamReader(_nombreArchivo);
-            while (!lector.EndOfStream)
-            {
-                string linea = lector.ReadLine();
-                if (!string.IsNullOrWhiteSpace(linea))
-                    lista.Add(Mapear(linea));
-            }
-            lector.Close();
+            using (OracleDataReader reader = EjecutarConsulta(
+                "SELECT id_estado, nombre_estado, descripcion FROM estado_partidas ORDER BY id_estado"))
+                while (reader.Read())
+                    lista.Add(Mapear(reader));
+
             return lista;
         }
 
-        private EstadoPartida Mapear(string linea)
+        public override string Guardar(EstadoPartida estado)
         {
-            // Formato: id|nombre_estado|descripcion
-            string[] c = linea.Split('|');
+            return EjecutarComando(
+                @"INSERT INTO estado_partidas (id_estado, nombre_estado, descripcion)
+                  VALUES (:id_estado, :nombre_estado, :descripcion)",
+                new[]
+                {
+                    (":id_estado", (object)estado.IdEstado),
+                    (":nombre_estado", (object)estado.NombreEstado),
+                    (":descripcion", (object)(estado.Descripcion ?? (object)System.DBNull.Value))
+                });
+        }
+
+        private EstadoPartida Mapear(OracleDataReader r)
+        {
             return new EstadoPartida
             {
-                IdEstado     = int.Parse(c[0]),
-                NombreEstado = c[1],
-                Descripcion  = c[2]
+                IdEstado = r.GetInt32(0),
+                NombreEstado = r.GetString(1),
+                Descripcion = r.IsDBNull(2) ? null : r.GetString(2)
             };
         }
     }

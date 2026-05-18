@@ -1,38 +1,47 @@
 using ENTITY;
+using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.IO;
 
 namespace DAL
 {
-    public class RolRepositorio : ArchivoBase<Rol>
+    /// <summary>
+    /// Solo necesita Consultar() y Guardar().
+    /// Los roles no se editan ni eliminan desde la aplicación,
+    /// se gestionan directamente desde el script SQL inicial.
+    /// </summary>
+    public class RolRepositorio : OracleBase<Rol>
     {
-        public RolRepositorio() : base(RutaArchivos.Roles) { }
-
         public override IList<Rol> Consultar()
         {
             IList<Rol> lista = new List<Rol>();
-            if (!File.Exists(_nombreArchivo)) return lista;
 
-            StreamReader lector = new StreamReader(_nombreArchivo);
-            while (!lector.EndOfStream)
-            {
-                string linea = lector.ReadLine();
-                if (!string.IsNullOrWhiteSpace(linea))
-                    lista.Add(Mapear(linea));
-            }
-            lector.Close();
+            using (OracleDataReader reader = EjecutarConsulta(
+                "SELECT id_rol, nombre_rol, descripcion FROM roles ORDER BY id_rol"))
+                while (reader.Read())
+                    lista.Add(Mapear(reader));
+
             return lista;
         }
 
-        private Rol Mapear(string linea)
+        public override string Guardar(Rol r)
         {
-            // Formato: id|nombre_rol|descripcion
-            string[] c = linea.Split('|');
+            return EjecutarComando(
+                "INSERT INTO roles VALUES (seq_roles.NEXTVAL, :nombre, :descripcion)",
+                new[]
+                {
+                    (":nombre",      (object)r.NombreRol),
+                    (":descripcion", (object)(r.Descripcion ?? (object)System.DBNull.Value))
+                });
+        }
+
+        private Rol Mapear(OracleDataReader r)
+        {
             return new Rol
             {
-                IdRol       = int.Parse(c[0]),
-                NombreRol   = c[1],
-                Descripcion = c[2]
+                IdRol = r.GetInt32(0),
+                NombreRol = r.GetString(1),
+                Descripcion = r.IsDBNull(2) ? null : r.GetString(2)
             };
         }
     }

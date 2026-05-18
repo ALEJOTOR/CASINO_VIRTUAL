@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfiguracionJuego.cs" />
+    <Compile Include="DetallePartida.cs" />
     <Compile Include="EstadoPartida.cs" />
     <Compile Include="Juego.cs" />
     <Compile Include="Partida.cs" />

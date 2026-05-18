@@ -1,44 +1,100 @@
 using ENTITY;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace DAL
 {
-    public class PartidaRepositorio : ArchivoBase<Partida>
+    /// <summary>
+    /// Agrega ObtenerPorUsuario() igual que TransaccionRepositorio.
+    /// SiguienteIdPartida() de PartidaServicio desaparece:
+    /// seq_partidas.NEXTVAL lo reemplaza en el INSERT.
+    /// </summary>
+    public class PartidaRepositorio : OracleBase<Partida>
     {
-        public PartidaRepositorio() : base(RutaArchivos.Partidas) { }
-
         public override IList<Partida> Consultar()
         {
             IList<Partida> lista = new List<Partida>();
-            if (!File.Exists(_nombreArchivo)) return lista;
 
-            StreamReader lector = new StreamReader(_nombreArchivo);
-            while (!lector.EndOfStream)
-            {
-                string linea = lector.ReadLine();
-                if (!string.IsNullOrWhiteSpace(linea))
-                    lista.Add(Mapear(linea));
-            }
-            lector.Close();
+            string sql = @"SELECT id_partida, id_usuario, id_juego,
+                                  id_estado, fecha, apuesta,
+                                  ganancia, resultado
+                             FROM partidas
+                            ORDER BY fecha DESC";
+
+            using (OracleDataReader reader = EjecutarConsulta(sql))
+                while (reader.Read())
+                    lista.Add(Mapear(reader));
+
             return lista;
         }
 
-        private Partida Mapear(string linea)
+        // Historial de partidas de un usuario específico.
+        // Lo usa FrmCliente para mostrar el historial y
+        // PartidaServicio para generar reportes por usuario.
+        public IList<Partida> ObtenerPorUsuario(int idUsuario)
         {
-            // Formato: id|idUsuario|idJuego|idEstado|fecha|apuesta|ganancia|resultado
-            string[] c = linea.Split('|');
+            IList<Partida> lista = new List<Partida>();
+
+            string sql = @"SELECT id_partida, id_usuario, id_juego,
+                                  id_estado, fecha, apuesta,
+                                  ganancia, resultado
+                             FROM partidas
+                            WHERE id_usuario = :id
+                            ORDER BY fecha DESC";
+
+            using (OracleDataReader reader = EjecutarConsulta(sql,
+                new[] { (":id", (object)idUsuario) }))
+                while (reader.Read())
+                    lista.Add(Mapear(reader));
+
+            return lista;
+        }
+
+        // El INSERT de partida NO maneja saldo aquí.
+        // El saldo se mueve insertando en transacciones (que
+        // dispara el trigger). La partida solo registra el
+        // resultado histórico de la jugada.
+        //
+        // RETURNING id_partida INTO :nuevo_id permite recuperar
+        // el ID generado por la secuencia justo después del INSERT,
+        // lo que necesita PartidaServicio para asociar los detalles.
+        public override string Guardar(Partida p)
+        {
+            string sql = @"INSERT INTO partidas (
+                               id_partida, id_usuario, id_juego,
+                               id_estado, fecha, apuesta,
+                               ganancia, resultado
+                           ) VALUES (
+                               seq_partidas.NEXTVAL, :id_usuario, :id_juego,
+                               :id_estado, CURRENT_TIMESTAMP, :apuesta,
+                               :ganancia, :resultado
+                           )";
+
+            return EjecutarComando(sql, new[]
+            {
+                (":id_usuario", (object)p.IdUsuario),
+                (":id_juego",   (object)p.IdJuego),
+                (":id_estado",  (object)p.IdEstado),
+                (":apuesta",    (object)p.Apuesta),
+                (":ganancia",   (object)p.Ganancia),
+                (":resultado",  (object)(p.Resultado ?? (object)DBNull.Value))
+            });
+        }
+
+        private Partida Mapear(OracleDataReader r)
+        {
             return new Partida
             {
-                IdPartida = int.Parse(c[0]),
-                IdUsuario = int.Parse(c[1]),
-                IdJuego   = int.Parse(c[2]),
-                IdEstado  = int.Parse(c[3]),
-                Fecha     = DateTime.Parse(c[4]),
-                Apuesta   = decimal.Parse(c[5]),
-                Ganancia  = decimal.Parse(c[6]),
-                Resultado = c[7]
+                IdPartida = r.GetInt32(0),
+                IdUsuario = r.GetInt32(1),
+                IdJuego = r.GetInt32(2),
+                IdEstado = r.GetInt32(3),
+                Fecha = r.GetDateTime(4),
+                Apuesta = r.GetDecimal(5),
+                Ganancia = r.GetDecimal(6),
+                Resultado = r.IsDBNull(7) ? null : r.GetString(7)
             };
         }
     }

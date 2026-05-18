@@ -1,39 +1,63 @@
 using ENTITY;
+using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.IO;
 
 namespace DAL
 {
-    public class JuegoRepositorio : ArchivoBase<Juego>
+    /// <summary>
+    /// Agrega ObtenerActivos() para que la GUI solo muestre
+    /// juegos disponibles al cliente, sin traer los inactivos.
+    /// Antes esto lo filtraba la BLL con un foreach; ahora
+    /// el WHERE lo hace Oracle directamente.
+    /// </summary>
+    public class JuegoRepositorio : OracleBase<Juego>
     {
-        public JuegoRepositorio() : base(RutaArchivos.Juegos) { }
-
         public override IList<Juego> Consultar()
         {
             IList<Juego> lista = new List<Juego>();
-            if (!File.Exists(_nombreArchivo)) return lista;
 
-            StreamReader lector = new StreamReader(_nombreArchivo);
-            while (!lector.EndOfStream)
-            {
-                string linea = lector.ReadLine();
-                if (!string.IsNullOrWhiteSpace(linea))
-                    lista.Add(Mapear(linea));
-            }
-            lector.Close();
+            using (OracleDataReader reader = EjecutarConsulta(
+                "SELECT id_juego, nombre, descripcion, estado FROM juegos ORDER BY id_juego"))
+                while (reader.Read())
+                    lista.Add(MapearJuego(reader));
+
             return lista;
         }
 
-        private Juego Mapear(string linea)
+        // Solo los juegos que el cliente puede jugar
+        public IList<Juego> ObtenerActivos()
         {
-            // Formato: id|nombre|descripcion|estado
-            string[] c = linea.Split('|');
+            IList<Juego> lista = new List<Juego>();
+
+            using (OracleDataReader reader = EjecutarConsulta(
+                "SELECT id_juego, nombre, descripcion, estado FROM juegos WHERE estado = 'activo'"))
+                while (reader.Read())
+                    lista.Add(MapearJuego(reader));
+
+            return lista;
+        }
+
+        public override string Guardar(Juego j)
+        {
+            return EjecutarComando(
+                @"INSERT INTO juegos VALUES (seq_juegos.NEXTVAL, :nombre, :descripcion, :estado)",
+                new[]
+                {
+                    (":nombre",      (object)j.Nombre),
+                    (":descripcion", (object)(j.Descripcion ?? (object)System.DBNull.Value)),
+                    (":estado",      (object)(j.Estado ?? "activo"))
+                });
+        }
+
+        private Juego MapearJuego(OracleDataReader r)
+        {
             return new Juego
             {
-                IdJuego     = int.Parse(c[0]),
-                Nombre      = c[1],
-                Descripcion = c[2],
-                Estado      = c[3]
+                IdJuego = r.GetInt32(0),
+                Nombre = r.GetString(1),
+                Descripcion = r.IsDBNull(2) ? null : r.GetString(2),
+                Estado = r.GetString(3)
             };
         }
     }
