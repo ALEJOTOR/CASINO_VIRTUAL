@@ -13,8 +13,7 @@ namespace GUI
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Crea los archivos de datos iniciales si no existen
-            new InicializadorServicio().InicializarTodo();
-
+            
             Application.Run(new FrmLogin());
         }
     }

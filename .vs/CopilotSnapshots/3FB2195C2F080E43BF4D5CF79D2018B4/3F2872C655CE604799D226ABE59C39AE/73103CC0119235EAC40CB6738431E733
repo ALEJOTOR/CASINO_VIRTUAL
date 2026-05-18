@@ -1,0 +1,217 @@
+﻿using ENTITY;
+using Oracle.ManagedDataAccess.Client;
+using System;
+using System.Collections.Generic;
+
+namespace DAL
+{
+    /// <summary>
+    /// Migrado de ArchivoBase a OracleBase.
+    /// Los métodos públicos mantienen los mismos nombres para
+    /// que UsuarioServicio (BLL) no necesite cambiar nada.
+    /// 
+    /// Cambios respecto a la versión con archivos:
+    ///   - Consultar()   → SELECT en lugar de leer líneas del .txt
+    ///   - Guardar()     → INSERT en lugar de StreamWriter
+    ///   - Actualizar()  → UPDATE fila por fila (reemplaza GuardarTodos)
+    ///   - Eliminar()    → DELETE (antes era reescribir el .txt sin esa fila)
+    ///   - SiguienteId() → desaparece, lo maneja seq_usuarios en Oracle
+    /// </summary>
+    public class UsuarioRepositorio : OracleBase<Usuario>
+    {
+        // ── Consultar ────────────────────────────────────────────
+        // Antes: leía cada línea del .txt y la partía por '|'
+        // Ahora: SELECT trae las columnas ya separadas y tipadas.
+        // El JOIN con estado_usuario trae el nombre del estado
+        // (activo/inactivo/suspendido) igual que antes en el .txt.
+        public override IList<Usuario> Consultar()
+        {
+            IList<Usuario> lista = new List<Usuario>();
+
+            string sql = @"SELECT u.id_usuario, u.username, u.password,
+                                  u.nombre_1, u.nombre_2,
+                                  u.apellido_1, u.apellido_2,
+                                  u.correo, u.fecha_nacimiento,
+                                  u.saldo, u.id_rol,
+                                  u.fecha_registro, e.nombre AS estado
+                             FROM usuarios u
+                             JOIN estado_usuario e ON u.id_estado = e.id_estado
+                            ORDER BY u.id_usuario";
+
+            using (OracleDataReader reader = EjecutarConsulta(sql))
+                while (reader.Read())
+                    lista.Add(Mapear(reader));
+
+            return lista;
+        }
+
+        // ── Guardar (INSERT) ─────────────────────────────────────
+        // Antes: escritor.WriteLine(usuario.ToString())
+        // Ahora: INSERT con parámetros nombrados (:param).
+        // 
+        // seq_usuarios.NEXTVAL genera el ID automáticamente,
+        // igual que hacía SiguienteId() pero de forma segura
+        // y sin tener que leer toda la tabla primero.
+        //
+        // TO_DATE convierte el string de fecha al tipo DATE de Oracle.
+        public override string Guardar(Usuario u)
+        {
+            string sql = @"INSERT INTO usuarios (
+                               id_usuario, username, password,
+                               nombre_1, nombre_2,
+                               apellido_1, apellido_2,
+                               correo, fecha_nacimiento,
+                               saldo, id_rol, id_estado, fecha_registro
+                           ) VALUES (
+                               seq_usuarios.NEXTVAL, :username, :password,
+                               :nombre1, :nombre2,
+                               :apellido1, :apellido2,
+                               :correo, TO_DATE(:fecha_nac, 'YYYY-MM-DD'),
+                               :saldo, :id_rol,
+                               (SELECT id_estado FROM estado_usuario WHERE nombre = :estado),
+                               SYSDATE
+                           )";
+
+            return EjecutarComando(sql, new[]
+            {
+                (":username",  (object)u.Username),
+                (":password",  (object)u.Password),
+                (":nombre1",   (object)u.Nombre1),
+                // Si nombre2 o apellido2 son null, guardamos DBNull
+                // para que Oracle guarde NULL y no el string "null"
+                (":nombre2",   (object)u.Nombre2   ?? DBNull.Value),
+                (":apellido1", (object)u.Apellido1),
+                (":apellido2", (object)u.Apellido2 ?? DBNull.Value),
+                (":correo",    (object)u.Correo),
+                (":fecha_nac", (object)u.FechaNacimiento.ToString("yyyy-MM-dd")),
+                (":saldo",     (object)u.Saldo),
+                (":id_rol",    (object)u.IdRol),
+                (":estado",    (object)(u.Estado ?? "activo"))
+            });
+        }
+
+        // ── Actualizar (UPDATE) ──────────────────────────────────
+        // Antes: no existía — se reescribía el .txt completo con
+        // GuardarTodos(), lo cual era ineficiente y peligroso
+        // (si fallaba a mitad, se perdían datos).
+        // Ahora: UPDATE de una sola fila por id_usuario.
+        // El trigger trg_auditoria_usuarios registra el cambio
+        // automáticamente si cambia saldo, estado o rol.
+        public string Actualizar(Usuario u)
+        {
+            string sql = @"UPDATE usuarios SET
+                               username         = :username,
+                               nombre_1         = :nombre1,
+                               nombre_2         = :nombre2,
+                               apellido_1       = :apellido1,
+                               apellido_2       = :apellido2,
+                               correo           = :correo,
+                               fecha_nacimiento = TO_DATE(:fecha_nac, 'YYYY-MM-DD'),
+                               id_rol           = :id_rol,
+                               id_estado        = (SELECT id_estado FROM estado_usuario WHERE nombre = :estado)
+                           WHERE id_usuario = :id";
+
+            return EjecutarComando(sql, new[]
+            {
+                (":username",  (object)u.Username),
+                (":nombre1",   (object)u.Nombre1),
+                (":nombre2",   (object)u.Nombre2   ?? DBNull.Value),
+                (":apellido1", (object)u.Apellido1),
+                (":apellido2", (object)u.Apellido2 ?? DBNull.Value),
+                (":correo",    (object)u.Correo),
+                (":fecha_nac", (object)u.FechaNacimiento.ToString("yyyy-MM-dd")),
+                (":id_rol",    (object)u.IdRol),
+                (":estado",    (object)(u.Estado ?? "activo")),
+                (":id",        (object)u.IdUsuario)
+            });
+        }
+
+        // ── Eliminar (DELETE) ────────────────────────────────────
+        // Antes: se cargaba toda la lista, se quitaba el usuario
+        // y se reescribía el .txt completo.
+        // Ahora: DELETE de una sola fila. Mucho más directo.
+        public string Eliminar(int idUsuario)
+        {
+            return EjecutarComando(
+                "DELETE FROM usuarios WHERE id_usuario = :id",
+                new[] { (":id", (object)idUsuario) }
+            );
+        }
+
+        // ── ObtenerPorUsername ───────────────────────────────────
+        // Antes: Consultar() traía todos y la BLL filtraba con foreach.
+        // Ahora: el WHERE lo hace Oracle directamente, más eficiente.
+        // Lo usa Login() en UsuarioServicio para autenticar.
+        public Usuario ObtenerPorUsername(string username)
+        {
+            string sql = @"SELECT u.id_usuario, u.username, u.password,
+                                  u.nombre_1, u.nombre_2,
+                                  u.apellido_1, u.apellido_2,
+                                  u.correo, u.fecha_nacimiento,
+                                  u.saldo, u.id_rol,
+                                  u.fecha_registro, e.nombre AS estado
+                             FROM usuarios u
+                             JOIN estado_usuario e ON u.id_estado = e.id_estado
+                            WHERE u.username = :username";
+
+            using (OracleDataReader reader = EjecutarConsulta(sql,
+                new[] { (":username", (object)username) }))
+            {
+                if (reader.Read())
+                    return Mapear(reader);
+                return null;
+            }
+        }
+
+        // ── ObtenerPorId ─────────────────────────────────────────
+        // Mismo concepto: antes la BLL hacía un foreach sobre todos.
+        // Ahora Oracle busca directamente por PK, mucho más rápido.
+        public Usuario ObtenerPorId(int idUsuario)
+        {
+            string sql = @"SELECT u.id_usuario, u.username, u.password,
+                                  u.nombre_1, u.nombre_2,
+                                  u.apellido_1, u.apellido_2,
+                                  u.correo, u.fecha_nacimiento,
+                                  u.saldo, u.id_rol,
+                                  u.fecha_registro, e.nombre AS estado
+                             FROM usuarios u
+                             JOIN estado_usuario e ON u.id_estado = e.id_estado
+                            WHERE u.id_usuario = :id";
+
+            using (OracleDataReader reader = EjecutarConsulta(sql,
+                new[] { (":id", (object)idUsuario) }))
+            {
+                if (reader.Read())
+                    return Mapear(reader);
+                return null;
+            }
+        }
+
+        // ── Mapear ───────────────────────────────────────────────
+        // Antes: recibía un string y lo partía por '|'
+        // Ahora: recibe un OracleDataReader y lee columna por columna.
+        // GetString(0), GetDecimal(9), etc. corresponden al orden
+        // de columnas del SELECT de arriba.
+        private Usuario Mapear(OracleDataReader r)
+        {
+            return new Usuario
+            {
+                IdUsuario = r.GetInt32(0),
+                Username = r.GetString(1),
+                Password = r.GetString(2),
+                Nombre1 = r.GetString(3),
+                // IsDBNull verifica si Oracle devolvió NULL para
+                // campos opcionales (nombre_2, apellido_2)
+                Nombre2 = r.IsDBNull(4) ? null : r.GetString(4),
+                Apellido1 = r.GetString(5),
+                Apellido2 = r.IsDBNull(6) ? null : r.GetString(6),
+                Correo = r.GetString(7),
+                FechaNacimiento = r.GetDateTime(8),
+                Saldo = r.GetDecimal(9),
+                IdRol = r.GetInt32(10),
+                FechaRegistro = r.GetDateTime(11),
+                Estado = r.GetString(12)
+            };
+        }
+    }
+}
