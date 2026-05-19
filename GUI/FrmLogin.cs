@@ -34,7 +34,7 @@ namespace GUI
             if (u.IdRol == 1)
                 new FrmAdmin(u).Show();
             else
-                new FrmCliente(u).Show();
+                new MainForm(u).Show();
 
             this.Hide();
         }

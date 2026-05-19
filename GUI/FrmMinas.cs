@@ -9,44 +9,50 @@ namespace GUI
 {
     public partial class FrmMinas : Form
     {
-        private readonly Usuario         _usuario;
+        private readonly Usuario _usuario;
         private readonly PartidaServicio _servicio = new PartidaServicio();
 
         private const int FILAS = 5, COLS = 5, TOTAL = 25;
         private const int TAM = 68, SEP = 4;
 
         private Button[,] _celdas;
-        private bool[,]   _esMina;
-        private bool      _activa;
-        private decimal   _apuesta;
-        private int       _nMinas;
-        private int       _destapadas;
-        private decimal   _multiplicador;
+        private bool[,] _esMina;
+        private bool _activa;
+        private decimal _apuesta;
+        private int _nMinas;
+        private int _destapadas;
+        private decimal _multiplicador;
 
         public FrmMinas(Usuario usuario)
         {
             _usuario = usuario;
             InitializeComponent();
             CrearTablero();
+
+            // Mostrar saldo actual al abrir el formulario
+            // Así el jugador sabe cuánto puede apostar antes de escribir
+            ActualizarLblSaldo();
         }
+
+        // ── Tablero ───────────────────────────────────────────────
 
         private void CrearTablero()
         {
             _celdas = new Button[FILAS, COLS];
-            int xBase = 12, yBase = 118;
+            int xBase = 12, yBase = 138; // yBase subió 20px para dar espacio al lblSaldo
             for (int i = 0; i < FILAS; i++)
                 for (int j = 0; j < COLS; j++)
                 {
                     var btn = new Button
                     {
-                        Text      = "?",
-                        Tag       = i * COLS + j,
-                        Location  = new Point(xBase + j * (TAM + SEP), yBase + i * (TAM + SEP)),
-                        Size      = new Size(TAM, TAM),
-                        Font      = new Font("Segoe UI", 14F),
+                        Text = "?",
+                        Tag = i * COLS + j,
+                        Location = new Point(xBase + j * (TAM + SEP), yBase + i * (TAM + SEP)),
+                        Size = new Size(TAM, TAM),
+                        Font = new Font("Segoe UI", 14F),
                         BackColor = Color.SteelBlue,
                         ForeColor = Color.White,
-                        Enabled   = false,
+                        Enabled = false,
                         FlatStyle = FlatStyle.Flat
                     };
                     btn.Click += Celda_Click;
@@ -55,94 +61,231 @@ namespace GUI
                 }
         }
 
+        // ── Iniciar partida ───────────────────────────────────────
+
         private void btnIniciar_Click(object sender, EventArgs e)
         {
+            // Validación 1: apuesta es un número válido y mayor a 0
             if (!decimal.TryParse(txtApuesta.Text, out _apuesta) || _apuesta <= 0)
-            { MessageBox.Show("Apuesta inválida.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
-            if (!int.TryParse(txtMinas.Text, out _nMinas) || _nMinas < 1 || _nMinas > 20)
-            { MessageBox.Show("Minas: entre 1 y 20.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+            {
+                MostrarError("Ingresa una apuesta válida mayor a $0.");
+                txtApuesta.Focus();
+                return;
+            }
 
-            _destapadas = 0; _multiplicador = 1m; _activa = true;
-            lblEstado.Text        = "¡Elige una celda!";
-            lblMultiplicador.Text = "Multiplicador: x1.00";
-            btnIniciar.Enabled    = false;
-            btnRetirar.Enabled    = true;
+            // Validación 2: apuesta no supera el saldo disponible
+            // Antes esto nunca se validaba en el formulario — solo en la BLL
+            // al final de la partida, cuando ya era tarde.
+            if (_apuesta > _usuario.Saldo)
+            {
+                MostrarError($"Saldo insuficiente. Tu saldo es ${_usuario.Saldo:N2}.");
+                txtApuesta.Text = _usuario.Saldo.ToString("F2");
+                txtApuesta.Focus();
+                return;
+            }
+
+            // Validación 3: número de minas
+            if (!int.TryParse(txtMinas.Text, out _nMinas) || _nMinas < 1 || _nMinas > 20)
+            {
+                MostrarError("El número de minas debe estar entre 1 y 20.");
+                txtMinas.Focus();
+                return;
+            }
+
+            // Validación 4: no se puede jugar si no hay celdas seguras
+            // Con 24 minas y solo 1 celda segura el juego no tiene sentido.
+            // Con 25 minas el juego es imposible.
+            if (_nMinas >= TOTAL)
+            {
+                MostrarError($"El máximo de minas para un tablero de {TOTAL} celdas es {TOTAL - 1}.");
+                return;
+            }
+
+            // Todo válido — iniciar partida
+            _destapadas = 0;
+            _multiplicador = 1m;
+            _activa = true;
+
+            ActualizarLblMultiplicador();
+            lblEstado.Text = "¡Elige una celda!";
+            lblEstado.ForeColor = Color.DarkGreen;
+
+            // Bloquear controles de configuración durante la partida
+            txtApuesta.Enabled = false;
+            txtMinas.Enabled = false;
+            btnIniciar.Enabled = false;
+            btnRetirar.Enabled = true;
+
             ColocarMinas();
             HabilitarCeldas(true);
         }
 
+        // ── Lógica de minas ───────────────────────────────────────
+
         private void ColocarMinas()
         {
             _esMina = new bool[FILAS, COLS];
-            var rnd    = new Random();
+            var rnd = new Random();
             var usadas = new List<int>();
-            while (usadas.Count < _nMinas) { int p = rnd.Next(TOTAL); if (!usadas.Contains(p)) usadas.Add(p); }
-            foreach (int p in usadas) _esMina[p / COLS, p % COLS] = true;
+
+            while (usadas.Count < _nMinas)
+            {
+                int p = rnd.Next(TOTAL);
+                if (!usadas.Contains(p)) usadas.Add(p);
+            }
+
+            foreach (int p in usadas)
+                _esMina[p / COLS, p % COLS] = true;
+
+            // Resetear visual de todas las celdas
             for (int i = 0; i < FILAS; i++)
                 for (int j = 0; j < COLS; j++)
-                { _celdas[i, j].Text = "?"; _celdas[i, j].BackColor = Color.SteelBlue; _celdas[i, j].Enabled = false; }
+                {
+                    _celdas[i, j].Text = "?";
+                    _celdas[i, j].BackColor = Color.SteelBlue;
+                    _celdas[i, j].ForeColor = Color.White;
+                    _celdas[i, j].Enabled = false;
+                }
         }
 
         private void Celda_Click(object sender, EventArgs e)
         {
             if (!_activa) return;
+
             var btn = (Button)sender;
             int idx = (int)btn.Tag;
             btn.Enabled = false;
 
             if (_esMina[idx / COLS, idx % COLS])
-            { btn.Text = "X"; btn.BackColor = Color.Crimson; TerminarPartida(false); }
+            {
+                // Mina — mostrar X en rojo y terminar
+                btn.Text = "✕";
+                btn.BackColor = Color.Crimson;
+                btn.ForeColor = Color.White;
+                TerminarPartida(false);
+            }
             else
             {
                 _destapadas++;
-                btn.Text = "★"; btn.BackColor = Color.LimeGreen;
+                btn.Text = "★";
+                btn.BackColor = Color.LimeGreen;
+                btn.ForeColor = Color.White;
+
                 _multiplicador *= 1m + (_nMinas * 0.05m);
-                lblMultiplicador.Text = $"Multiplicador: x{_multiplicador:N2}";
-                if (_destapadas >= TOTAL - _nMinas) TerminarPartida(true);
+                ActualizarLblMultiplicador();
+
+                // Ganancia proyectada visible en lblEstado mientras juega
+                decimal proyectado = Math.Round(_apuesta * _multiplicador, 2);
+                lblEstado.Text = $"Ganancia potencial: ${proyectado:N2}";
+                lblEstado.ForeColor = Color.DarkGreen;
+
+                // Destapó todas las celdas seguras — gana automáticamente
+                if (_destapadas >= TOTAL - _nMinas)
+                    TerminarPartida(true);
             }
         }
 
+        // ── Retirar ───────────────────────────────────────────────
+
         private void btnRetirar_Click(object sender, EventArgs e)
         {
-            if (!_activa || _destapadas == 0)
-            { MessageBox.Show("Destapa al menos una celda antes de retirar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
-            TerminarPartida(true);
+            if (!_activa) return;
+
+            if (_destapadas == 0)
+            {
+                MostrarError("Destapa al menos una celda antes de retirar.");
+                return;
+            }
+
+            // Confirmar antes de retirar — evita clics accidentales
+            decimal proyectado = Math.Round(_apuesta * _multiplicador, 2);
+            var confirmacion = MessageBox.Show(
+                $"¿Deseas retirar ${proyectado:N2}?\n\nSi continúas jugando podrías ganar más, pero también perder todo.",
+                "Confirmar retiro",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirmacion == DialogResult.Yes)
+                TerminarPartida(true);
         }
+
+        // ── Fin de partida ────────────────────────────────────────
 
         private void TerminarPartida(bool gano)
         {
-            _activa            = false;
-            btnIniciar.Enabled = true;
-            btnRetirar.Enabled = false;
+            _activa = false;
             HabilitarCeldas(false);
             MostrarMinas();
 
-            decimal ganancia = gano ? Math.Round(_apuesta * _multiplicador, 2) : 0;
+            decimal ganancia = gano ? Math.Round(_apuesta * _multiplicador, 2) : 0m;
+
             Partida p = new Partida
             {
                 IdUsuario = _usuario.IdUsuario,
-                IdJuego   = 1,
-                IdEstado  = gano ? 2 : 3,
-                Apuesta   = _apuesta,
-                Ganancia  = ganancia,
+                IdJuego = 1,
+                IdEstado = gano ? 2 : 3,
+                Apuesta = _apuesta,
+                Ganancia = ganancia,
                 Resultado = gano ? "gano" : "perdio"
             };
-            _servicio.RegistrarPartida(p);
-            lblEstado.Text = gano
-                ? $"¡Ganaste ${ganancia:N2}!"
-                : $"¡Mina! Perdiste ${_apuesta:N2}";
-            MessageBox.Show(lblEstado.Text,
-                gano ? "¡Victoria!" : "Perdiste",
-                MessageBoxButtons.OK,
-                gano ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+
+            string resultado = _servicio.RegistrarPartida(p);
+
+            // Si la BLL rechazó la partida (saldo insuficiente, etc.)
+            // no actualizar la UI como si hubiera funcionado
+            if (resultado != "Guardado correctamente.")
+            {
+                MostrarError($"Error al registrar partida: {resultado}");
+                RestablecerControles();
+                return;
+            }
+
+            // Actualizar el saldo en memoria del usuario
+            // para que el lblSaldo refleje el nuevo valor sin recargar
+            if (gano)
+                _usuario.Saldo = _usuario.Saldo - _apuesta + ganancia;
+            else
+                _usuario.Saldo = _usuario.Saldo - _apuesta;
+
+            ActualizarLblSaldo();
+
+            // Feedback visual de resultado
+            if (gano)
+            {
+                lblEstado.Text = $"¡Ganaste ${ganancia:N2}!";
+                lblEstado.ForeColor = Color.DarkGreen;
+                MessageBox.Show(
+                    $"¡Felicidades!\n\nGanaste ${ganancia:N2} con un multiplicador de x{_multiplicador:N2}.\nTu nuevo saldo: ${_usuario.Saldo:N2}",
+                    "¡Victoria!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+            else
+            {
+                lblEstado.Text = $"¡Mina! Perdiste ${_apuesta:N2}";
+                lblEstado.ForeColor = Color.Crimson;
+                MessageBox.Show(
+                    $"¡Encontraste una mina!\n\nPerdiste ${_apuesta:N2}.\nTu nuevo saldo: ${_usuario.Saldo:N2}",
+                    "Perdiste",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+
+            RestablecerControles();
         }
+
+        // ── Helpers visuales ──────────────────────────────────────
 
         private void MostrarMinas()
         {
             for (int i = 0; i < FILAS; i++)
                 for (int j = 0; j < COLS; j++)
                     if (_esMina[i, j] && _celdas[i, j].Text == "?")
-                    { _celdas[i, j].Text = "X"; _celdas[i, j].BackColor = Color.OrangeRed; }
+                    {
+                        _celdas[i, j].Text = "✕";
+                        _celdas[i, j].BackColor = Color.OrangeRed;
+                        _celdas[i, j].ForeColor = Color.White;
+                    }
         }
 
         private void HabilitarCeldas(bool v)
@@ -150,6 +293,31 @@ namespace GUI
             for (int i = 0; i < FILAS; i++)
                 for (int j = 0; j < COLS; j++)
                     _celdas[i, j].Enabled = v;
+        }
+
+        private void RestablecerControles()
+        {
+            btnIniciar.Enabled = true;
+            btnRetirar.Enabled = false;
+            txtApuesta.Enabled = true;
+            txtMinas.Enabled = true;
+        }
+
+        private void ActualizarLblSaldo()
+        {
+            lblSaldo.Text = $"Saldo disponible: ${_usuario.Saldo:N2}";
+            // Verde si hay saldo, rojo si está en cero
+            lblSaldo.ForeColor = _usuario.Saldo > 0 ? Color.DarkGreen : Color.Crimson;
+        }
+
+        private void ActualizarLblMultiplicador()
+        {
+            lblMultiplicador.Text = $"Multiplicador: x{_multiplicador:N2}";
+        }
+
+        private void MostrarError(string mensaje)
+        {
+            MessageBox.Show(mensaje, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
 }

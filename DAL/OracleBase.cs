@@ -1,12 +1,23 @@
 ﻿using Oracle.ManagedDataAccess.Client;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL
 {
+    /// <summary>
+    /// OracleBase mantiene exactamente el mismo contrato
+    /// (mismos nombres de método, mismas firmas) para que
+    /// la BLL no necesite cambiar nada.
+    /// 
+    /// La diferencia: en lugar de un StreamWriter, cada
+    /// repositorio hijo recibe un OracleCommand para ejecutar
+    /// el SQL que le corresponde.
+    /// 
+    /// GuardarTodos() ya NO existe aquí porque en Oracle
+    /// no se "reescribe todo" — cada UPDATE modifica solo
+    /// la fila afectada. Los repositorios que la usaban
+    /// (UsuarioRepositorio) tendrán un método Actualizar()
+    /// en su lugar.
+    /// </summary>
     public abstract class OracleBase<T>
     {
         // ── Método que cada repositorio hijo DEBE implementar ────
