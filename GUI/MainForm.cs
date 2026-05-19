@@ -39,6 +39,7 @@ namespace GUI
         private void btnMinas_Click(object sender, EventArgs e)
         {
             new FrmMinas(_usuario).ShowDialog();
+            cargarDatos();
         }
 
         private void btnRuleta_Click(object sender, EventArgs e)

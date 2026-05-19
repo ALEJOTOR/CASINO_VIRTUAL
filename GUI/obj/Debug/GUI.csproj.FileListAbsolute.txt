@@ -58,3 +58,4 @@ C:\Users\sebas\Documents\GitHub\CASINO_VIRTUAL\GUI\bin\Debug\Microsoft.Bcl.Async
 C:\Users\sebas\Documents\GitHub\CASINO_VIRTUAL\GUI\bin\Debug\System.Buffers.xml
 C:\Users\sebas\Documents\GitHub\CASINO_VIRTUAL\GUI\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\sebas\Documents\GitHub\CASINO_VIRTUAL\GUI\obj\Debug\GUI.MainForm.resources
+C:\Users\sebas\Documents\GitHub\CASINO_VIRTUAL\GUI\obj\Debug\GUI.FrmMinas.resources

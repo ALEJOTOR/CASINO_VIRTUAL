@@ -5,11 +5,6 @@ using System.IO;
 
 namespace DAL
 {
-    /// <summary>
-    /// Solo necesita Consultar() y Guardar().
-    /// Los roles no se editan ni eliminan desde la aplicación,
-    /// se gestionan directamente desde el script SQL inicial.
-    /// </summary>
     public class RolRepositorio : OracleBase<Rol>
     {
         public override IList<Rol> Consultar()

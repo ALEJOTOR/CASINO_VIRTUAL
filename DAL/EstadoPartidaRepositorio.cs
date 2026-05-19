@@ -4,9 +4,6 @@ using System.Collections.Generic;
 
 namespace DAL
 {
-    /// <summary>
-    /// Repositorio de estados de partida en Oracle.
-    /// </summary>
     public class EstadoPartidaRepositorio : OracleBase<EstadoPartida>
     {
         public override IList<EstadoPartida> Consultar()

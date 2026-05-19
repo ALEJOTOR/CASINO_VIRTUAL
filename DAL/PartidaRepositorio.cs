@@ -6,11 +6,6 @@ using System.IO;
 
 namespace DAL
 {
-    /// <summary>
-    /// Agrega ObtenerPorUsuario() igual que TransaccionRepositorio.
-    /// SiguienteIdPartida() de PartidaServicio desaparece:
-    /// seq_partidas.NEXTVAL lo reemplaza en el INSERT.
-    /// </summary>
     public class PartidaRepositorio : OracleBase<Partida>
     {
         public override IList<Partida> Consultar()
@@ -30,9 +25,6 @@ namespace DAL
             return lista;
         }
 
-        // Historial de partidas de un usuario específico.
-        // Lo usa FrmCliente para mostrar el historial y
-        // PartidaServicio para generar reportes por usuario.
         public IList<Partida> ObtenerPorUsuario(int idUsuario)
         {
             IList<Partida> lista = new List<Partida>();
@@ -52,14 +44,6 @@ namespace DAL
             return lista;
         }
 
-        // El INSERT de partida NO maneja saldo aquí.
-        // El saldo se mueve insertando en transacciones (que
-        // dispara el trigger). La partida solo registra el
-        // resultado histórico de la jugada.
-        //
-        // RETURNING id_partida INTO :nuevo_id permite recuperar
-        // el ID generado por la secuencia justo después del INSERT,
-        // lo que necesita PartidaServicio para asociar los detalles.
         public override string Guardar(Partida p)
         {
             string sql = @"INSERT INTO partidas (

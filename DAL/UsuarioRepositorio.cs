@@ -5,25 +5,8 @@ using System.Collections.Generic;
 
 namespace DAL
 {
-    /// <summary>
-    /// Migrado de ArchivoBase a OracleBase.
-    /// Los métodos públicos mantienen los mismos nombres para
-    /// que UsuarioServicio (BLL) no necesite cambiar nada.
-    /// 
-    /// Cambios respecto a la versión con archivos:
-    ///   - Consultar()   → SELECT en lugar de leer líneas del .txt
-    ///   - Guardar()     → INSERT en lugar de StreamWriter
-    ///   - Actualizar()  → UPDATE fila por fila (reemplaza GuardarTodos)
-    ///   - Eliminar()    → DELETE (antes era reescribir el .txt sin esa fila)
-    ///   - SiguienteId() → desaparece, lo maneja seq_usuarios en Oracle
-    /// </summary>
     public class UsuarioRepositorio : OracleBase<Usuario>
     {
-        // ── Consultar ────────────────────────────────────────────
-        // Antes: leía cada línea del .txt y la partía por '|'
-        // Ahora: SELECT trae las columnas ya separadas y tipadas.
-        // El JOIN con estado_usuario trae el nombre del estado
-        // (activo/inactivo/suspendido) igual que antes en el .txt.
         public override IList<Usuario> Consultar()
         {
             IList<Usuario> lista = new List<Usuario>();
@@ -45,15 +28,6 @@ namespace DAL
             return lista;
         }
 
-        // ── Guardar (INSERT) ─────────────────────────────────────
-        // Antes: escritor.WriteLine(usuario.ToString())
-        // Ahora: INSERT con parámetros nombrados (:param).
-        // 
-        // seq_usuarios.NEXTVAL genera el ID automáticamente,
-        // igual que hacía SiguienteId() pero de forma segura
-        // y sin tener que leer toda la tabla primero.
-        //
-        // TO_DATE convierte el string de fecha al tipo DATE de Oracle.
         public override string Guardar(Usuario u)
         {
             string sql = @"INSERT INTO usuarios (
@@ -89,14 +63,6 @@ namespace DAL
                 (":estado",    (object)(u.Estado ?? "activo"))
             });
         }
-
-        // ── Actualizar (UPDATE) ──────────────────────────────────
-        // Antes: no existía — se reescribía el .txt completo con
-        // GuardarTodos(), lo cual era ineficiente y peligroso
-        // (si fallaba a mitad, se perdían datos).
-        // Ahora: UPDATE de una sola fila por id_usuario.
-        // El trigger trg_auditoria_usuarios registra el cambio
-        // automáticamente si cambia saldo, estado o rol.
         public string Actualizar(Usuario u)
         {
             string sql = @"UPDATE usuarios SET
@@ -125,11 +91,6 @@ namespace DAL
                 (":id",        (object)u.IdUsuario)
             });
         }
-
-        // ── Eliminar (DELETE) ────────────────────────────────────
-        // Antes: se cargaba toda la lista, se quitaba el usuario
-        // y se reescribía el .txt completo.
-        // Ahora: DELETE de una sola fila. Mucho más directo.
         public string Eliminar(int idUsuario)
         {
             return EjecutarComando(
@@ -138,10 +99,6 @@ namespace DAL
             );
         }
 
-        // ── ObtenerPorUsername ───────────────────────────────────
-        // Antes: Consultar() traía todos y la BLL filtraba con foreach.
-        // Ahora: el WHERE lo hace Oracle directamente, más eficiente.
-        // Lo usa Login() en UsuarioServicio para autenticar.
         public Usuario ObtenerPorUsername(string username)
         {
             string sql = @"SELECT u.id_usuario, u.username, u.password,
@@ -163,9 +120,6 @@ namespace DAL
             }
         }
 
-        // ── ObtenerPorId ─────────────────────────────────────────
-        // Mismo concepto: antes la BLL hacía un foreach sobre todos.
-        // Ahora Oracle busca directamente por PK, mucho más rápido.
         public Usuario ObtenerPorId(int idUsuario)
         {
             string sql = @"SELECT u.id_usuario, u.username, u.password,
@@ -187,11 +141,6 @@ namespace DAL
             }
         }
 
-        // ── Mapear ───────────────────────────────────────────────
-        // Antes: recibía un string y lo partía por '|'
-        // Ahora: recibe un OracleDataReader y lee columna por columna.
-        // GetString(0), GetDecimal(9), etc. corresponden al orden
-        // de columnas del SELECT de arriba.
         private Usuario Mapear(OracleDataReader r)
         {
             return new Usuario

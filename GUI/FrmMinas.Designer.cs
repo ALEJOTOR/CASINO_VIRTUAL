@@ -21,77 +21,105 @@ namespace GUI
             this.btnRetirar = new System.Windows.Forms.Button();
             this.lblMultiplicador = new System.Windows.Forms.Label();
             this.lblEstado = new System.Windows.Forms.Label();
-            this.lblSaldo = new System.Windows.Forms.Label(); // NUEVO
+            this.lblSaldo = new System.Windows.Forms.Label();
             this.SuspendLayout();
-
+            // 
             // lblApuesta
+            // 
             this.lblApuesta.AutoSize = true;
+            this.lblApuesta.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblApuesta.Location = new System.Drawing.Point(12, 14);
+            this.lblApuesta.Name = "lblApuesta";
+            this.lblApuesta.Size = new System.Drawing.Size(96, 20);
+            this.lblApuesta.TabIndex = 0;
             this.lblApuesta.Text = "Apuesta ($):";
-
+            // 
             // txtApuesta
-            this.txtApuesta.Location = new System.Drawing.Point(95, 11);
-            this.txtApuesta.Size = new System.Drawing.Size(100, 22);
-
+            // 
+            this.txtApuesta.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtApuesta.Location = new System.Drawing.Point(114, 11);
+            this.txtApuesta.Name = "txtApuesta";
+            this.txtApuesta.Size = new System.Drawing.Size(147, 26);
+            this.txtApuesta.TabIndex = 1;
+            // 
             // lblMinas
+            // 
             this.lblMinas.AutoSize = true;
-            this.lblMinas.Location = new System.Drawing.Point(210, 14);
+            this.lblMinas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMinas.Location = new System.Drawing.Point(267, 14);
+            this.lblMinas.Name = "lblMinas";
+            this.lblMinas.Size = new System.Drawing.Size(101, 20);
+            this.lblMinas.TabIndex = 2;
             this.lblMinas.Text = "Minas (1-20):";
-
+            // 
             // txtMinas
-            this.txtMinas.Location = new System.Drawing.Point(305, 11);
-            this.txtMinas.Size = new System.Drawing.Size(50, 22);
+            // 
+            this.txtMinas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMinas.Location = new System.Drawing.Point(374, 11);
+            this.txtMinas.Name = "txtMinas";
+            this.txtMinas.Size = new System.Drawing.Size(50, 26);
+            this.txtMinas.TabIndex = 3;
             this.txtMinas.Text = "5";
-
+            // 
             // btnIniciar
+            // 
+            this.btnIniciar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnIniciar.Location = new System.Drawing.Point(12, 45);
+            this.btnIniciar.Name = "btnIniciar";
             this.btnIniciar.Size = new System.Drawing.Size(90, 30);
+            this.btnIniciar.TabIndex = 4;
             this.btnIniciar.Text = "Iniciar";
             this.btnIniciar.UseVisualStyleBackColor = true;
             this.btnIniciar.Click += new System.EventHandler(this.btnIniciar_Click);
-
+            // 
             // btnRetirar
+            // 
             this.btnRetirar.Enabled = false;
+            this.btnRetirar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRetirar.Location = new System.Drawing.Point(112, 45);
+            this.btnRetirar.Name = "btnRetirar";
             this.btnRetirar.Size = new System.Drawing.Size(150, 30);
+            this.btnRetirar.TabIndex = 5;
             this.btnRetirar.Text = "Retirar ganancias";
             this.btnRetirar.UseVisualStyleBackColor = true;
             this.btnRetirar.Click += new System.EventHandler(this.btnRetirar_Click);
-
+            // 
             // lblMultiplicador
+            // 
             this.lblMultiplicador.AutoSize = true;
-            this.lblMultiplicador.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblMultiplicador.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMultiplicador.Location = new System.Drawing.Point(12, 86);
+            this.lblMultiplicador.Name = "lblMultiplicador";
+            this.lblMultiplicador.Size = new System.Drawing.Size(143, 20);
+            this.lblMultiplicador.TabIndex = 6;
             this.lblMultiplicador.Text = "Multiplicador: x1.00";
-
+            // 
             // lblEstado
+            // 
             this.lblEstado.AutoSize = true;
+            this.lblEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEstado.Location = new System.Drawing.Point(200, 86);
+            this.lblEstado.Name = "lblEstado";
+            this.lblEstado.Size = new System.Drawing.Size(204, 20);
+            this.lblEstado.TabIndex = 7;
             this.lblEstado.Text = "Configura y presiona Iniciar.";
-
-            // lblSaldo — NUEVO
-            // Muestra el saldo del usuario en tiempo real.
-            // Se ubica en la segunda fila del encabezado, visible siempre.
+            // 
+            // lblSaldo
+            // 
             this.lblSaldo.AutoSize = true;
-            this.lblSaldo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblSaldo.Location = new System.Drawing.Point(12, 110);
-            this.lblSaldo.Text = "Saldo disponible: $0.00";
+            this.lblSaldo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSaldo.ForeColor = System.Drawing.Color.DarkGreen;
-
+            this.lblSaldo.Location = new System.Drawing.Point(12, 110);
+            this.lblSaldo.Name = "lblSaldo";
+            this.lblSaldo.Size = new System.Drawing.Size(173, 20);
+            this.lblSaldo.TabIndex = 8;
+            this.lblSaldo.Text = "Saldo disponible: $0.00";
+            // 
             // FrmMinas
-            // Cálculo del tamaño correcto:
-            //   Ancho: xBase(12) + 5 celdas*(TAM68+SEP4) - SEP4 + margen(16) = 12+360-4+16 = 384 → 392 con borde
-            //   Alto:  yBase(138) + 5 filas*(68+4) - SEP4 + margen(20) = 138+360-4+20 = 514 → 535 con borde
-            //
-            // AutoScaleMode.Dpi en lugar de Font evita que el formulario
-            // reescale los controles estáticos a una resolución diferente
-            // de la que usan las celdas dinámicas creadas en CrearTablero(),
-            // lo que causaba que el tablero se viera cortado.
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(392, 535);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
+            this.ClientSize = new System.Drawing.Size(469, 535);
             this.Controls.Add(this.lblApuesta);
             this.Controls.Add(this.txtApuesta);
             this.Controls.Add(this.lblMinas);
@@ -100,12 +128,15 @@ namespace GUI
             this.Controls.Add(this.btnRetirar);
             this.Controls.Add(this.lblMultiplicador);
             this.Controls.Add(this.lblEstado);
-            this.Controls.Add(this.lblSaldo);   // NUEVO
+            this.Controls.Add(this.lblSaldo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "FrmMinas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Juego - Minas";
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
         #endregion
 

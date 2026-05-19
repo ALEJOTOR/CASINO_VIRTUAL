@@ -6,17 +6,6 @@ using System.IO;
 
 namespace DAL
 {
-    /// <summary>
-    /// El repositorio más importante junto con UsuarioRepositorio.
-    /// Cada INSERT aquí dispara el trigger trg_actualizar_saldo
-    /// en Oracle, que actualiza el saldo del usuario automáticamente.
-    /// Por eso ActualizarSaldo() en UsuarioServicio (BLL) ya no
-    /// necesita llamar al repositorio de usuarios — basta con
-    /// insertar la transacción aquí.
-    /// 
-    /// Agrega ObtenerPorUsuario() para que la BLL no tenga
-    /// que traer todas las transacciones y filtrar con foreach.
-    /// </summary>
     public class TransaccionRepositorio : OracleBase<Transaccion>
     {
         public override IList<Transaccion> Consultar()
@@ -35,9 +24,6 @@ namespace DAL
             return lista;
         }
 
-        // Trae solo las transacciones de un usuario específico.
-        // Antes la BLL hacía foreach sobre todas — con muchos
-        // usuarios eso es costoso. Oracle filtra en el servidor.
         public IList<Transaccion> ObtenerPorUsuario(int idUsuario)
         {
             IList<Transaccion> lista = new List<Transaccion>();
@@ -56,16 +42,6 @@ namespace DAL
             return lista;
         }
 
-        // El INSERT más crítico del sistema.
-        // Al ejecutarse, el trigger trg_validar_saldo verifica
-        // que haya saldo suficiente (para perdida/retiro), y el
-        // trigger trg_actualizar_saldo ajusta el saldo del usuario.
-        // Si el saldo no alcanza, Oracle lanza una excepción con
-        // el mensaje definido en el trigger (RAISE_APPLICATION_ERROR)
-        // y el INSERT no se completa — todo queda consistente.
-        //
-        // SiguienteIdTransaccion() de PartidaServicio desaparece:
-        // seq_transacciones.NEXTVAL lo reemplaza.
         public override string Guardar(Transaccion t)
         {
             string sql = @"INSERT INTO transacciones (

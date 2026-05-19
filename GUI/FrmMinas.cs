@@ -30,7 +30,6 @@ namespace GUI
             CrearTablero();
 
             // Mostrar saldo actual al abrir el formulario
-            // Así el jugador sabe cuánto puede apostar antes de escribir
             ActualizarLblSaldo();
         }
 
@@ -61,6 +60,21 @@ namespace GUI
                 }
         }
 
+        // ── Reglas para número mínimo de minas según apuesta ──────
+
+        private int MinasMinimasPorApuesta(decimal apuesta, decimal saldo)
+        {
+            if (saldo == 0) return 1;
+
+            decimal porcentaje = apuesta / saldo;
+
+            if (porcentaje >= 0.7m) return 10;  // all-in o arriesgado: mínimo 10 minas
+            if (porcentaje >= 0.5m) return 8;
+            if (porcentaje >= 0.3m) return 5;
+            if (porcentaje >= 0.1m) return 3;
+            return 1; // apuestas bajas, deja jugar con una mina
+        }
+
         // ── Iniciar partida ───────────────────────────────────────
 
         private void btnIniciar_Click(object sender, EventArgs e)
@@ -74,8 +88,6 @@ namespace GUI
             }
 
             // Validación 2: apuesta no supera el saldo disponible
-            // Antes esto nunca se validaba en el formulario — solo en la BLL
-            // al final de la partida, cuando ya era tarde.
             if (_apuesta > _usuario.Saldo)
             {
                 MostrarError($"Saldo insuficiente. Tu saldo es ${_usuario.Saldo:N2}.");
@@ -92,9 +104,20 @@ namespace GUI
                 return;
             }
 
-            // Validación 4: no se puede jugar si no hay celdas seguras
-            // Con 24 minas y solo 1 celda segura el juego no tiene sentido.
-            // Con 25 minas el juego es imposible.
+            // Nueva validación: acorde a valor apostado
+            int minObligatorio = MinasMinimasPorApuesta(_apuesta, _usuario.Saldo);
+            if (_nMinas < minObligatorio)
+            {
+                MostrarError(
+                    $"Para una apuesta de ${_apuesta:N2}, el mínimo de minas permitido es {minObligatorio}.\n" +
+                    $"(A mayor apuesta, mayor dificultad requerida)"
+                );
+                txtMinas.Text = minObligatorio.ToString();
+                txtMinas.Focus();
+                return;
+            }
+
+            // Validación: no se puede jugar si no hay celdas seguras
             if (_nMinas >= TOTAL)
             {
                 MostrarError($"El máximo de minas para un tablero de {TOTAL} celdas es {TOTAL - 1}.");
@@ -171,7 +194,9 @@ namespace GUI
                 btn.BackColor = Color.LimeGreen;
                 btn.ForeColor = Color.White;
 
-                _multiplicador *= 1m + (_nMinas * 0.05m);
+                // Multiplicador progresivo, recompensa más si hay más minas
+                decimal incremento = 1m + ((_nMinas / (decimal)TOTAL) * 0.4m);
+                _multiplicador *= incremento;
                 ActualizarLblMultiplicador();
 
                 // Ganancia proyectada visible en lblEstado mientras juega
@@ -232,7 +257,6 @@ namespace GUI
             string resultado = _servicio.RegistrarPartida(p);
 
             // Si la BLL rechazó la partida (saldo insuficiente, etc.)
-            // no actualizar la UI como si hubiera funcionado
             if (resultado != "Guardado correctamente.")
             {
                 MostrarError($"Error al registrar partida: {resultado}");
@@ -240,8 +264,6 @@ namespace GUI
                 return;
             }
 
-            // Actualizar el saldo en memoria del usuario
-            // para que el lblSaldo refleje el nuevo valor sin recargar
             if (gano)
                 _usuario.Saldo = _usuario.Saldo - _apuesta + ganancia;
             else
@@ -249,7 +271,6 @@ namespace GUI
 
             ActualizarLblSaldo();
 
-            // Feedback visual de resultado
             if (gano)
             {
                 lblEstado.Text = $"¡Ganaste ${ganancia:N2}!";
@@ -306,7 +327,6 @@ namespace GUI
         private void ActualizarLblSaldo()
         {
             lblSaldo.Text = $"Saldo disponible: ${_usuario.Saldo:N2}";
-            // Verde si hay saldo, rojo si está en cero
             lblSaldo.ForeColor = _usuario.Saldo > 0 ? Color.DarkGreen : Color.Crimson;
         }
 

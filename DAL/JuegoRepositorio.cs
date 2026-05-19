@@ -5,12 +5,6 @@ using System.IO;
 
 namespace DAL
 {
-    /// <summary>
-    /// Agrega ObtenerActivos() para que la GUI solo muestre
-    /// juegos disponibles al cliente, sin traer los inactivos.
-    /// Antes esto lo filtraba la BLL con un foreach; ahora
-    /// el WHERE lo hace Oracle directamente.
-    /// </summary>
     public class JuegoRepositorio : OracleBase<Juego>
     {
         public override IList<Juego> Consultar()
