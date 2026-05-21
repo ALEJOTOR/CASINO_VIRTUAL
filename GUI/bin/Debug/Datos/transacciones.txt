@@ -1,7 +1,0 @@
-1|2|depósito|10000.00|2026-05-16 16:19:43|Recarga de saldo
-2|2|pérdida|1000.00|2026-05-16 16:19:58|Apuesta partida juego 1
-3|2|pérdida|2000,00|2026-05-17 13:54:09|Apuesta partida juego 1
-4|2|ganancia|4882,81|2026-05-17 13:54:09|Ganancia partida juego 1
-5|2|depósito|10000,00|2026-05-18 13:04:30|Recarga de saldo
-6|2|pérdida|900000,00|2026-05-18 13:05:07|Apuesta partida juego 1
-7|2|pérdida|10000,00|2026-05-18 13:05:21|Apuesta partida juego 1

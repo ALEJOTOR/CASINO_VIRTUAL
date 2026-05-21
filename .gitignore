@@ -1,0 +1,26 @@
+# Visual Studio local state
+.vs/
+
+# Build outputs
+[Bb]in/
+[Oo]bj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+
+# Debug symbols and binaries
+*.pdb
+*.exe
+*.dll
+
+# NuGet generated artifacts
+*.nupkg
+packages/*/tools/

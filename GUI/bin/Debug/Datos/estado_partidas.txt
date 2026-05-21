@@ -1,4 +1,0 @@
-1|en curso|Partida activa
-2|ganada|El usuario ganó
-3|perdida|El usuario perdió
-4|cancelada|Partida cancelada
