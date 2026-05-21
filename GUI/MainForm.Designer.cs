@@ -71,7 +71,7 @@
             // 
             // mainLayout
             // 
-            this.mainLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.mainLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(26)))));
             this.mainLayout.ColumnCount = 1;
             this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.mainLayout.Controls.Add(this.panelNavbar, 0, 0);
@@ -93,7 +93,7 @@
             // 
             // panelNavbar
             // 
-            this.panelNavbar.BackColor = System.Drawing.Color.Red;
+            this.panelNavbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(18)))), ((int)(((byte)(32)))));
             this.panelNavbar.Controls.Add(this.lblSaldo);
             this.panelNavbar.Controls.Add(this.menuStrip);
             this.panelNavbar.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -106,9 +106,9 @@
             // 
             this.lblSaldo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSaldo.AutoSize = true;
-            this.lblSaldo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.lblSaldo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(36)))), ((int)(((byte)(60)))));
             this.lblSaldo.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold);
-            this.lblSaldo.ForeColor = System.Drawing.Color.SpringGreen;
+            this.lblSaldo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(222)))), ((int)(((byte)(128)))));
             this.lblSaldo.Location = new System.Drawing.Point(870, 6);
             this.lblSaldo.Name = "lblSaldo";
             this.lblSaldo.Padding = new System.Windows.Forms.Padding(10);
@@ -119,7 +119,7 @@
             // 
             // menuStrip
             // 
-            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(18)))), ((int)(((byte)(32)))));
             this.menuStrip.Dock = System.Windows.Forms.DockStyle.Fill;
             this.menuStrip.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -162,7 +162,7 @@
             // 
             // panelHero
             // 
-            this.panelHero.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.panelHero.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(26)))));
             this.panelHero.Controls.Add(this.lblBienvenido);
             this.panelHero.Controls.Add(this.lblDescripcion);
             this.panelHero.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -174,8 +174,8 @@
             // lblBienvenido
             // 
             this.lblBienvenido.AutoSize = true;
-            this.lblBienvenido.Font = new System.Drawing.Font("Arial", 22F, System.Drawing.FontStyle.Bold);
-            this.lblBienvenido.ForeColor = System.Drawing.Color.Gold;
+            this.lblBienvenido.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
+            this.lblBienvenido.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(204)))), ((int)(((byte)(21)))));
             this.lblBienvenido.Location = new System.Drawing.Point(20, 18);
             this.lblBienvenido.Name = "lblBienvenido";
             this.lblBienvenido.Size = new System.Drawing.Size(416, 35);
@@ -185,8 +185,8 @@
             // lblDescripcion
             // 
             this.lblDescripcion.AutoSize = true;
-            this.lblDescripcion.Font = new System.Drawing.Font("Arial", 12F);
-            this.lblDescripcion.ForeColor = System.Drawing.Color.White;
+            this.lblDescripcion.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.lblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.lblDescripcion.Location = new System.Drawing.Point(22, 64);
             this.lblDescripcion.MaximumSize = new System.Drawing.Size(700, 0);
             this.lblDescripcion.Name = "lblDescripcion";
@@ -215,7 +215,7 @@
             // 
             // panelMinas
             // 
-            this.panelMinas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.panelMinas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(34)))), ((int)(((byte)(56)))));
             this.panelMinas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMinas.Controls.Add(this.pictureBox1);
             this.panelMinas.Controls.Add(this.btnMinas);
@@ -245,6 +245,8 @@
             // 
             this.btnMinas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
             this.btnMinas.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnMinas.FlatAppearance.BorderSize = 0;
+            this.btnMinas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMinas.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnMinas.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMinas.ForeColor = System.Drawing.Color.White;
@@ -261,7 +263,7 @@
             // 
             this.lblDescripcionMinas.AutoSize = true;
             this.lblDescripcionMinas.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblDescripcionMinas.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDescripcionMinas.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDescripcionMinas.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lblDescripcionMinas.Location = new System.Drawing.Point(10, 40);
             this.lblDescripcionMinas.MaximumSize = new System.Drawing.Size(220, 48);
@@ -273,17 +275,17 @@
             // lblMinas
             // 
             this.lblMinas.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblMinas.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold);
+            this.lblMinas.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblMinas.ForeColor = System.Drawing.Color.Gold;
             this.lblMinas.Location = new System.Drawing.Point(10, 10);
             this.lblMinas.Name = "lblMinas";
             this.lblMinas.Size = new System.Drawing.Size(307, 30);
             this.lblMinas.TabIndex = 2;
-            this.lblMinas.Text = "💣 Busca Minas";
+            this.lblMinas.Text = "Busca Minas";
             // 
             // panelRuleta
             // 
-            this.panelRuleta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.panelRuleta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(34)))), ((int)(((byte)(56)))));
             this.panelRuleta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelRuleta.Controls.Add(this.pictureBox3);
             this.panelRuleta.Controls.Add(this.btnRuleta);
@@ -310,8 +312,10 @@
             // 
             // btnRuleta
             // 
-            this.btnRuleta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
+            this.btnRuleta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.btnRuleta.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRuleta.FlatAppearance.BorderSize = 0;
+            this.btnRuleta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRuleta.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnRuleta.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRuleta.ForeColor = System.Drawing.Color.White;
@@ -328,7 +332,7 @@
             // 
             this.lblDescripcionRuleta.AutoSize = true;
             this.lblDescripcionRuleta.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblDescripcionRuleta.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDescripcionRuleta.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDescripcionRuleta.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lblDescripcionRuleta.Location = new System.Drawing.Point(10, 40);
             this.lblDescripcionRuleta.MaximumSize = new System.Drawing.Size(220, 48);
@@ -340,17 +344,17 @@
             // lblRuleta
             // 
             this.lblRuleta.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblRuleta.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold);
+            this.lblRuleta.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblRuleta.ForeColor = System.Drawing.Color.Gold;
             this.lblRuleta.Location = new System.Drawing.Point(10, 10);
             this.lblRuleta.Name = "lblRuleta";
             this.lblRuleta.Size = new System.Drawing.Size(307, 30);
             this.lblRuleta.TabIndex = 2;
-            this.lblRuleta.Text = "🎡 Ruleta";
+            this.lblRuleta.Text = "Ruleta";
             // 
             // panelSlot
             // 
-            this.panelSlot.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.panelSlot.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(34)))), ((int)(((byte)(56)))));
             this.panelSlot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelSlot.Controls.Add(this.pictureBox2);
             this.panelSlot.Controls.Add(this.btnSlot);
@@ -377,8 +381,10 @@
             // 
             // btnSlot
             // 
-            this.btnSlot.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
+            this.btnSlot.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.btnSlot.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSlot.FlatAppearance.BorderSize = 0;
+            this.btnSlot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSlot.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnSlot.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSlot.ForeColor = System.Drawing.Color.White;
@@ -395,7 +401,7 @@
             // 
             this.lblDescripcionSlot.AutoSize = true;
             this.lblDescripcionSlot.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblDescripcionSlot.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDescripcionSlot.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDescripcionSlot.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lblDescripcionSlot.Location = new System.Drawing.Point(10, 40);
             this.lblDescripcionSlot.MaximumSize = new System.Drawing.Size(220, 48);
@@ -407,17 +413,17 @@
             // lblSlot
             // 
             this.lblSlot.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblSlot.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold);
+            this.lblSlot.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblSlot.ForeColor = System.Drawing.Color.Gold;
             this.lblSlot.Location = new System.Drawing.Point(10, 10);
             this.lblSlot.Name = "lblSlot";
             this.lblSlot.Size = new System.Drawing.Size(307, 30);
             this.lblSlot.TabIndex = 2;
-            this.lblSlot.Text = "🎰 Tragamonedas";
+            this.lblSlot.Text = "Tragamonedas";
             // 
             // tlpStats
             // 
-            this.tlpStats.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.tlpStats.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(18)))), ((int)(((byte)(32)))));
             this.tlpStats.ColumnCount = 3;
             this.tlpStats.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
             this.tlpStats.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
@@ -493,7 +499,7 @@
             // 
             // MainForm
             // 
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(26)))));
             this.ClientSize = new System.Drawing.Size(1081, 670);
             this.Controls.Add(this.mainLayout);
             this.MinimumSize = new System.Drawing.Size(800, 670);

@@ -27,8 +27,9 @@ namespace GUI
             // lblApuesta
             // 
             this.lblApuesta.AutoSize = true;
-            this.lblApuesta.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblApuesta.Location = new System.Drawing.Point(12, 14);
+            this.lblApuesta.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.lblApuesta.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblApuesta.Location = new System.Drawing.Point(22, 22);
             this.lblApuesta.Name = "lblApuesta";
             this.lblApuesta.Size = new System.Drawing.Size(96, 20);
             this.lblApuesta.TabIndex = 0;
@@ -36,17 +37,20 @@ namespace GUI
             // 
             // txtApuesta
             // 
-            this.txtApuesta.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtApuesta.Location = new System.Drawing.Point(114, 11);
+            this.txtApuesta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.txtApuesta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtApuesta.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txtApuesta.Location = new System.Drawing.Point(126, 18);
             this.txtApuesta.Name = "txtApuesta";
-            this.txtApuesta.Size = new System.Drawing.Size(147, 26);
+            this.txtApuesta.Size = new System.Drawing.Size(130, 27);
             this.txtApuesta.TabIndex = 1;
             // 
             // lblMinas
             // 
             this.lblMinas.AutoSize = true;
-            this.lblMinas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMinas.Location = new System.Drawing.Point(267, 14);
+            this.lblMinas.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.lblMinas.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblMinas.Location = new System.Drawing.Point(276, 22);
             this.lblMinas.Name = "lblMinas";
             this.lblMinas.Size = new System.Drawing.Size(101, 20);
             this.lblMinas.TabIndex = 2;
@@ -54,8 +58,10 @@ namespace GUI
             // 
             // txtMinas
             // 
-            this.txtMinas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMinas.Location = new System.Drawing.Point(374, 11);
+            this.txtMinas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.txtMinas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMinas.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txtMinas.Location = new System.Drawing.Point(382, 18);
             this.txtMinas.Name = "txtMinas";
             this.txtMinas.Size = new System.Drawing.Size(50, 26);
             this.txtMinas.TabIndex = 3;
@@ -63,32 +69,43 @@ namespace GUI
             // 
             // btnIniciar
             // 
-            this.btnIniciar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnIniciar.Location = new System.Drawing.Point(12, 45);
+            this.btnIniciar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
+            this.btnIniciar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnIniciar.FlatAppearance.BorderSize = 0;
+            this.btnIniciar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnIniciar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnIniciar.ForeColor = System.Drawing.Color.White;
+            this.btnIniciar.Location = new System.Drawing.Point(22, 62);
             this.btnIniciar.Name = "btnIniciar";
-            this.btnIniciar.Size = new System.Drawing.Size(90, 30);
+            this.btnIniciar.Size = new System.Drawing.Size(112, 34);
             this.btnIniciar.TabIndex = 4;
             this.btnIniciar.Text = "Iniciar";
-            this.btnIniciar.UseVisualStyleBackColor = true;
+            this.btnIniciar.UseVisualStyleBackColor = false;
             this.btnIniciar.Click += new System.EventHandler(this.btnIniciar_Click);
             // 
             // btnRetirar
             // 
+            this.btnRetirar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(234)))), ((int)(((byte)(179)))), ((int)(((byte)(8)))));
+            this.btnRetirar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRetirar.Enabled = false;
-            this.btnRetirar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRetirar.Location = new System.Drawing.Point(112, 45);
+            this.btnRetirar.FlatAppearance.BorderSize = 0;
+            this.btnRetirar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRetirar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnRetirar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.btnRetirar.Location = new System.Drawing.Point(146, 62);
             this.btnRetirar.Name = "btnRetirar";
-            this.btnRetirar.Size = new System.Drawing.Size(150, 30);
+            this.btnRetirar.Size = new System.Drawing.Size(170, 34);
             this.btnRetirar.TabIndex = 5;
             this.btnRetirar.Text = "Retirar ganancias";
-            this.btnRetirar.UseVisualStyleBackColor = true;
+            this.btnRetirar.UseVisualStyleBackColor = false;
             this.btnRetirar.Click += new System.EventHandler(this.btnRetirar_Click);
             // 
             // lblMultiplicador
             // 
             this.lblMultiplicador.AutoSize = true;
-            this.lblMultiplicador.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMultiplicador.Location = new System.Drawing.Point(12, 86);
+            this.lblMultiplicador.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.lblMultiplicador.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(204)))), ((int)(((byte)(21)))));
+            this.lblMultiplicador.Location = new System.Drawing.Point(22, 112);
             this.lblMultiplicador.Name = "lblMultiplicador";
             this.lblMultiplicador.Size = new System.Drawing.Size(143, 20);
             this.lblMultiplicador.TabIndex = 6;
@@ -97,8 +114,9 @@ namespace GUI
             // lblEstado
             // 
             this.lblEstado.AutoSize = true;
-            this.lblEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEstado.Location = new System.Drawing.Point(200, 86);
+            this.lblEstado.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.lblEstado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.lblEstado.Location = new System.Drawing.Point(208, 112);
             this.lblEstado.Name = "lblEstado";
             this.lblEstado.Size = new System.Drawing.Size(204, 20);
             this.lblEstado.TabIndex = 7;
@@ -107,9 +125,9 @@ namespace GUI
             // lblSaldo
             // 
             this.lblSaldo.AutoSize = true;
-            this.lblSaldo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSaldo.ForeColor = System.Drawing.Color.DarkGreen;
-            this.lblSaldo.Location = new System.Drawing.Point(12, 110);
+            this.lblSaldo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.lblSaldo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(222)))), ((int)(((byte)(128)))));
+            this.lblSaldo.Location = new System.Drawing.Point(22, 137);
             this.lblSaldo.Name = "lblSaldo";
             this.lblSaldo.Size = new System.Drawing.Size(173, 20);
             this.lblSaldo.TabIndex = 8;
@@ -119,7 +137,8 @@ namespace GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(469, 535);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.ClientSize = new System.Drawing.Size(470, 560);
             this.Controls.Add(this.lblApuesta);
             this.Controls.Add(this.txtApuesta);
             this.Controls.Add(this.lblMinas);
@@ -133,7 +152,7 @@ namespace GUI
             this.MaximizeBox = false;
             this.Name = "FrmMinas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Juego - Minas";
+            this.Text = "Casino Virtual - Minas";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -38,7 +38,7 @@ namespace GUI
         private void CrearTablero()
         {
             _celdas = new Button[FILAS, COLS];
-            int xBase = 12, yBase = 138; // yBase subió 20px para dar espacio al lblSaldo
+            int xBase = 22, yBase = 174;
             for (int i = 0; i < FILAS; i++)
                 for (int j = 0; j < COLS; j++)
                 {
@@ -48,12 +48,13 @@ namespace GUI
                         Tag = i * COLS + j,
                         Location = new Point(xBase + j * (TAM + SEP), yBase + i * (TAM + SEP)),
                         Size = new Size(TAM, TAM),
-                        Font = new Font("Segoe UI", 14F),
-                        BackColor = Color.SteelBlue,
+                        Font = new Font("Segoe UI", 16F, FontStyle.Bold),
+                        BackColor = Color.FromArgb(30, 64, 175),
                         ForeColor = Color.White,
                         Enabled = false,
                         FlatStyle = FlatStyle.Flat
                     };
+                    btn.FlatAppearance.BorderSize = 0;
                     btn.Click += Celda_Click;
                     _celdas[i, j] = btn;
                     this.Controls.Add(btn);
@@ -165,7 +166,7 @@ namespace GUI
                 for (int j = 0; j < COLS; j++)
                 {
                     _celdas[i, j].Text = "?";
-                    _celdas[i, j].BackColor = Color.SteelBlue;
+                    _celdas[i, j].BackColor = Color.FromArgb(30, 64, 175);
                     _celdas[i, j].ForeColor = Color.White;
                     _celdas[i, j].Enabled = false;
                 }
