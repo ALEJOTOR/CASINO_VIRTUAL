@@ -155,6 +155,7 @@ namespace GUI
             this.lblSaldo.Size = new System.Drawing.Size(173, 20);
             this.lblSaldo.TabIndex = 8;
             this.lblSaldo.Text = "Saldo disponible: $0.00";
+            this.lblSaldo.Visible = false;
             // 
             // UcMinas
             // 

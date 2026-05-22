@@ -81,6 +81,7 @@ namespace GUI
             this.lblSaldo.TabIndex = 1;
             this.lblSaldo.Text = "Saldo: $0.00";
             this.lblSaldo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblSaldo.Visible = false;
             // 
             // panelJuego
             // 
