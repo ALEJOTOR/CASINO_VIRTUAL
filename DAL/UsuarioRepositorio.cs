@@ -67,12 +67,14 @@ namespace DAL
         {
             string sql = @"UPDATE usuarios SET
                                username         = :username,
+                               password         = :password,
                                nombre_1         = :nombre1,
                                nombre_2         = :nombre2,
                                apellido_1       = :apellido1,
                                apellido_2       = :apellido2,
                                correo           = :correo,
                                fecha_nacimiento = TO_DATE(:fecha_nac, 'YYYY-MM-DD'),
+                               saldo            = :saldo,
                                id_rol           = :id_rol,
                                id_estado        = (SELECT id_estado FROM estado_usuario WHERE nombre = :estado)
                            WHERE id_usuario = :id";
@@ -80,12 +82,14 @@ namespace DAL
             return EjecutarComando(sql, new[]
             {
                 (":username",  (object)u.Username),
+                (":password",  (object)u.Password),
                 (":nombre1",   (object)u.Nombre1),
                 (":nombre2",   (object)u.Nombre2   ?? DBNull.Value),
                 (":apellido1", (object)u.Apellido1),
                 (":apellido2", (object)u.Apellido2 ?? DBNull.Value),
                 (":correo",    (object)u.Correo),
                 (":fecha_nac", (object)u.FechaNacimiento.ToString("yyyy-MM-dd")),
+                (":saldo",     (object)u.Saldo),
                 (":id_rol",    (object)u.IdRol),
                 (":estado",    (object)(u.Estado ?? "activo")),
                 (":id",        (object)u.IdUsuario)

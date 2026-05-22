@@ -16,6 +16,9 @@
 *.tmp
 *.temp
 
+# Local database connection overrides
+conexion.local.config
+
 # Debug symbols and binaries
 *.pdb
 *.exe

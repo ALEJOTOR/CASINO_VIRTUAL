@@ -22,9 +22,7 @@ namespace BLL
 
         public Usuario ObtenerPorId(int id)
         {
-            foreach (Usuario u in _repositorio.Consultar())
-                if (u.IdUsuario == id) return u;
-            return null;
+            return _repositorio.ObtenerPorId(id);
         }
 
         // ── Autenticación ─────────────────────────────────────────
@@ -32,9 +30,11 @@ namespace BLL
         public Usuario Login(string username, string password)
         {
             string hash = HashPassword(password);
-            foreach (Usuario u in _repositorio.Consultar())
-                if (u.Username == username && u.Password == hash && u.Estado == "activo")
-                    return u;
+            Usuario u = _repositorio.ObtenerPorUsername(username);
+
+            if (u != null && u.Password == hash && u.Estado == "activo")
+                return u;
+
             return null;
         }
 
@@ -49,9 +49,8 @@ namespace BLL
             if (string.IsNullOrWhiteSpace(u.Correo)) return "El correo es obligatorio.";
             if (u.IdRol <= 0) return "El rol es obligatorio.";
 
-            foreach (Usuario existente in _repositorio.Consultar())
-                if (existente.Username == u.Username)
-                    return "El username ya está en uso.";
+            if (_repositorio.ObtenerPorUsername(u.Username) != null)
+                return "El username ya está en uso.";
 
             u.Password = HashPassword(u.Password);
             u.Estado = "activo";
