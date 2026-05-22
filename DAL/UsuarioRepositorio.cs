@@ -74,7 +74,6 @@ namespace DAL
                                apellido_2       = :apellido2,
                                correo           = :correo,
                                fecha_nacimiento = TO_DATE(:fecha_nac, 'YYYY-MM-DD'),
-                               saldo            = :saldo,
                                id_rol           = :id_rol,
                                id_estado        = (SELECT id_estado FROM estado_usuario WHERE nombre = :estado)
                            WHERE id_usuario = :id";
@@ -89,7 +88,6 @@ namespace DAL
                 (":apellido2", (object)u.Apellido2 ?? DBNull.Value),
                 (":correo",    (object)u.Correo),
                 (":fecha_nac", (object)u.FechaNacimiento.ToString("yyyy-MM-dd")),
-                (":saldo",     (object)u.Saldo),
                 (":id_rol",    (object)u.IdRol),
                 (":estado",    (object)(u.Estado ?? "activo")),
                 (":id",        (object)u.IdUsuario)

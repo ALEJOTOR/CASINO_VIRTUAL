@@ -12,6 +12,7 @@ namespace BLL
     {
         private readonly UsuarioRepositorio _repositorio = new UsuarioRepositorio();
         private readonly RolRepositorio _rolRepositorio = new RolRepositorio();
+        private readonly TransaccionRepositorio _transaccionRepositorio = new TransaccionRepositorio();
 
         // ── Consultas ─────────────────────────────────────────────
 
@@ -56,6 +57,7 @@ namespace BLL
             u.Estado = "activo";
             u.FechaRegistro = DateTime.Now;
             u.IdUsuario = SiguienteId();
+            u.Saldo = 0;
 
             return _repositorio.Guardar(u);
         }
@@ -80,10 +82,20 @@ namespace BLL
         {
             Usuario u = ObtenerPorId(idUsuario);
             if (u == null) return "Usuario no encontrado.";
-            decimal nuevoSaldo = u.Saldo + delta;
-            if (nuevoSaldo < 0) return "Saldo insuficiente.";
-            u.Saldo = nuevoSaldo;
-            return Actualizar(u);
+
+            if (delta == 0) return "Guardado correctamente.";
+            if (u.Saldo + delta < 0) return "Saldo insuficiente.";
+
+            return _transaccionRepositorio.Guardar(new Transaccion
+            {
+                IdUsuario = idUsuario,
+                Tipo = delta > 0 ? "deposito" : "retiro",
+                Monto = Math.Abs(delta),
+                Fecha = DateTime.Now,
+                Descripcion = delta > 0
+                    ? "Ajuste positivo de saldo por administrador"
+                    : "Ajuste negativo de saldo por administrador"
+            });
         }
 
         public string ModificarSaldoAdmin(int idUsuario, decimal nuevoSaldo)
@@ -91,8 +103,9 @@ namespace BLL
             if (nuevoSaldo < 0) return "El saldo no puede ser negativo.";
             Usuario u = ObtenerPorId(idUsuario);
             if (u == null) return "Usuario no encontrado.";
-            u.Saldo = nuevoSaldo;
-            return Actualizar(u);
+
+            decimal diferencia = nuevoSaldo - u.Saldo;
+            return ActualizarSaldo(idUsuario, diferencia);
         }
 
         public string CambiarEstado(int idUsuario, string nuevoEstado)
