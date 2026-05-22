@@ -62,18 +62,39 @@ namespace GUI
                 return;
             }
 
-            string resultado = _partidaSvc.RealizarDeposito(_usuario.IdUsuario, monto);
-            bool ok = resultado == "Depósito realizado correctamente.";
+            btnDepositar.Enabled = false;
 
-            MessageBox.Show(resultado, ok ? "Exito" : "Error",
-                MessageBoxButtons.OK,
-                ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
-
-            if (ok)
+            try
             {
-                txtMontoDeposito.Clear();
-                cargarDatos();
+                string resultado = _partidaSvc.RealizarDeposito(_usuario.IdUsuario, monto);
+                bool ok = resultado == "Deposito realizado correctamente.";
+
+                MessageBox.Show(resultado, ok ? "Exito" : "Error",
+                    MessageBoxButtons.OK,
+                    ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+
+                if (ok)
+                {
+                    txtMontoDeposito.Clear();
+                    cargarDatos();
+                }
             }
+            finally
+            {
+                btnDepositar.Enabled = true;
+            }
+        }
+
+        private void btnHistorial_Click(object sender, EventArgs e)
+        {
+            new FrmCliente(_usuario).ShowDialog();
+            cargarDatos();
+        }
+
+        private void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            new FrmLogin().Show();
+            this.Close();
         }
 
         private void cargarDatos()

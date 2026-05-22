@@ -73,37 +73,20 @@ namespace DAL
             {
                 try
                 {
-                    int filas = EjecutarComandoTransaccional(con, tx,
-                        @"UPDATE usuarios
-                             SET saldo = saldo - :apuesta
-                           WHERE id_usuario = :id_usuario
-                             AND saldo >= :apuesta",
-                        new[]
-                        {
-                            (":apuesta", (object)p.Apuesta),
-                            (":id_usuario", (object)p.IdUsuario)
-                        });
+                    decimal saldoActual = ConsultarSaldo(con, tx, p.IdUsuario, true);
 
-                    if (filas == 0)
+                    if (saldoActual < p.Apuesta)
                         throw new InvalidOperationException("Saldo insuficiente.");
 
                     InsertarTransaccion(con, tx, p.IdUsuario, "perdida", p.Apuesta,
                         $"Apuesta partida juego {p.IdJuego}");
+                    saldoActual = AplicarMovimientoSaldoSiHaceFalta(con, tx, p.IdUsuario, saldoActual, -p.Apuesta);
 
                     if (p.Resultado == "gano" && p.Ganancia > 0)
                     {
-                        EjecutarComandoTransaccional(con, tx,
-                            @"UPDATE usuarios
-                                 SET saldo = saldo + :ganancia
-                               WHERE id_usuario = :id_usuario",
-                            new[]
-                            {
-                                (":ganancia", (object)p.Ganancia),
-                                (":id_usuario", (object)p.IdUsuario)
-                            });
-
                         InsertarTransaccion(con, tx, p.IdUsuario, "ganancia", p.Ganancia,
                             $"Ganancia partida juego {p.IdJuego}");
+                        saldoActual = AplicarMovimientoSaldoSiHaceFalta(con, tx, p.IdUsuario, saldoActual, p.Ganancia);
                     }
 
                     EjecutarComandoTransaccional(con, tx,
@@ -131,9 +114,65 @@ namespace DAL
                 }
                 catch (Exception ex)
                 {
-                    tx.Rollback();
+                    try { tx.Rollback(); } catch { }
                     return ex.Message;
                 }
+            }
+        }
+
+        private decimal AplicarMovimientoSaldoSiHaceFalta(
+            OracleConnection con,
+            OracleTransaction tx,
+            int idUsuario,
+            decimal saldoAnterior,
+            decimal movimiento)
+        {
+            decimal saldoDespuesTransaccion = ConsultarSaldo(con, tx, idUsuario, false);
+            decimal saldoEsperado = saldoAnterior + movimiento;
+
+            if (saldoDespuesTransaccion == saldoEsperado)
+                return saldoDespuesTransaccion;
+
+            if (saldoDespuesTransaccion != saldoAnterior)
+                throw new InvalidOperationException("El saldo cambio inesperadamente durante la partida.");
+
+            int filas = EjecutarComandoTransaccional(con, tx,
+                @"UPDATE usuarios
+                     SET saldo = saldo + :movimiento
+                   WHERE id_usuario = :id_usuario",
+                new[]
+                {
+                    (":movimiento", (object)movimiento),
+                    (":id_usuario", (object)idUsuario)
+                });
+
+            if (filas == 0)
+                throw new InvalidOperationException("Usuario no encontrado.");
+
+            return saldoEsperado;
+        }
+
+        private decimal ConsultarSaldo(
+            OracleConnection con,
+            OracleTransaction tx,
+            int idUsuario,
+            bool bloquear)
+        {
+            string sql = bloquear
+                ? "SELECT saldo FROM usuarios WHERE id_usuario = :id_usuario FOR UPDATE"
+                : "SELECT saldo FROM usuarios WHERE id_usuario = :id_usuario";
+
+            using (OracleCommand cmd = new OracleCommand(sql, con))
+            {
+                cmd.Transaction = tx;
+                cmd.BindByName = true;
+                cmd.Parameters.Add(new OracleParameter(":id_usuario", idUsuario));
+
+                object resultado = cmd.ExecuteScalar();
+                if (resultado == null || resultado == DBNull.Value)
+                    throw new InvalidOperationException("Usuario no encontrado.");
+
+                return Convert.ToDecimal(resultado);
             }
         }
 
