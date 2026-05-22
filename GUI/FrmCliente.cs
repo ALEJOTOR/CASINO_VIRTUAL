@@ -70,6 +70,18 @@ namespace GUI
             CargarDatos();
         }
 
+        private void btnJugarRuleta_Click(object sender, System.EventArgs e)
+        {
+            new FrmRuleta(_usuario).ShowDialog();
+            CargarDatos();
+        }
+
+        private void btnJugarSlot_Click(object sender, System.EventArgs e)
+        {
+            new FrmTragamonedas(_usuario).ShowDialog();
+            CargarDatos();
+        }
+
         private void btnCerrarSesion_Click(object sender, System.EventArgs e)
         {
             new FrmLogin().Show();

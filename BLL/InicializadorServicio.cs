@@ -29,9 +29,25 @@ namespace BLL
         private void InicializarJuegos()
         {
             JuegoRepositorio repo = new JuegoRepositorio();
-            if (repo.Consultar().Count > 0) return;
+            bool tieneMinas = false;
+            bool tieneRuleta = false;
+            bool tieneTragamonedas = false;
 
-            repo.Guardar(new Juego { IdJuego = 1, Nombre = "Minas", Descripcion = "Juego tipo minas con apuestas", Estado = "activo" });
+            foreach (Juego juego in repo.Consultar())
+            {
+                if (juego.Nombre == "Minas") tieneMinas = true;
+                if (juego.Nombre == "Ruleta") tieneRuleta = true;
+                if (juego.Nombre == "Tragamonedas") tieneTragamonedas = true;
+            }
+
+            if (!tieneMinas)
+                repo.Guardar(new Juego { Nombre = "Minas", Descripcion = "Juego tipo minas con apuestas", Estado = "activo" });
+
+            if (!tieneRuleta)
+                repo.Guardar(new Juego { Nombre = "Ruleta", Descripcion = "Apuestas por color o numero exacto", Estado = "activo" });
+
+            if (!tieneTragamonedas)
+                repo.Guardar(new Juego { Nombre = "Tragamonedas", Descripcion = "Rodillos con premios por combinaciones", Estado = "activo" });
         }
 
         private void InicializarEstadosPartida()

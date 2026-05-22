@@ -45,12 +45,14 @@ namespace GUI
 
         private void btnRuleta_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Entrar a Ruleta");
+            new FrmRuleta(_usuario).ShowDialog();
+            cargarDatos();
         }
 
         private void btnSlot_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Entrar a Tragamonedas");
+            new FrmTragamonedas(_usuario).ShowDialog();
+            cargarDatos();
         }
 
         private void btnDepositar_Click(object sender, EventArgs e)

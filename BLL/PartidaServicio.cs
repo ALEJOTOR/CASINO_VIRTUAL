@@ -10,6 +10,7 @@ namespace BLL
     {
         private readonly PartidaRepositorio _partidaRepo = new PartidaRepositorio();
         private readonly TransaccionRepositorio _transRepo = new TransaccionRepositorio();
+        private readonly JuegoRepositorio _juegoRepo = new JuegoRepositorio();
         private readonly UsuarioServicio _usuarioSvc = new UsuarioServicio();
 
         // ── Consultas ─────────────────────────────────────────────
@@ -38,6 +39,12 @@ namespace BLL
         public IList<Transaccion> ObtenerTodasTransacciones()
         {
             return _transRepo.Consultar();
+        }
+
+        public int ObtenerIdJuegoPorNombre(string nombre)
+        {
+            Juego juego = _juegoRepo.ObtenerPorNombre(nombre);
+            return juego == null ? 0 : juego.IdJuego;
         }
 
         // ── Operaciones ───────────────────────────────────────────

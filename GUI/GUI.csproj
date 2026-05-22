@@ -88,6 +88,18 @@
     <Compile Include="FrmRegistro.Designer.cs">
       <DependentUpon>FrmRegistro.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmRuleta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRuleta.Designer.cs">
+      <DependentUpon>FrmRuleta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmTragamonedas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTragamonedas.Designer.cs">
+      <DependentUpon>FrmTragamonedas.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

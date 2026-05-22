@@ -32,6 +32,17 @@ namespace DAL
             return lista;
         }
 
+        public Juego ObtenerPorNombre(string nombre)
+        {
+            using (OracleDataReader reader = EjecutarConsulta(
+                "SELECT id_juego, nombre, descripcion, estado FROM juegos WHERE nombre = :nombre",
+                new[] { (":nombre", (object)nombre) }))
+                if (reader.Read())
+                    return MapearJuego(reader);
+
+            return null;
+        }
+
         public override string Guardar(Juego j)
         {
             return EjecutarComando(
