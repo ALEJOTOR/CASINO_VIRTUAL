@@ -38,7 +38,7 @@ namespace GUI
         private void CrearTablero()
         {
             _celdas = new Button[FILAS, COLS];
-            int xBase = 22, yBase = 174;
+            int xBase = 86, yBase = 264;
             for (int i = 0; i < FILAS; i++)
                 for (int j = 0; j < COLS; j++)
                 {
