@@ -12,8 +12,23 @@ namespace GUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Crea los archivos de datos iniciales si no existen
-            
+            try
+            {
+                new InicializadorServicio().InicializarTodo();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "No se pudo inicializar la base de datos.\n\n" +
+                    "Verifica la conexion Oracle, Hamachi y el archivo conexion.local.config.\n\n" +
+                    ex.Message,
+                    "Error de conexion",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                return;
+            }
+
             Application.Run(new FrmLogin());
         }
     }

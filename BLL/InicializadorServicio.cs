@@ -4,7 +4,7 @@ using ENTITY;
 namespace BLL
 {
     /// <summary>
-    /// Crea los archivos de datos iniciales si no existen.
+    /// Crea los datos iniciales en Oracle si no existen.
     /// Se llama una sola vez al arrancar la aplicación (Program.cs).
     /// </summary>
     public class InicializadorServicio
