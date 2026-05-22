@@ -17,11 +17,13 @@ namespace GUI
         private readonly Usuario _usuario;
         private readonly UsuarioServicio _usuarioSvc = new UsuarioServicio();
         private readonly PartidaServicio _partidaSvc = new PartidaServicio();
+        private Control _vistaInicio;
 
         public MainForm()
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
+            PrepararNavegacion();
         }
 
         public MainForm(Usuario usuario)
@@ -29,6 +31,7 @@ namespace GUI
             _usuario = usuario;
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
+            PrepararNavegacion();
             cargarDatos();
         }
 
@@ -39,20 +42,17 @@ namespace GUI
 
         private void btnMinas_Click(object sender, EventArgs e)
         {
-            new FrmMinas(_usuario).ShowDialog();
-            cargarDatos();
+            MostrarVista(new UcMinas(_usuario));
         }
 
         private void btnRuleta_Click(object sender, EventArgs e)
         {
-            new FrmRuleta(_usuario).ShowDialog();
-            cargarDatos();
+            MostrarVista(new UcRuleta(_usuario));
         }
 
         private void btnSlot_Click(object sender, EventArgs e)
         {
-            new FrmTragamonedas(_usuario).ShowDialog();
-            cargarDatos();
+            MostrarVista(new UcTragamonedas(_usuario));
         }
 
         private void btnDepositar_Click(object sender, EventArgs e)
@@ -89,8 +89,7 @@ namespace GUI
 
         private void btnHistorial_Click(object sender, EventArgs e)
         {
-            new FrmCliente(_usuario).ShowDialog();
-            cargarDatos();
+            MostrarFormulario(new FrmCliente(_usuario));
         }
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)
@@ -101,10 +100,52 @@ namespace GUI
 
         private void cargarDatos()
         {
+            if (_usuario == null) return;
+
             Usuario u = _usuarioSvc.ObtenerPorId(_usuario.IdUsuario);
             if (u != null) _usuario.Saldo = u.Saldo;
             lblBienvenido.Text = $"Bienvenido, {_usuario.Nombre1} {_usuario.Apellido1}";
             lblSaldo.Text = $"Saldo: ${_usuario.Saldo:N2}";
+        }
+
+        private void PrepararNavegacion()
+        {
+            _vistaInicio = layoutInicio;
+            inicioToolStripMenuItem.Click += (s, e) => MostrarInicio();
+            juegosToolStripMenuItem.Click += (s, e) => MostrarInicio();
+        }
+
+        private void MostrarInicio()
+        {
+            pnlContenido.Controls.Clear();
+            _vistaInicio.Dock = DockStyle.Fill;
+            pnlContenido.Controls.Add(_vistaInicio);
+            cargarDatos();
+        }
+
+        private void MostrarVista(UserControl vista)
+        {
+            if (_usuario == null)
+            {
+                vista.Dispose();
+                return;
+            }
+
+            pnlContenido.Controls.Clear();
+            vista.Dock = DockStyle.Fill;
+            pnlContenido.Controls.Add(vista);
+            cargarDatos();
+        }
+
+        private void MostrarFormulario(Form formulario)
+        {
+            pnlContenido.Controls.Clear();
+            formulario.TopLevel = false;
+            formulario.FormBorderStyle = FormBorderStyle.None;
+            formulario.Dock = DockStyle.Fill;
+            pnlContenido.Controls.Add(formulario);
+            formulario.Show();
+            cargarDatos();
         }
 
     }

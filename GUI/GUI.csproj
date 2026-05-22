@@ -100,6 +100,24 @@
     <Compile Include="FrmTragamonedas.Designer.cs">
       <DependentUpon>FrmTragamonedas.cs</DependentUpon>
     </Compile>
+    <Compile Include="UcMinas.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcMinas.Designer.cs">
+      <DependentUpon>UcMinas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcRuleta.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcRuleta.Designer.cs">
+      <DependentUpon>UcRuleta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcTragamonedas.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcTragamonedas.Designer.cs">
+      <DependentUpon>UcTragamonedas.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

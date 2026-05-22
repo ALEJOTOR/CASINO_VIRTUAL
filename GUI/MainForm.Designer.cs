@@ -30,6 +30,8 @@
             this.juegosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.promocionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.soporteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pnlContenido = new System.Windows.Forms.Panel();
+            this.layoutInicio = new System.Windows.Forms.TableLayoutPanel();
             this.panelHero = new System.Windows.Forms.Panel();
             this.lblDeposito = new System.Windows.Forms.Label();
             this.txtMontoDeposito = new System.Windows.Forms.TextBox();
@@ -62,6 +64,8 @@
             this.mainLayout.SuspendLayout();
             this.panelNavbar.SuspendLayout();
             this.menuStrip.SuspendLayout();
+            this.pnlContenido.SuspendLayout();
+            this.layoutInicio.SuspendLayout();
             this.panelHero.SuspendLayout();
             this.tlpJuegos.SuspendLayout();
             this.panelMinas.SuspendLayout();
@@ -80,19 +84,13 @@
             this.mainLayout.ColumnCount = 1;
             this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.mainLayout.Controls.Add(this.panelNavbar, 0, 0);
-            this.mainLayout.Controls.Add(this.panelHero, 0, 1);
-            this.mainLayout.Controls.Add(this.tlpJuegos, 0, 2);
-            this.mainLayout.Controls.Add(this.tlpStats, 0, 3);
-            this.mainLayout.Controls.Add(this.panelFooter, 0, 4);
+            this.mainLayout.Controls.Add(this.pnlContenido, 0, 1);
             this.mainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainLayout.Location = new System.Drawing.Point(0, 0);
             this.mainLayout.Name = "mainLayout";
-            this.mainLayout.RowCount = 5;
+            this.mainLayout.RowCount = 2;
             this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 160F));
             this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.mainLayout.Size = new System.Drawing.Size(1081, 670);
             this.mainLayout.TabIndex = 0;
             // 
@@ -183,6 +181,36 @@
             this.soporteToolStripMenuItem.Size = new System.Drawing.Size(90, 50);
             this.soporteToolStripMenuItem.Text = "Soporte";
             // 
+            // pnlContenido
+            // 
+            this.pnlContenido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(26)))));
+            this.pnlContenido.Controls.Add(this.layoutInicio);
+            this.pnlContenido.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlContenido.Location = new System.Drawing.Point(3, 63);
+            this.pnlContenido.Name = "pnlContenido";
+            this.pnlContenido.Size = new System.Drawing.Size(1075, 604);
+            this.pnlContenido.TabIndex = 1;
+            // 
+            // layoutInicio
+            // 
+            this.layoutInicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(26)))));
+            this.layoutInicio.ColumnCount = 1;
+            this.layoutInicio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutInicio.Controls.Add(this.panelHero, 0, 0);
+            this.layoutInicio.Controls.Add(this.tlpJuegos, 0, 1);
+            this.layoutInicio.Controls.Add(this.tlpStats, 0, 2);
+            this.layoutInicio.Controls.Add(this.panelFooter, 0, 3);
+            this.layoutInicio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutInicio.Location = new System.Drawing.Point(0, 0);
+            this.layoutInicio.Name = "layoutInicio";
+            this.layoutInicio.RowCount = 4;
+            this.layoutInicio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            this.layoutInicio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutInicio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.layoutInicio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutInicio.Size = new System.Drawing.Size(1075, 604);
+            this.layoutInicio.TabIndex = 0;
+            // 
             // panelHero
             // 
             this.panelHero.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(26)))));
@@ -193,9 +221,9 @@
             this.panelHero.Controls.Add(this.lblBienvenido);
             this.panelHero.Controls.Add(this.lblDescripcion);
             this.panelHero.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelHero.Location = new System.Drawing.Point(3, 63);
+            this.panelHero.Location = new System.Drawing.Point(3, 3);
             this.panelHero.Name = "panelHero";
-            this.panelHero.Size = new System.Drawing.Size(1075, 154);
+            this.panelHero.Size = new System.Drawing.Size(1069, 154);
             this.panelHero.TabIndex = 1;
             // 
             // lblDeposito
@@ -289,12 +317,12 @@
             this.tlpJuegos.Controls.Add(this.panelRuleta, 1, 0);
             this.tlpJuegos.Controls.Add(this.panelSlot, 2, 0);
             this.tlpJuegos.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpJuegos.Location = new System.Drawing.Point(3, 223);
+            this.tlpJuegos.Location = new System.Drawing.Point(3, 163);
             this.tlpJuegos.Name = "tlpJuegos";
             this.tlpJuegos.Padding = new System.Windows.Forms.Padding(20, 18, 20, 10);
             this.tlpJuegos.RowCount = 1;
             this.tlpJuegos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpJuegos.Size = new System.Drawing.Size(1075, 329);
+            this.tlpJuegos.Size = new System.Drawing.Size(1069, 323);
             this.tlpJuegos.TabIndex = 2;
             // 
             // panelMinas
@@ -516,11 +544,11 @@
             this.tlpStats.Controls.Add(this.lblPremios, 1, 0);
             this.tlpStats.Controls.Add(this.lblSoporte, 2, 0);
             this.tlpStats.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpStats.Location = new System.Drawing.Point(3, 558);
+            this.tlpStats.Location = new System.Drawing.Point(3, 489);
             this.tlpStats.Name = "tlpStats";
             this.tlpStats.RowCount = 1;
             this.tlpStats.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpStats.Size = new System.Drawing.Size(1075, 74);
+            this.tlpStats.Size = new System.Drawing.Size(1069, 74);
             this.tlpStats.TabIndex = 3;
             // 
             // lblUsuarios
@@ -564,9 +592,9 @@
             this.panelFooter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(17)))), ((int)(((byte)(32)))));
             this.panelFooter.Controls.Add(this.lblFooter);
             this.panelFooter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelFooter.Location = new System.Drawing.Point(3, 638);
+            this.panelFooter.Location = new System.Drawing.Point(3, 572);
             this.panelFooter.Name = "panelFooter";
-            this.panelFooter.Size = new System.Drawing.Size(1075, 29);
+            this.panelFooter.Size = new System.Drawing.Size(1069, 29);
             this.panelFooter.TabIndex = 4;
             // 
             // lblFooter
@@ -594,6 +622,8 @@
             this.panelNavbar.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            this.pnlContenido.ResumeLayout(false);
+            this.layoutInicio.ResumeLayout(false);
             this.panelHero.ResumeLayout(false);
             this.panelHero.PerformLayout();
             this.tlpJuegos.ResumeLayout(false);
@@ -615,6 +645,8 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel mainLayout;
+        private System.Windows.Forms.Panel pnlContenido;
+        private System.Windows.Forms.TableLayoutPanel layoutInicio;
 
         private System.Windows.Forms.Panel panelHero;
         private System.Windows.Forms.Label lblDeposito;
