@@ -50,32 +50,15 @@ namespace BLL
             if (usuario == null) return "Usuario no encontrado.";
             if (usuario.Saldo < p.Apuesta) return "Saldo insuficiente.";
 
-            // Descontar apuesta
-            _usuarioSvc.ActualizarSaldo(p.IdUsuario, -p.Apuesta);
-            RegistrarTransaccion(p.IdUsuario, "perdida", p.Apuesta,
-                $"Apuesta partida juego {p.IdJuego}");
-
-            // Acreditar ganancia si aplica
-            if (p.Resultado == "gano" && p.Ganancia > 0)
-            {
-                _usuarioSvc.ActualizarSaldo(p.IdUsuario, p.Ganancia);
-                RegistrarTransaccion(p.IdUsuario, "ganancia", p.Ganancia,
-                    $"Ganancia partida juego {p.IdJuego}");
-            }
-
             p.Fecha = DateTime.Now;
-            return _partidaRepo.Guardar(p);
+            return _partidaRepo.RegistrarConMovimientos(p);
         }
 
         public string RealizarDeposito(int idUsuario, decimal monto)
         {
             if (monto <= 0) return "El monto debe ser mayor a 0.";
 
-            string resultado = _usuarioSvc.ActualizarSaldo(idUsuario, monto);
-            if (resultado != "Guardado correctamente.") return resultado;
-
-            RegistrarTransaccion(idUsuario, "deposito", monto, "Recarga de saldo");
-            return "Depósito realizado correctamente.";
+            return _transRepo.RegistrarDepositoConSaldo(idUsuario, monto);
         }
 
         // ── Reportes ──────────────────────────────────────────────
@@ -99,19 +82,5 @@ namespace BLL
                    $"Balance casino:    ${apostado - ganado:N2}\n";
         }
 
-        // ── Helpers privados ──────────────────────────────────────
-
-        private void RegistrarTransaccion(int idUsuario, string tipo, decimal monto, string descripcion)
-        {
-            Transaccion t = new Transaccion
-            {
-                IdUsuario = idUsuario,
-                Tipo = tipo,
-                Monto = monto,
-                Fecha = DateTime.Now,
-                Descripcion = descripcion
-            };
-            _transRepo.Guardar(t);
-        }
     }
 }

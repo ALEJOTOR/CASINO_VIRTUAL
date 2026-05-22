@@ -2,7 +2,6 @@ using ENTITY;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace DAL
 {
@@ -59,6 +58,71 @@ namespace DAL
                 (":monto",       (object)t.Monto),
                 (":descripcion", (object)(t.Descripcion ?? (object)DBNull.Value))
             });
+        }
+
+        public string RegistrarDepositoConSaldo(int idUsuario, decimal monto)
+        {
+            using (OracleConnection con = ConexionOracle.Abrir())
+            using (OracleTransaction tx = con.BeginTransaction())
+            {
+                try
+                {
+                    int filas = EjecutarComandoTransaccional(con, tx,
+                        @"UPDATE usuarios
+                             SET saldo = saldo + :monto
+                           WHERE id_usuario = :id_usuario",
+                        new[]
+                        {
+                            (":monto", (object)monto),
+                            (":id_usuario", (object)idUsuario)
+                        });
+
+                    if (filas == 0)
+                        throw new InvalidOperationException("Usuario no encontrado.");
+
+                    EjecutarComandoTransaccional(con, tx,
+                        @"INSERT INTO transacciones (
+                              id_transaccion, id_usuario, tipo,
+                              monto, fecha, descripcion
+                          ) VALUES (
+                              seq_transacciones.NEXTVAL, :id_usuario, :tipo,
+                              :monto, CURRENT_TIMESTAMP, :descripcion
+                          )",
+                        new[]
+                        {
+                            (":id_usuario", (object)idUsuario),
+                            (":tipo", (object)"deposito"),
+                            (":monto", (object)monto),
+                            (":descripcion", (object)"Recarga de saldo")
+                        });
+
+                    tx.Commit();
+                    return "Depósito realizado correctamente.";
+                }
+                catch (Exception ex)
+                {
+                    tx.Rollback();
+                    return ex.Message;
+                }
+            }
+        }
+
+        private int EjecutarComandoTransaccional(
+            OracleConnection con,
+            OracleTransaction tx,
+            string sql,
+            (string nombre, object valor)[] parametros)
+        {
+            using (OracleCommand cmd = new OracleCommand(sql, con))
+            {
+                cmd.Transaction = tx;
+                cmd.BindByName = true;
+
+                foreach (var (nombre, valor) in parametros)
+                    cmd.Parameters.Add(new OracleParameter(nombre, valor));
+
+                return cmd.ExecuteNonQuery();
+            }
         }
 
         private Transaccion Mapear(OracleDataReader r)

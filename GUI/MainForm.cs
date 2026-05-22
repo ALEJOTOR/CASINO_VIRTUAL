@@ -16,6 +16,7 @@ namespace GUI
     {
         private readonly Usuario _usuario;
         private readonly UsuarioServicio _usuarioSvc = new UsuarioServicio();
+        private readonly PartidaServicio _partidaSvc = new PartidaServicio();
 
         public MainForm()
         {
@@ -50,6 +51,29 @@ namespace GUI
         private void btnSlot_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Entrar a Tragamonedas");
+        }
+
+        private void btnDepositar_Click(object sender, EventArgs e)
+        {
+            if (!decimal.TryParse(txtMontoDeposito.Text, out decimal monto) || monto <= 0)
+            {
+                MessageBox.Show("Ingrese un monto valido.", "Aviso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string resultado = _partidaSvc.RealizarDeposito(_usuario.IdUsuario, monto);
+            bool ok = resultado == "Depósito realizado correctamente.";
+
+            MessageBox.Show(resultado, ok ? "Exito" : "Error",
+                MessageBoxButtons.OK,
+                ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+
+            if (ok)
+            {
+                txtMontoDeposito.Clear();
+                cargarDatos();
+            }
         }
 
         private void cargarDatos()

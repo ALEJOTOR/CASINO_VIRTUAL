@@ -30,6 +30,9 @@
             this.promocionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.soporteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelHero = new System.Windows.Forms.Panel();
+            this.lblDeposito = new System.Windows.Forms.Label();
+            this.txtMontoDeposito = new System.Windows.Forms.TextBox();
+            this.btnDepositar = new System.Windows.Forms.Button();
             this.lblBienvenido = new System.Windows.Forms.Label();
             this.lblDescripcion = new System.Windows.Forms.Label();
             this.tlpJuegos = new System.Windows.Forms.TableLayoutPanel();
@@ -163,6 +166,9 @@
             // panelHero
             // 
             this.panelHero.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(26)))));
+            this.panelHero.Controls.Add(this.lblDeposito);
+            this.panelHero.Controls.Add(this.txtMontoDeposito);
+            this.panelHero.Controls.Add(this.btnDepositar);
             this.panelHero.Controls.Add(this.lblBienvenido);
             this.panelHero.Controls.Add(this.lblDescripcion);
             this.panelHero.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -170,6 +176,46 @@
             this.panelHero.Name = "panelHero";
             this.panelHero.Size = new System.Drawing.Size(1075, 154);
             this.panelHero.TabIndex = 1;
+            // 
+            // lblDeposito
+            // 
+            this.lblDeposito.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDeposito.AutoSize = true;
+            this.lblDeposito.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.lblDeposito.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblDeposito.Location = new System.Drawing.Point(781, 24);
+            this.lblDeposito.Name = "lblDeposito";
+            this.lblDeposito.Size = new System.Drawing.Size(130, 19);
+            this.lblDeposito.TabIndex = 2;
+            this.lblDeposito.Text = "Recargar saldo ($)";
+            // 
+            // txtMontoDeposito
+            // 
+            this.txtMontoDeposito.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtMontoDeposito.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.txtMontoDeposito.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMontoDeposito.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txtMontoDeposito.Location = new System.Drawing.Point(785, 50);
+            this.txtMontoDeposito.Name = "txtMontoDeposito";
+            this.txtMontoDeposito.Size = new System.Drawing.Size(130, 27);
+            this.txtMontoDeposito.TabIndex = 3;
+            // 
+            // btnDepositar
+            // 
+            this.btnDepositar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDepositar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
+            this.btnDepositar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDepositar.FlatAppearance.BorderSize = 0;
+            this.btnDepositar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDepositar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnDepositar.ForeColor = System.Drawing.Color.White;
+            this.btnDepositar.Location = new System.Drawing.Point(925, 49);
+            this.btnDepositar.Name = "btnDepositar";
+            this.btnDepositar.Size = new System.Drawing.Size(125, 29);
+            this.btnDepositar.TabIndex = 4;
+            this.btnDepositar.Text = "Depositar";
+            this.btnDepositar.UseVisualStyleBackColor = false;
+            this.btnDepositar.Click += new System.EventHandler(this.btnDepositar_Click);
             // 
             // lblBienvenido
             // 
@@ -533,6 +579,9 @@
         private System.Windows.Forms.TableLayoutPanel mainLayout;
 
         private System.Windows.Forms.Panel panelHero;
+        private System.Windows.Forms.Label lblDeposito;
+        private System.Windows.Forms.TextBox txtMontoDeposito;
+        private System.Windows.Forms.Button btnDepositar;
         private System.Windows.Forms.Label lblBienvenido;
         private System.Windows.Forms.Label lblDescripcion;
 
