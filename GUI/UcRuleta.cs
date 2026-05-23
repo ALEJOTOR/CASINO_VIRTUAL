@@ -10,6 +10,8 @@ namespace GUI
 {
     public partial class UcRuleta : UserControl
     {
+        public event EventHandler SaldoActualizado;
+
         private readonly Usuario _usuario;
         private readonly PartidaServicio _servicio = new PartidaServicio();
         private readonly UsuarioServicio _usuarioSvc = new UsuarioServicio();
@@ -35,6 +37,15 @@ namespace GUI
 
         private void ConfigurarApuestasIniciales()
         {
+            CasinoTheme.StylePage(this);
+            CasinoTheme.StyleHeader(panelTop);
+            CasinoTheme.StyleTitle(lblTitulo);
+            CasinoTheme.StyleActionButton(btnGirarRuleta, CasinoTheme.Red);
+            CasinoTheme.StyleSecondaryButton(btnLimpiarMesa);
+            CasinoTheme.StyleInput(txtApuesta);
+            panelJuego.BackColor = CasinoTheme.Page;
+            panelControles.BackColor = CasinoTheme.Surface;
+
             txtApuesta.Text = FormatearFicha(_fichaSeleccionada);
             cboTipoApuesta.Visible = false;
             numNumero.Visible = false;
@@ -140,6 +151,7 @@ namespace GUI
                 Usuario actualizado = _usuarioSvc.ObtenerPorId(_usuario.IdUsuario);
                 if (actualizado != null) _usuario.Saldo = actualizado.Saldo;
                 ActualizarSaldo();
+                SaldoActualizado?.Invoke(this, EventArgs.Empty);
 
                 lblResultado.Text = detalle;
                 lblResultado.ForeColor = gano ? Color.FromArgb(34, 197, 94) : Color.FromArgb(248, 113, 113);

@@ -24,6 +24,7 @@ namespace GUI
             this.lblSaldo = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblTitulo = new System.Windows.Forms.Label();
+            this.panelTablero = new System.Windows.Forms.Panel();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -31,6 +32,7 @@ namespace GUI
             // 
             this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(12)))), ((int)(((byte)(24)))));
             this.panelHeader.Controls.Add(this.lblTitulo);
+            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(560, 72);
@@ -157,12 +159,22 @@ namespace GUI
             this.lblSaldo.Text = "Saldo disponible: $0.00";
             this.lblSaldo.Visible = false;
             // 
+            // panelTablero
+            // 
+            this.panelTablero.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(47)))), ((int)(((byte)(73)))));
+            this.panelTablero.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTablero.Location = new System.Drawing.Point(170, 250);
+            this.panelTablero.Name = "panelTablero";
+            this.panelTablero.Size = new System.Drawing.Size(360, 360);
+            this.panelTablero.TabIndex = 10;
+            // 
             // UcMinas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.Size = new System.Drawing.Size(560, 640);
+            this.Controls.Add(this.panelTablero);
             this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.lblApuesta);
             this.Controls.Add(this.txtApuesta);
@@ -193,6 +205,7 @@ namespace GUI
         private System.Windows.Forms.Label lblSaldo;   // NUEVO
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitulo;
+        private System.Windows.Forms.Panel panelTablero;
     }
 }
 

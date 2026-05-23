@@ -25,6 +25,7 @@
             this.panelNavbar = new System.Windows.Forms.Panel();
             this.btnCerrarSesion = new System.Windows.Forms.Button();
             this.lblSaldo = new System.Windows.Forms.Label();
+            this._lblMarca = new System.Windows.Forms.Label();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.inicioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.juegosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -33,24 +34,33 @@
             this.pnlContenido = new System.Windows.Forms.Panel();
             this.layoutInicio = new System.Windows.Forms.TableLayoutPanel();
             this.panelHero = new System.Windows.Forms.Panel();
+            this._lblSeccionJuegos = new System.Windows.Forms.Label();
+            this._panelWallet = new System.Windows.Forms.Panel();
+            this._lblWalletTitulo = new System.Windows.Forms.Label();
+            this._lblWalletAyuda = new System.Windows.Forms.Label();
             this.lblDeposito = new System.Windows.Forms.Label();
             this.txtMontoDeposito = new System.Windows.Forms.TextBox();
             this.btnDepositar = new System.Windows.Forms.Button();
             this.btnHistorial = new System.Windows.Forms.Button();
+            this._lblHeroDato = new System.Windows.Forms.Label();
+            this._lblHeroTag = new System.Windows.Forms.Label();
             this.lblBienvenido = new System.Windows.Forms.Label();
             this.lblDescripcion = new System.Windows.Forms.Label();
             this.tlpJuegos = new System.Windows.Forms.TableLayoutPanel();
             this.panelMinas = new System.Windows.Forms.Panel();
+            this._badgeMinas = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnMinas = new System.Windows.Forms.Button();
             this.lblDescripcionMinas = new System.Windows.Forms.Label();
             this.lblMinas = new System.Windows.Forms.Label();
             this.panelRuleta = new System.Windows.Forms.Panel();
+            this._badgeRuleta = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.btnRuleta = new System.Windows.Forms.Button();
             this.lblDescripcionRuleta = new System.Windows.Forms.Label();
             this.lblRuleta = new System.Windows.Forms.Label();
             this.panelSlot = new System.Windows.Forms.Panel();
+            this._badgeSlot = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnSlot = new System.Windows.Forms.Button();
             this.lblDescripcionSlot = new System.Windows.Forms.Label();
@@ -67,6 +77,7 @@
             this.pnlContenido.SuspendLayout();
             this.layoutInicio.SuspendLayout();
             this.panelHero.SuspendLayout();
+            this._panelWallet.SuspendLayout();
             this.tlpJuegos.SuspendLayout();
             this.panelMinas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -99,6 +110,7 @@
             this.panelNavbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(18)))), ((int)(((byte)(32)))));
             this.panelNavbar.Controls.Add(this.btnCerrarSesion);
             this.panelNavbar.Controls.Add(this.lblSaldo);
+            this.panelNavbar.Controls.Add(this._lblMarca);
             this.panelNavbar.Controls.Add(this.menuStrip);
             this.panelNavbar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelNavbar.Location = new System.Drawing.Point(3, 3);
@@ -138,6 +150,18 @@
             this.lblSaldo.Text = "Saldo: $250.000";
             this.lblSaldo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // _lblMarca
+            // 
+            this._lblMarca.BackColor = System.Drawing.Color.Transparent;
+            this._lblMarca.Font = new System.Drawing.Font("Georgia", 18F, System.Drawing.FontStyle.Bold);
+            this._lblMarca.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(204)))), ((int)(((byte)(21)))));
+            this._lblMarca.Location = new System.Drawing.Point(18, 0);
+            this._lblMarca.Name = "_lblMarca";
+            this._lblMarca.Size = new System.Drawing.Size(170, 54);
+            this._lblMarca.TabIndex = 5;
+            this._lblMarca.Text = "CASINO ROYAL";
+            this._lblMarca.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // menuStrip
             // 
             this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(18)))), ((int)(((byte)(32)))));
@@ -150,6 +174,7 @@
             this.soporteToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Padding = new System.Windows.Forms.Padding(190, 0, 0, 0);
             this.menuStrip.Size = new System.Drawing.Size(1075, 54);
             this.menuStrip.TabIndex = 1;
             // 
@@ -157,28 +182,28 @@
             // 
             this.inicioToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.inicioToolStripMenuItem.Name = "inicioToolStripMenuItem";
-            this.inicioToolStripMenuItem.Size = new System.Drawing.Size(67, 50);
+            this.inicioToolStripMenuItem.Size = new System.Drawing.Size(67, 54);
             this.inicioToolStripMenuItem.Text = "Inicio";
             // 
             // juegosToolStripMenuItem
             // 
             this.juegosToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.juegosToolStripMenuItem.Name = "juegosToolStripMenuItem";
-            this.juegosToolStripMenuItem.Size = new System.Drawing.Size(85, 50);
+            this.juegosToolStripMenuItem.Size = new System.Drawing.Size(85, 54);
             this.juegosToolStripMenuItem.Text = "Juegos";
             // 
             // promocionesToolStripMenuItem
             // 
             this.promocionesToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.promocionesToolStripMenuItem.Name = "promocionesToolStripMenuItem";
-            this.promocionesToolStripMenuItem.Size = new System.Drawing.Size(135, 50);
+            this.promocionesToolStripMenuItem.Size = new System.Drawing.Size(135, 54);
             this.promocionesToolStripMenuItem.Text = "Promociones";
             // 
             // soporteToolStripMenuItem
             // 
             this.soporteToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.soporteToolStripMenuItem.Name = "soporteToolStripMenuItem";
-            this.soporteToolStripMenuItem.Size = new System.Drawing.Size(90, 50);
+            this.soporteToolStripMenuItem.Size = new System.Drawing.Size(90, 54);
             this.soporteToolStripMenuItem.Text = "Soporte";
             // 
             // pnlContenido
@@ -204,9 +229,9 @@
             this.layoutInicio.Location = new System.Drawing.Point(0, 0);
             this.layoutInicio.Name = "layoutInicio";
             this.layoutInicio.RowCount = 4;
-            this.layoutInicio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            this.layoutInicio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 190F));
             this.layoutInicio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.layoutInicio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.layoutInicio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 86F));
             this.layoutInicio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.layoutInicio.Size = new System.Drawing.Size(1075, 604);
             this.layoutInicio.TabIndex = 0;
@@ -214,53 +239,101 @@
             // panelHero
             // 
             this.panelHero.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(26)))));
-            this.panelHero.Controls.Add(this.lblDeposito);
-            this.panelHero.Controls.Add(this.txtMontoDeposito);
-            this.panelHero.Controls.Add(this.btnDepositar);
-            this.panelHero.Controls.Add(this.btnHistorial);
+            this.panelHero.Controls.Add(this._lblSeccionJuegos);
+            this.panelHero.Controls.Add(this._panelWallet);
+            this.panelHero.Controls.Add(this._lblHeroDato);
+            this.panelHero.Controls.Add(this._lblHeroTag);
             this.panelHero.Controls.Add(this.lblBienvenido);
             this.panelHero.Controls.Add(this.lblDescripcion);
             this.panelHero.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelHero.Location = new System.Drawing.Point(3, 3);
             this.panelHero.Name = "panelHero";
-            this.panelHero.Size = new System.Drawing.Size(1069, 154);
+            this.panelHero.Size = new System.Drawing.Size(1069, 184);
             this.panelHero.TabIndex = 1;
+            // 
+            // _lblSeccionJuegos
+            // 
+            this._lblSeccionJuegos.BackColor = System.Drawing.Color.Transparent;
+            this._lblSeccionJuegos.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            this._lblSeccionJuegos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this._lblSeccionJuegos.Location = new System.Drawing.Point(32, 156);
+            this._lblSeccionJuegos.Name = "_lblSeccionJuegos";
+            this._lblSeccionJuegos.Size = new System.Drawing.Size(260, 28);
+            this._lblSeccionJuegos.TabIndex = 8;
+            this._lblSeccionJuegos.Text = "Juegos destacados";
+            this._lblSeccionJuegos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // _panelWallet
+            // 
+            this._panelWallet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._panelWallet.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(28)))), ((int)(((byte)(50)))));
+            this._panelWallet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._panelWallet.Controls.Add(this._lblWalletTitulo);
+            this._panelWallet.Controls.Add(this._lblWalletAyuda);
+            this._panelWallet.Controls.Add(this.lblDeposito);
+            this._panelWallet.Controls.Add(this.txtMontoDeposito);
+            this._panelWallet.Controls.Add(this.btnDepositar);
+            this._panelWallet.Controls.Add(this.btnHistorial);
+            this._panelWallet.Location = new System.Drawing.Point(687, 24);
+            this._panelWallet.Name = "_panelWallet";
+            this._panelWallet.Size = new System.Drawing.Size(350, 138);
+            this._panelWallet.TabIndex = 9;
+            // 
+            // _lblWalletTitulo
+            // 
+            this._lblWalletTitulo.BackColor = System.Drawing.Color.Transparent;
+            this._lblWalletTitulo.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this._lblWalletTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(204)))), ((int)(((byte)(21)))));
+            this._lblWalletTitulo.Location = new System.Drawing.Point(18, 12);
+            this._lblWalletTitulo.Name = "_lblWalletTitulo";
+            this._lblWalletTitulo.Size = new System.Drawing.Size(312, 24);
+            this._lblWalletTitulo.TabIndex = 0;
+            this._lblWalletTitulo.Text = "Billetera";
+            this._lblWalletTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // _lblWalletAyuda
+            // 
+            this._lblWalletAyuda.BackColor = System.Drawing.Color.Transparent;
+            this._lblWalletAyuda.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this._lblWalletAyuda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
+            this._lblWalletAyuda.Location = new System.Drawing.Point(18, 38);
+            this._lblWalletAyuda.Name = "_lblWalletAyuda";
+            this._lblWalletAyuda.Size = new System.Drawing.Size(312, 20);
+            this._lblWalletAyuda.TabIndex = 1;
+            this._lblWalletAyuda.Text = "Recarga saldo y consulta tus movimientos.";
+            this._lblWalletAyuda.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblDeposito
             // 
-            this.lblDeposito.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblDeposito.AutoSize = true;
             this.lblDeposito.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblDeposito.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblDeposito.Location = new System.Drawing.Point(781, 24);
+            this.lblDeposito.Location = new System.Drawing.Point(18, 68);
             this.lblDeposito.Name = "lblDeposito";
-            this.lblDeposito.Size = new System.Drawing.Size(132, 19);
+            this.lblDeposito.Size = new System.Drawing.Size(140, 20);
             this.lblDeposito.TabIndex = 2;
             this.lblDeposito.Text = "Recargar saldo ($)";
             // 
             // txtMontoDeposito
             // 
-            this.txtMontoDeposito.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMontoDeposito.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             this.txtMontoDeposito.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMontoDeposito.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.txtMontoDeposito.Location = new System.Drawing.Point(785, 50);
+            this.txtMontoDeposito.Location = new System.Drawing.Point(18, 92);
             this.txtMontoDeposito.Name = "txtMontoDeposito";
-            this.txtMontoDeposito.Size = new System.Drawing.Size(130, 27);
+            this.txtMontoDeposito.Size = new System.Drawing.Size(128, 27);
             this.txtMontoDeposito.TabIndex = 3;
             // 
             // btnDepositar
             // 
-            this.btnDepositar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDepositar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
             this.btnDepositar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDepositar.FlatAppearance.BorderSize = 0;
             this.btnDepositar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDepositar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnDepositar.ForeColor = System.Drawing.Color.White;
-            this.btnDepositar.Location = new System.Drawing.Point(925, 49);
+            this.btnDepositar.Location = new System.Drawing.Point(158, 91);
             this.btnDepositar.Name = "btnDepositar";
-            this.btnDepositar.Size = new System.Drawing.Size(125, 29);
+            this.btnDepositar.Size = new System.Drawing.Size(86, 30);
             this.btnDepositar.TabIndex = 4;
             this.btnDepositar.Text = "Depositar";
             this.btnDepositar.UseVisualStyleBackColor = false;
@@ -268,41 +341,62 @@
             // 
             // btnHistorial
             // 
-            this.btnHistorial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnHistorial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.btnHistorial.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnHistorial.FlatAppearance.BorderSize = 0;
             this.btnHistorial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnHistorial.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnHistorial.ForeColor = System.Drawing.Color.White;
-            this.btnHistorial.Location = new System.Drawing.Point(785, 91);
+            this.btnHistorial.Location = new System.Drawing.Point(252, 91);
             this.btnHistorial.Name = "btnHistorial";
-            this.btnHistorial.Size = new System.Drawing.Size(265, 34);
+            this.btnHistorial.Size = new System.Drawing.Size(80, 30);
             this.btnHistorial.TabIndex = 5;
             this.btnHistorial.Text = "Ver historial";
             this.btnHistorial.UseVisualStyleBackColor = false;
             this.btnHistorial.Click += new System.EventHandler(this.btnHistorial_Click);
             // 
+            // _lblHeroDato
+            // 
+            this._lblHeroDato.BackColor = System.Drawing.Color.Transparent;
+            this._lblHeroDato.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this._lblHeroDato.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this._lblHeroDato.Location = new System.Drawing.Point(34, 142);
+            this._lblHeroDato.Name = "_lblHeroDato";
+            this._lblHeroDato.Size = new System.Drawing.Size(520, 26);
+            this._lblHeroDato.TabIndex = 7;
+            this._lblHeroDato.Text = "Minas, ruleta y tragamonedas en una sola ventana.";
+            this._lblHeroDato.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // _lblHeroTag
+            // 
+            this._lblHeroTag.BackColor = System.Drawing.Color.Transparent;
+            this._lblHeroTag.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this._lblHeroTag.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(189)))), ((int)(((byte)(248)))));
+            this._lblHeroTag.Location = new System.Drawing.Point(32, 20);
+            this._lblHeroTag.Name = "_lblHeroTag";
+            this._lblHeroTag.Size = new System.Drawing.Size(220, 20);
+            this._lblHeroTag.TabIndex = 6;
+            this._lblHeroTag.Text = "LOBBY PRINCIPAL";
+            this._lblHeroTag.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // lblBienvenido
             // 
-            this.lblBienvenido.AutoSize = true;
             this.lblBienvenido.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.lblBienvenido.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(204)))), ((int)(((byte)(21)))));
-            this.lblBienvenido.Location = new System.Drawing.Point(20, 18);
+            this.lblBienvenido.Location = new System.Drawing.Point(32, 44);
             this.lblBienvenido.Name = "lblBienvenido";
-            this.lblBienvenido.Size = new System.Drawing.Size(441, 45);
+            this.lblBienvenido.Size = new System.Drawing.Size(560, 45);
             this.lblBienvenido.TabIndex = 0;
             this.lblBienvenido.Text = "Bienvenido al Casino Virtual";
             // 
             // lblDescripcion
             // 
-            this.lblDescripcion.AutoSize = true;
             this.lblDescripcion.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.lblDescripcion.Location = new System.Drawing.Point(22, 64);
+            this.lblDescripcion.Location = new System.Drawing.Point(34, 92);
             this.lblDescripcion.MaximumSize = new System.Drawing.Size(700, 0);
             this.lblDescripcion.Name = "lblDescripcion";
-            this.lblDescripcion.Size = new System.Drawing.Size(678, 42);
+            this.lblDescripcion.Size = new System.Drawing.Size(520, 52);
             this.lblDescripcion.TabIndex = 1;
             this.lblDescripcion.Text = "Disfruta de los mejores juegos online, apuesta y vive la experiencia de un casino" +
     " moderno desde cualquier lugar.";
@@ -317,18 +411,19 @@
             this.tlpJuegos.Controls.Add(this.panelRuleta, 1, 0);
             this.tlpJuegos.Controls.Add(this.panelSlot, 2, 0);
             this.tlpJuegos.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpJuegos.Location = new System.Drawing.Point(3, 163);
+            this.tlpJuegos.Location = new System.Drawing.Point(3, 193);
             this.tlpJuegos.Name = "tlpJuegos";
             this.tlpJuegos.Padding = new System.Windows.Forms.Padding(20, 18, 20, 10);
             this.tlpJuegos.RowCount = 1;
             this.tlpJuegos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpJuegos.Size = new System.Drawing.Size(1069, 323);
+            this.tlpJuegos.Size = new System.Drawing.Size(1069, 287);
             this.tlpJuegos.TabIndex = 2;
             // 
             // panelMinas
             // 
             this.panelMinas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(34)))), ((int)(((byte)(56)))));
             this.panelMinas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMinas.Controls.Add(this._badgeMinas);
             this.panelMinas.Controls.Add(this.pictureBox1);
             this.panelMinas.Controls.Add(this.btnMinas);
             this.panelMinas.Controls.Add(this.lblDescripcionMinas);
@@ -338,8 +433,20 @@
             this.panelMinas.Margin = new System.Windows.Forms.Padding(8);
             this.panelMinas.Name = "panelMinas";
             this.panelMinas.Padding = new System.Windows.Forms.Padding(10);
-            this.panelMinas.Size = new System.Drawing.Size(329, 285);
+            this.panelMinas.Size = new System.Drawing.Size(326, 243);
             this.panelMinas.TabIndex = 0;
+            // 
+            // _badgeMinas
+            // 
+            this._badgeMinas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this._badgeMinas.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            this._badgeMinas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(189)))), ((int)(((byte)(248)))));
+            this._badgeMinas.Location = new System.Drawing.Point(222, 18);
+            this._badgeMinas.Name = "_badgeMinas";
+            this._badgeMinas.Size = new System.Drawing.Size(86, 24);
+            this._badgeMinas.TabIndex = 6;
+            this._badgeMinas.Text = "Estrategia";
+            this._badgeMinas.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBox1
             // 
@@ -348,7 +455,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(10, 88);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(307, 150);
+            this.pictureBox1.Size = new System.Drawing.Size(304, 108);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
@@ -362,10 +469,10 @@
             this.btnMinas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMinas.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMinas.ForeColor = System.Drawing.Color.White;
-            this.btnMinas.Location = new System.Drawing.Point(10, 238);
+            this.btnMinas.Location = new System.Drawing.Point(10, 196);
             this.btnMinas.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.btnMinas.Name = "btnMinas";
-            this.btnMinas.Size = new System.Drawing.Size(307, 35);
+            this.btnMinas.Size = new System.Drawing.Size(304, 35);
             this.btnMinas.TabIndex = 0;
             this.btnMinas.Text = "Entrar al Juego";
             this.btnMinas.UseVisualStyleBackColor = false;
@@ -391,7 +498,7 @@
             this.lblMinas.ForeColor = System.Drawing.Color.Gold;
             this.lblMinas.Location = new System.Drawing.Point(10, 10);
             this.lblMinas.Name = "lblMinas";
-            this.lblMinas.Size = new System.Drawing.Size(307, 30);
+            this.lblMinas.Size = new System.Drawing.Size(304, 30);
             this.lblMinas.TabIndex = 2;
             this.lblMinas.Text = "Busca Minas";
             // 
@@ -399,17 +506,30 @@
             // 
             this.panelRuleta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(34)))), ((int)(((byte)(56)))));
             this.panelRuleta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelRuleta.Controls.Add(this._badgeRuleta);
             this.panelRuleta.Controls.Add(this.pictureBox3);
             this.panelRuleta.Controls.Add(this.btnRuleta);
             this.panelRuleta.Controls.Add(this.lblDescripcionRuleta);
             this.panelRuleta.Controls.Add(this.lblRuleta);
             this.panelRuleta.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelRuleta.Location = new System.Drawing.Point(373, 26);
+            this.panelRuleta.Location = new System.Drawing.Point(370, 26);
             this.panelRuleta.Margin = new System.Windows.Forms.Padding(8);
             this.panelRuleta.Name = "panelRuleta";
             this.panelRuleta.Padding = new System.Windows.Forms.Padding(10);
-            this.panelRuleta.Size = new System.Drawing.Size(329, 285);
+            this.panelRuleta.Size = new System.Drawing.Size(326, 243);
             this.panelRuleta.TabIndex = 1;
+            // 
+            // _badgeRuleta
+            // 
+            this._badgeRuleta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this._badgeRuleta.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            this._badgeRuleta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(189)))), ((int)(((byte)(248)))));
+            this._badgeRuleta.Location = new System.Drawing.Point(222, 18);
+            this._badgeRuleta.Name = "_badgeRuleta";
+            this._badgeRuleta.Size = new System.Drawing.Size(86, 24);
+            this._badgeRuleta.TabIndex = 6;
+            this._badgeRuleta.Text = "Clasico";
+            this._badgeRuleta.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBox3
             // 
@@ -417,7 +537,7 @@
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
             this.pictureBox3.Location = new System.Drawing.Point(10, 88);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(307, 150);
+            this.pictureBox3.Size = new System.Drawing.Size(304, 108);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 5;
             this.pictureBox3.TabStop = false;
@@ -431,10 +551,10 @@
             this.btnRuleta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRuleta.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRuleta.ForeColor = System.Drawing.Color.White;
-            this.btnRuleta.Location = new System.Drawing.Point(10, 238);
+            this.btnRuleta.Location = new System.Drawing.Point(10, 196);
             this.btnRuleta.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.btnRuleta.Name = "btnRuleta";
-            this.btnRuleta.Size = new System.Drawing.Size(307, 35);
+            this.btnRuleta.Size = new System.Drawing.Size(304, 35);
             this.btnRuleta.TabIndex = 0;
             this.btnRuleta.Text = "Entrar al Juego";
             this.btnRuleta.UseVisualStyleBackColor = false;
@@ -460,7 +580,7 @@
             this.lblRuleta.ForeColor = System.Drawing.Color.Gold;
             this.lblRuleta.Location = new System.Drawing.Point(10, 10);
             this.lblRuleta.Name = "lblRuleta";
-            this.lblRuleta.Size = new System.Drawing.Size(307, 30);
+            this.lblRuleta.Size = new System.Drawing.Size(304, 30);
             this.lblRuleta.TabIndex = 2;
             this.lblRuleta.Text = "Ruleta";
             // 
@@ -468,17 +588,30 @@
             // 
             this.panelSlot.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(34)))), ((int)(((byte)(56)))));
             this.panelSlot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelSlot.Controls.Add(this._badgeSlot);
             this.panelSlot.Controls.Add(this.pictureBox2);
             this.panelSlot.Controls.Add(this.btnSlot);
             this.panelSlot.Controls.Add(this.lblDescripcionSlot);
             this.panelSlot.Controls.Add(this.lblSlot);
             this.panelSlot.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelSlot.Location = new System.Drawing.Point(718, 26);
+            this.panelSlot.Location = new System.Drawing.Point(712, 26);
             this.panelSlot.Margin = new System.Windows.Forms.Padding(8);
             this.panelSlot.Name = "panelSlot";
             this.panelSlot.Padding = new System.Windows.Forms.Padding(10);
-            this.panelSlot.Size = new System.Drawing.Size(329, 285);
+            this.panelSlot.Size = new System.Drawing.Size(329, 243);
             this.panelSlot.TabIndex = 2;
+            // 
+            // _badgeSlot
+            // 
+            this._badgeSlot.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this._badgeSlot.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            this._badgeSlot.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(189)))), ((int)(((byte)(248)))));
+            this._badgeSlot.Location = new System.Drawing.Point(225, 18);
+            this._badgeSlot.Name = "_badgeSlot";
+            this._badgeSlot.Size = new System.Drawing.Size(86, 24);
+            this._badgeSlot.TabIndex = 6;
+            this._badgeSlot.Text = "Rapido";
+            this._badgeSlot.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBox2
             // 
@@ -486,7 +619,7 @@
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
             this.pictureBox2.Location = new System.Drawing.Point(10, 88);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(307, 150);
+            this.pictureBox2.Size = new System.Drawing.Size(307, 108);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 4;
             this.pictureBox2.TabStop = false;
@@ -500,7 +633,7 @@
             this.btnSlot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSlot.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSlot.ForeColor = System.Drawing.Color.White;
-            this.btnSlot.Location = new System.Drawing.Point(10, 238);
+            this.btnSlot.Location = new System.Drawing.Point(10, 196);
             this.btnSlot.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.btnSlot.Name = "btnSlot";
             this.btnSlot.Size = new System.Drawing.Size(307, 35);
@@ -544,11 +677,11 @@
             this.tlpStats.Controls.Add(this.lblPremios, 1, 0);
             this.tlpStats.Controls.Add(this.lblSoporte, 2, 0);
             this.tlpStats.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpStats.Location = new System.Drawing.Point(3, 489);
+            this.tlpStats.Location = new System.Drawing.Point(3, 486);
             this.tlpStats.Name = "tlpStats";
             this.tlpStats.RowCount = 1;
             this.tlpStats.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpStats.Size = new System.Drawing.Size(1069, 74);
+            this.tlpStats.Size = new System.Drawing.Size(1069, 80);
             this.tlpStats.TabIndex = 3;
             // 
             // lblUsuarios
@@ -558,9 +691,9 @@
             this.lblUsuarios.ForeColor = System.Drawing.Color.Gold;
             this.lblUsuarios.Location = new System.Drawing.Point(3, 0);
             this.lblUsuarios.Name = "lblUsuarios";
-            this.lblUsuarios.Size = new System.Drawing.Size(352, 74);
+            this.lblUsuarios.Size = new System.Drawing.Size(350, 80);
             this.lblUsuarios.TabIndex = 0;
-            this.lblUsuarios.Text = "+10K\nUsuarios";
+            this.lblUsuarios.Text = "3 juegos\nDisponibles";
             this.lblUsuarios.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblPremios
@@ -568,11 +701,11 @@
             this.lblPremios.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblPremios.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Bold);
             this.lblPremios.ForeColor = System.Drawing.Color.Gold;
-            this.lblPremios.Location = new System.Drawing.Point(361, 0);
+            this.lblPremios.Location = new System.Drawing.Point(359, 0);
             this.lblPremios.Name = "lblPremios";
-            this.lblPremios.Size = new System.Drawing.Size(352, 74);
+            this.lblPremios.Size = new System.Drawing.Size(350, 80);
             this.lblPremios.TabIndex = 1;
-            this.lblPremios.Text = "+500K\nPremios";
+            this.lblPremios.Text = "Saldo real\nCon historial";
             this.lblPremios.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblSoporte
@@ -580,9 +713,9 @@
             this.lblSoporte.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblSoporte.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Bold);
             this.lblSoporte.ForeColor = System.Drawing.Color.Gold;
-            this.lblSoporte.Location = new System.Drawing.Point(719, 0);
+            this.lblSoporte.Location = new System.Drawing.Point(715, 0);
             this.lblSoporte.Name = "lblSoporte";
-            this.lblSoporte.Size = new System.Drawing.Size(353, 74);
+            this.lblSoporte.Size = new System.Drawing.Size(351, 80);
             this.lblSoporte.TabIndex = 2;
             this.lblSoporte.Text = "24/7\nSoporte";
             this.lblSoporte.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -604,7 +737,7 @@
             this.lblFooter.ForeColor = System.Drawing.Color.LightSlateGray;
             this.lblFooter.Location = new System.Drawing.Point(0, 0);
             this.lblFooter.Name = "lblFooter";
-            this.lblFooter.Size = new System.Drawing.Size(1075, 29);
+            this.lblFooter.Size = new System.Drawing.Size(1069, 29);
             this.lblFooter.TabIndex = 0;
             this.lblFooter.Text = "© 2026 Casino Royal - Todos los derechos reservados";
             this.lblFooter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -625,7 +758,8 @@
             this.pnlContenido.ResumeLayout(false);
             this.layoutInicio.ResumeLayout(false);
             this.panelHero.ResumeLayout(false);
-            this.panelHero.PerformLayout();
+            this._panelWallet.ResumeLayout(false);
+            this._panelWallet.PerformLayout();
             this.tlpJuegos.ResumeLayout(false);
             this.panelMinas.ResumeLayout(false);
             this.panelMinas.PerformLayout();
@@ -649,6 +783,12 @@
         private System.Windows.Forms.TableLayoutPanel layoutInicio;
 
         private System.Windows.Forms.Panel panelHero;
+        private System.Windows.Forms.Label _lblHeroTag;
+        private System.Windows.Forms.Label _lblHeroDato;
+        private System.Windows.Forms.Label _lblSeccionJuegos;
+        private System.Windows.Forms.Panel _panelWallet;
+        private System.Windows.Forms.Label _lblWalletTitulo;
+        private System.Windows.Forms.Label _lblWalletAyuda;
         private System.Windows.Forms.Label lblDeposito;
         private System.Windows.Forms.TextBox txtMontoDeposito;
         private System.Windows.Forms.Button btnDepositar;
@@ -658,14 +798,17 @@
 
         private System.Windows.Forms.TableLayoutPanel tlpJuegos;
         private System.Windows.Forms.Panel panelMinas;
+        private System.Windows.Forms.Label _badgeMinas;
         private System.Windows.Forms.Label lblMinas;
         private System.Windows.Forms.Label lblDescripcionMinas;
         private System.Windows.Forms.Button btnMinas;
         private System.Windows.Forms.Panel panelRuleta;
+        private System.Windows.Forms.Label _badgeRuleta;
         private System.Windows.Forms.Label lblRuleta;
         private System.Windows.Forms.Label lblDescripcionRuleta;
         private System.Windows.Forms.Button btnRuleta;
         private System.Windows.Forms.Panel panelSlot;
+        private System.Windows.Forms.Label _badgeSlot;
         private System.Windows.Forms.Label lblSlot;
         private System.Windows.Forms.Label lblDescripcionSlot;
         private System.Windows.Forms.Button btnSlot;
@@ -678,6 +821,7 @@
         private System.Windows.Forms.Panel panelFooter;
         private System.Windows.Forms.Label lblFooter;
         private System.Windows.Forms.Panel panelNavbar;
+        private System.Windows.Forms.Label _lblMarca;
         private System.Windows.Forms.Button btnCerrarSesion;
         private System.Windows.Forms.Label lblSaldo;
         private System.Windows.Forms.MenuStrip menuStrip;
