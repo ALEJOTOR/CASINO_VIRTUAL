@@ -42,7 +42,6 @@
             this.txtMontoDeposito = new System.Windows.Forms.TextBox();
             this.btnDepositar = new System.Windows.Forms.Button();
             this.btnHistorial = new System.Windows.Forms.Button();
-            this._lblHeroDato = new System.Windows.Forms.Label();
             this._lblHeroTag = new System.Windows.Forms.Label();
             this.lblBienvenido = new System.Windows.Forms.Label();
             this.lblDescripcion = new System.Windows.Forms.Label();
@@ -100,9 +99,9 @@
             this.mainLayout.Location = new System.Drawing.Point(0, 0);
             this.mainLayout.Name = "mainLayout";
             this.mainLayout.RowCount = 2;
-            this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 75F));
             this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.mainLayout.Size = new System.Drawing.Size(1081, 670);
+            this.mainLayout.Size = new System.Drawing.Size(1219, 729);
             this.mainLayout.TabIndex = 0;
             // 
             // panelNavbar
@@ -115,7 +114,7 @@
             this.panelNavbar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelNavbar.Location = new System.Drawing.Point(3, 3);
             this.panelNavbar.Name = "panelNavbar";
-            this.panelNavbar.Size = new System.Drawing.Size(1075, 54);
+            this.panelNavbar.Size = new System.Drawing.Size(1213, 69);
             this.panelNavbar.TabIndex = 0;
             // 
             // btnCerrarSesion
@@ -127,7 +126,7 @@
             this.btnCerrarSesion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCerrarSesion.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.btnCerrarSesion.ForeColor = System.Drawing.Color.White;
-            this.btnCerrarSesion.Location = new System.Drawing.Point(952, 12);
+            this.btnCerrarSesion.Location = new System.Drawing.Point(1090, 12);
             this.btnCerrarSesion.Name = "btnCerrarSesion";
             this.btnCerrarSesion.Size = new System.Drawing.Size(112, 30);
             this.btnCerrarSesion.TabIndex = 4;
@@ -140,13 +139,13 @@
             this.lblSaldo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSaldo.AutoSize = true;
             this.lblSaldo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(36)))), ((int)(((byte)(60)))));
-            this.lblSaldo.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold);
+            this.lblSaldo.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSaldo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(222)))), ((int)(((byte)(128)))));
-            this.lblSaldo.Location = new System.Drawing.Point(760, 6);
+            this.lblSaldo.Location = new System.Drawing.Point(890, 22);
             this.lblSaldo.Name = "lblSaldo";
             this.lblSaldo.Padding = new System.Windows.Forms.Padding(10);
-            this.lblSaldo.Size = new System.Drawing.Size(166, 41);
-            this.lblSaldo.TabIndex = 3;
+            this.lblSaldo.Size = new System.Drawing.Size(150, 39);
+            this.lblSaldo.TabIndex = 2;
             this.lblSaldo.Text = "Saldo: $250.000";
             this.lblSaldo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -155,7 +154,7 @@
             this._lblMarca.BackColor = System.Drawing.Color.Transparent;
             this._lblMarca.Font = new System.Drawing.Font("Georgia", 18F, System.Drawing.FontStyle.Bold);
             this._lblMarca.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(204)))), ((int)(((byte)(21)))));
-            this._lblMarca.Location = new System.Drawing.Point(18, 0);
+            this._lblMarca.Location = new System.Drawing.Point(9, 12);
             this._lblMarca.Name = "_lblMarca";
             this._lblMarca.Size = new System.Drawing.Size(170, 54);
             this._lblMarca.TabIndex = 5;
@@ -175,35 +174,35 @@
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(190, 0, 0, 0);
-            this.menuStrip.Size = new System.Drawing.Size(1075, 54);
+            this.menuStrip.Size = new System.Drawing.Size(1213, 69);
             this.menuStrip.TabIndex = 1;
             // 
             // inicioToolStripMenuItem
             // 
             this.inicioToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.inicioToolStripMenuItem.Name = "inicioToolStripMenuItem";
-            this.inicioToolStripMenuItem.Size = new System.Drawing.Size(67, 54);
+            this.inicioToolStripMenuItem.Size = new System.Drawing.Size(67, 69);
             this.inicioToolStripMenuItem.Text = "Inicio";
             // 
             // juegosToolStripMenuItem
             // 
             this.juegosToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.juegosToolStripMenuItem.Name = "juegosToolStripMenuItem";
-            this.juegosToolStripMenuItem.Size = new System.Drawing.Size(85, 54);
+            this.juegosToolStripMenuItem.Size = new System.Drawing.Size(85, 69);
             this.juegosToolStripMenuItem.Text = "Juegos";
             // 
             // promocionesToolStripMenuItem
             // 
             this.promocionesToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.promocionesToolStripMenuItem.Name = "promocionesToolStripMenuItem";
-            this.promocionesToolStripMenuItem.Size = new System.Drawing.Size(135, 54);
+            this.promocionesToolStripMenuItem.Size = new System.Drawing.Size(135, 69);
             this.promocionesToolStripMenuItem.Text = "Promociones";
             // 
             // soporteToolStripMenuItem
             // 
             this.soporteToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.soporteToolStripMenuItem.Name = "soporteToolStripMenuItem";
-            this.soporteToolStripMenuItem.Size = new System.Drawing.Size(90, 54);
+            this.soporteToolStripMenuItem.Size = new System.Drawing.Size(90, 69);
             this.soporteToolStripMenuItem.Text = "Soporte";
             // 
             // pnlContenido
@@ -211,9 +210,9 @@
             this.pnlContenido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(26)))));
             this.pnlContenido.Controls.Add(this.layoutInicio);
             this.pnlContenido.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlContenido.Location = new System.Drawing.Point(3, 63);
+            this.pnlContenido.Location = new System.Drawing.Point(3, 78);
             this.pnlContenido.Name = "pnlContenido";
-            this.pnlContenido.Size = new System.Drawing.Size(1075, 604);
+            this.pnlContenido.Size = new System.Drawing.Size(1213, 648);
             this.pnlContenido.TabIndex = 1;
             // 
             // layoutInicio
@@ -233,7 +232,7 @@
             this.layoutInicio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.layoutInicio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 86F));
             this.layoutInicio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.layoutInicio.Size = new System.Drawing.Size(1075, 604);
+            this.layoutInicio.Size = new System.Drawing.Size(1213, 648);
             this.layoutInicio.TabIndex = 0;
             // 
             // panelHero
@@ -241,14 +240,13 @@
             this.panelHero.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(26)))));
             this.panelHero.Controls.Add(this._lblSeccionJuegos);
             this.panelHero.Controls.Add(this._panelWallet);
-            this.panelHero.Controls.Add(this._lblHeroDato);
             this.panelHero.Controls.Add(this._lblHeroTag);
             this.panelHero.Controls.Add(this.lblBienvenido);
             this.panelHero.Controls.Add(this.lblDescripcion);
             this.panelHero.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelHero.Location = new System.Drawing.Point(3, 3);
             this.panelHero.Name = "panelHero";
-            this.panelHero.Size = new System.Drawing.Size(1069, 184);
+            this.panelHero.Size = new System.Drawing.Size(1207, 184);
             this.panelHero.TabIndex = 1;
             // 
             // _lblSeccionJuegos
@@ -256,7 +254,7 @@
             this._lblSeccionJuegos.BackColor = System.Drawing.Color.Transparent;
             this._lblSeccionJuegos.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
             this._lblSeccionJuegos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this._lblSeccionJuegos.Location = new System.Drawing.Point(32, 156);
+            this._lblSeccionJuegos.Location = new System.Drawing.Point(35, 144);
             this._lblSeccionJuegos.Name = "_lblSeccionJuegos";
             this._lblSeccionJuegos.Size = new System.Drawing.Size(260, 28);
             this._lblSeccionJuegos.TabIndex = 8;
@@ -274,7 +272,7 @@
             this._panelWallet.Controls.Add(this.txtMontoDeposito);
             this._panelWallet.Controls.Add(this.btnDepositar);
             this._panelWallet.Controls.Add(this.btnHistorial);
-            this._panelWallet.Location = new System.Drawing.Point(687, 24);
+            this._panelWallet.Location = new System.Drawing.Point(825, 24);
             this._panelWallet.Name = "_panelWallet";
             this._panelWallet.Size = new System.Drawing.Size(350, 138);
             this._panelWallet.TabIndex = 9;
@@ -355,18 +353,6 @@
             this.btnHistorial.UseVisualStyleBackColor = false;
             this.btnHistorial.Click += new System.EventHandler(this.btnHistorial_Click);
             // 
-            // _lblHeroDato
-            // 
-            this._lblHeroDato.BackColor = System.Drawing.Color.Transparent;
-            this._lblHeroDato.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this._lblHeroDato.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this._lblHeroDato.Location = new System.Drawing.Point(34, 142);
-            this._lblHeroDato.Name = "_lblHeroDato";
-            this._lblHeroDato.Size = new System.Drawing.Size(520, 26);
-            this._lblHeroDato.TabIndex = 7;
-            this._lblHeroDato.Text = "Minas, ruleta y tragamonedas en una sola ventana.";
-            this._lblHeroDato.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // _lblHeroTag
             // 
             this._lblHeroTag.BackColor = System.Drawing.Color.Transparent;
@@ -381,6 +367,7 @@
             // 
             // lblBienvenido
             // 
+            this.lblBienvenido.BackColor = System.Drawing.Color.Transparent;
             this.lblBienvenido.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.lblBienvenido.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(204)))), ((int)(((byte)(21)))));
             this.lblBienvenido.Location = new System.Drawing.Point(32, 44);
@@ -391,6 +378,7 @@
             // 
             // lblDescripcion
             // 
+            this.lblDescripcion.BackColor = System.Drawing.Color.Transparent;
             this.lblDescripcion.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.lblDescripcion.Location = new System.Drawing.Point(34, 92);
@@ -416,7 +404,7 @@
             this.tlpJuegos.Padding = new System.Windows.Forms.Padding(20, 18, 20, 10);
             this.tlpJuegos.RowCount = 1;
             this.tlpJuegos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpJuegos.Size = new System.Drawing.Size(1069, 287);
+            this.tlpJuegos.Size = new System.Drawing.Size(1207, 331);
             this.tlpJuegos.TabIndex = 2;
             // 
             // panelMinas
@@ -433,7 +421,7 @@
             this.panelMinas.Margin = new System.Windows.Forms.Padding(8);
             this.panelMinas.Name = "panelMinas";
             this.panelMinas.Padding = new System.Windows.Forms.Padding(10);
-            this.panelMinas.Size = new System.Drawing.Size(326, 243);
+            this.panelMinas.Size = new System.Drawing.Size(373, 287);
             this.panelMinas.TabIndex = 0;
             // 
             // _badgeMinas
@@ -455,7 +443,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(10, 88);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(304, 108);
+            this.pictureBox1.Size = new System.Drawing.Size(351, 152);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
@@ -469,10 +457,10 @@
             this.btnMinas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMinas.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMinas.ForeColor = System.Drawing.Color.White;
-            this.btnMinas.Location = new System.Drawing.Point(10, 196);
+            this.btnMinas.Location = new System.Drawing.Point(10, 240);
             this.btnMinas.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.btnMinas.Name = "btnMinas";
-            this.btnMinas.Size = new System.Drawing.Size(304, 35);
+            this.btnMinas.Size = new System.Drawing.Size(351, 35);
             this.btnMinas.TabIndex = 0;
             this.btnMinas.Text = "Entrar al Juego";
             this.btnMinas.UseVisualStyleBackColor = false;
@@ -498,7 +486,7 @@
             this.lblMinas.ForeColor = System.Drawing.Color.Gold;
             this.lblMinas.Location = new System.Drawing.Point(10, 10);
             this.lblMinas.Name = "lblMinas";
-            this.lblMinas.Size = new System.Drawing.Size(304, 30);
+            this.lblMinas.Size = new System.Drawing.Size(351, 30);
             this.lblMinas.TabIndex = 2;
             this.lblMinas.Text = "Busca Minas";
             // 
@@ -512,11 +500,11 @@
             this.panelRuleta.Controls.Add(this.lblDescripcionRuleta);
             this.panelRuleta.Controls.Add(this.lblRuleta);
             this.panelRuleta.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelRuleta.Location = new System.Drawing.Point(370, 26);
+            this.panelRuleta.Location = new System.Drawing.Point(417, 26);
             this.panelRuleta.Margin = new System.Windows.Forms.Padding(8);
             this.panelRuleta.Name = "panelRuleta";
             this.panelRuleta.Padding = new System.Windows.Forms.Padding(10);
-            this.panelRuleta.Size = new System.Drawing.Size(326, 243);
+            this.panelRuleta.Size = new System.Drawing.Size(373, 287);
             this.panelRuleta.TabIndex = 1;
             // 
             // _badgeRuleta
@@ -537,7 +525,7 @@
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
             this.pictureBox3.Location = new System.Drawing.Point(10, 88);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(304, 108);
+            this.pictureBox3.Size = new System.Drawing.Size(351, 152);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 5;
             this.pictureBox3.TabStop = false;
@@ -551,10 +539,10 @@
             this.btnRuleta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRuleta.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRuleta.ForeColor = System.Drawing.Color.White;
-            this.btnRuleta.Location = new System.Drawing.Point(10, 196);
+            this.btnRuleta.Location = new System.Drawing.Point(10, 240);
             this.btnRuleta.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.btnRuleta.Name = "btnRuleta";
-            this.btnRuleta.Size = new System.Drawing.Size(304, 35);
+            this.btnRuleta.Size = new System.Drawing.Size(351, 35);
             this.btnRuleta.TabIndex = 0;
             this.btnRuleta.Text = "Entrar al Juego";
             this.btnRuleta.UseVisualStyleBackColor = false;
@@ -580,7 +568,7 @@
             this.lblRuleta.ForeColor = System.Drawing.Color.Gold;
             this.lblRuleta.Location = new System.Drawing.Point(10, 10);
             this.lblRuleta.Name = "lblRuleta";
-            this.lblRuleta.Size = new System.Drawing.Size(304, 30);
+            this.lblRuleta.Size = new System.Drawing.Size(351, 30);
             this.lblRuleta.TabIndex = 2;
             this.lblRuleta.Text = "Ruleta";
             // 
@@ -594,11 +582,11 @@
             this.panelSlot.Controls.Add(this.lblDescripcionSlot);
             this.panelSlot.Controls.Add(this.lblSlot);
             this.panelSlot.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelSlot.Location = new System.Drawing.Point(712, 26);
+            this.panelSlot.Location = new System.Drawing.Point(806, 26);
             this.panelSlot.Margin = new System.Windows.Forms.Padding(8);
             this.panelSlot.Name = "panelSlot";
             this.panelSlot.Padding = new System.Windows.Forms.Padding(10);
-            this.panelSlot.Size = new System.Drawing.Size(329, 243);
+            this.panelSlot.Size = new System.Drawing.Size(373, 287);
             this.panelSlot.TabIndex = 2;
             // 
             // _badgeSlot
@@ -619,7 +607,7 @@
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
             this.pictureBox2.Location = new System.Drawing.Point(10, 88);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(307, 108);
+            this.pictureBox2.Size = new System.Drawing.Size(351, 152);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 4;
             this.pictureBox2.TabStop = false;
@@ -633,10 +621,10 @@
             this.btnSlot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSlot.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSlot.ForeColor = System.Drawing.Color.White;
-            this.btnSlot.Location = new System.Drawing.Point(10, 196);
+            this.btnSlot.Location = new System.Drawing.Point(10, 240);
             this.btnSlot.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.btnSlot.Name = "btnSlot";
-            this.btnSlot.Size = new System.Drawing.Size(307, 35);
+            this.btnSlot.Size = new System.Drawing.Size(351, 35);
             this.btnSlot.TabIndex = 0;
             this.btnSlot.Text = "Entrar al Juego";
             this.btnSlot.UseVisualStyleBackColor = false;
@@ -662,7 +650,7 @@
             this.lblSlot.ForeColor = System.Drawing.Color.Gold;
             this.lblSlot.Location = new System.Drawing.Point(10, 10);
             this.lblSlot.Name = "lblSlot";
-            this.lblSlot.Size = new System.Drawing.Size(307, 30);
+            this.lblSlot.Size = new System.Drawing.Size(351, 30);
             this.lblSlot.TabIndex = 2;
             this.lblSlot.Text = "Tragamonedas";
             // 
@@ -677,11 +665,11 @@
             this.tlpStats.Controls.Add(this.lblPremios, 1, 0);
             this.tlpStats.Controls.Add(this.lblSoporte, 2, 0);
             this.tlpStats.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpStats.Location = new System.Drawing.Point(3, 486);
+            this.tlpStats.Location = new System.Drawing.Point(3, 530);
             this.tlpStats.Name = "tlpStats";
             this.tlpStats.RowCount = 1;
             this.tlpStats.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpStats.Size = new System.Drawing.Size(1069, 80);
+            this.tlpStats.Size = new System.Drawing.Size(1207, 80);
             this.tlpStats.TabIndex = 3;
             // 
             // lblUsuarios
@@ -691,7 +679,7 @@
             this.lblUsuarios.ForeColor = System.Drawing.Color.Gold;
             this.lblUsuarios.Location = new System.Drawing.Point(3, 0);
             this.lblUsuarios.Name = "lblUsuarios";
-            this.lblUsuarios.Size = new System.Drawing.Size(350, 80);
+            this.lblUsuarios.Size = new System.Drawing.Size(396, 80);
             this.lblUsuarios.TabIndex = 0;
             this.lblUsuarios.Text = "3 juegos\nDisponibles";
             this.lblUsuarios.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -701,9 +689,9 @@
             this.lblPremios.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblPremios.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Bold);
             this.lblPremios.ForeColor = System.Drawing.Color.Gold;
-            this.lblPremios.Location = new System.Drawing.Point(359, 0);
+            this.lblPremios.Location = new System.Drawing.Point(405, 0);
             this.lblPremios.Name = "lblPremios";
-            this.lblPremios.Size = new System.Drawing.Size(350, 80);
+            this.lblPremios.Size = new System.Drawing.Size(396, 80);
             this.lblPremios.TabIndex = 1;
             this.lblPremios.Text = "Saldo real\nCon historial";
             this.lblPremios.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -713,9 +701,9 @@
             this.lblSoporte.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblSoporte.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Bold);
             this.lblSoporte.ForeColor = System.Drawing.Color.Gold;
-            this.lblSoporte.Location = new System.Drawing.Point(715, 0);
+            this.lblSoporte.Location = new System.Drawing.Point(807, 0);
             this.lblSoporte.Name = "lblSoporte";
-            this.lblSoporte.Size = new System.Drawing.Size(351, 80);
+            this.lblSoporte.Size = new System.Drawing.Size(397, 80);
             this.lblSoporte.TabIndex = 2;
             this.lblSoporte.Text = "24/7\nSoporte";
             this.lblSoporte.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -725,9 +713,9 @@
             this.panelFooter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(17)))), ((int)(((byte)(32)))));
             this.panelFooter.Controls.Add(this.lblFooter);
             this.panelFooter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelFooter.Location = new System.Drawing.Point(3, 572);
+            this.panelFooter.Location = new System.Drawing.Point(3, 616);
             this.panelFooter.Name = "panelFooter";
-            this.panelFooter.Size = new System.Drawing.Size(1069, 29);
+            this.panelFooter.Size = new System.Drawing.Size(1207, 29);
             this.panelFooter.TabIndex = 4;
             // 
             // lblFooter
@@ -737,7 +725,7 @@
             this.lblFooter.ForeColor = System.Drawing.Color.LightSlateGray;
             this.lblFooter.Location = new System.Drawing.Point(0, 0);
             this.lblFooter.Name = "lblFooter";
-            this.lblFooter.Size = new System.Drawing.Size(1069, 29);
+            this.lblFooter.Size = new System.Drawing.Size(1207, 29);
             this.lblFooter.TabIndex = 0;
             this.lblFooter.Text = "© 2026 Casino Royal - Todos los derechos reservados";
             this.lblFooter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -745,7 +733,7 @@
             // MainForm
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(26)))));
-            this.ClientSize = new System.Drawing.Size(1081, 670);
+            this.ClientSize = new System.Drawing.Size(1219, 729);
             this.Controls.Add(this.mainLayout);
             this.MinimumSize = new System.Drawing.Size(800, 670);
             this.Name = "MainForm";
@@ -784,7 +772,6 @@
 
         private System.Windows.Forms.Panel panelHero;
         private System.Windows.Forms.Label _lblHeroTag;
-        private System.Windows.Forms.Label _lblHeroDato;
         private System.Windows.Forms.Label _lblSeccionJuegos;
         private System.Windows.Forms.Panel _panelWallet;
         private System.Windows.Forms.Label _lblWalletTitulo;

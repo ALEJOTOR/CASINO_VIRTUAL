@@ -43,6 +43,7 @@ namespace BLL
 
         public string Registrar(Usuario u)
         {
+            if (u.IdUsuario < 1) return "La identificación es obligatoria y no puede ser un número negativo";
             if (string.IsNullOrWhiteSpace(u.Username)) return "El username es obligatorio.";
             if (string.IsNullOrWhiteSpace(u.Password)) return "La contraseña es obligatoria.";
             if (string.IsNullOrWhiteSpace(u.Nombre1)) return "El primer nombre es obligatorio.";
@@ -53,10 +54,13 @@ namespace BLL
             if (_repositorio.ObtenerPorUsername(u.Username) != null)
                 return "El username ya está en uso.";
 
+            if(_repositorio.ObtenerPorId(u.IdUsuario) != null){
+                return "La identificación ya está registrada.";
+            }
+
             u.Password = HashPassword(u.Password);
             u.Estado = "activo";
             u.FechaRegistro = DateTime.Now;
-            u.IdUsuario = SiguienteId();
             u.Saldo = 0;
 
             return _repositorio.Guardar(u);
@@ -177,16 +181,6 @@ namespace BLL
         }
 
         // ── Helpers privados ──────────────────────────────────────
-
-        private int SiguienteId()
-        {
-            IList<Usuario> lista = _repositorio.Consultar();
-            if (lista.Count == 0) return 1;
-            int max = 0;
-            foreach (Usuario u in lista)
-                if (u.IdUsuario > max) max = u.IdUsuario;
-            return max + 1;
-        }
 
         private string HashPassword(string password)
         {

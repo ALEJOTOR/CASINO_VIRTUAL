@@ -18,6 +18,18 @@ namespace ENTITY
         public DateTime FechaRegistro { get; set; }
         public string Estado { get; set; }
 
+        public bool EsMayorDeEdad()
+        {
+            int edad = DateTime.Today.Year - FechaNacimiento.Year;
+
+            // Si aún no ha cumplido años este año, se resta 1
+            if (FechaNacimiento.Date > DateTime.Today.AddYears(-edad))
+            {
+                edad--;
+            }
+
+            return edad >= 18;
+        }
         public override string ToString()
         {
             return string.Join("|",

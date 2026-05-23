@@ -2,6 +2,7 @@ using ENTITY;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace DAL
 {
@@ -30,6 +31,7 @@ namespace DAL
 
         public override string Guardar(Usuario u)
         {
+            MessageBox.Show($"Identificacion: {u.IdUsuario}");
             string sql = @"INSERT INTO usuarios (
                                id_usuario, username, password,
                                nombre_1, nombre_2,
@@ -37,7 +39,7 @@ namespace DAL
                                correo, fecha_nacimiento,
                                saldo, id_rol, id_estado, fecha_registro
                            ) VALUES (
-                               seq_usuarios.NEXTVAL, :username, :password,
+                               :idusuario, :username, :password,
                                :nombre1, :nombre2,
                                :apellido1, :apellido2,
                                :correo, TO_DATE(:fecha_nac, 'YYYY-MM-DD'),
@@ -48,6 +50,7 @@ namespace DAL
 
             return EjecutarComando(sql, new[]
             {
+                (":idusuario", (object)u.IdUsuario),
                 (":username",  (object)u.Username),
                 (":password",  (object)u.Password),
                 (":nombre1",   (object)u.Nombre1),

@@ -1,6 +1,7 @@
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.IO;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace DAL
@@ -11,7 +12,7 @@ namespace DAL
 
         private class ConfigOracle
         {
-            public string Host { get; set; } = "localhost";
+            public string Host { get; set; } = "25.40.255.112";
             public string Port { get; set; } = "1521";
             public string Service { get; set; } = "xepdb1";
             public string User { get; set; } = "sebas_casino";
@@ -20,7 +21,9 @@ namespace DAL
 
         public static OracleConnection Abrir()
         {
-            OracleConnection conexion = new OracleConnection(CrearCadenaConexion());
+            string cadena = CrearCadenaConexion();
+
+            OracleConnection conexion = new OracleConnection(cadena);
             conexion.Open();
             return conexion;
         }

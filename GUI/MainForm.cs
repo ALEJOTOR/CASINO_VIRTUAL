@@ -222,11 +222,9 @@ namespace GUI
             _lblMarca.BringToFront();
 
             _lblHeroTag = CrearLabel("LOBBY PRINCIPAL", CasinoTheme.Cyan, CasinoTheme.UiFont(9F, FontStyle.Bold), ContentAlignment.MiddleLeft);
-            _lblHeroDato = CrearLabel("Minas, ruleta y tragamonedas en una sola ventana.", CasinoTheme.Text, CasinoTheme.UiFont(10F, FontStyle.Bold), ContentAlignment.MiddleLeft);
             _lblSeccionJuegos = CrearLabel("Juegos destacados", CasinoTheme.Text, CasinoTheme.UiFont(16F, FontStyle.Bold), ContentAlignment.MiddleLeft);
 
             panelHero.Controls.Add(_lblHeroTag);
-            panelHero.Controls.Add(_lblHeroDato);
             panelHero.Controls.Add(_lblSeccionJuegos);
 
             _panelWallet = new Panel
@@ -345,7 +343,6 @@ namespace GUI
             lblBienvenido.SetBounds(margen, 44, Math.Max(360, heroW - walletW - margen * 3), 45);
             lblDescripcion.SetBounds(margen + 2, 92, Math.Max(360, heroW - walletW - margen * 3), 52);
             lblDescripcion.MaximumSize = new Size(lblDescripcion.Width, 0);
-            _lblHeroDato.SetBounds(margen + 2, 142, Math.Max(360, heroW - walletW - margen * 3), 26);
             _lblSeccionJuegos.SetBounds(margen, panelHero.ClientSize.Height - 34, 260, 28);
 
             if (compacto)
@@ -362,7 +359,7 @@ namespace GUI
 
             _lblMarca.SetBounds(18, 0, 170, panelNavbar.Height);
             menuStrip.Padding = new Padding(190, 0, 0, 0);
-            lblSaldo.SetBounds(Math.Max(420, panelNavbar.Width - 304), 10, 174, 34);
+            lblSaldo.SetBounds(Math.Max(420, panelNavbar.Width - 304), 10, 174, 40);
             btnCerrarSesion.SetBounds(panelNavbar.Width - 120, 12, 106, 30);
 
             ReubicarTarjeta(panelMinas);
