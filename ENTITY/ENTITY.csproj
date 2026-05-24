@@ -45,6 +45,7 @@
     <Compile Include="ConfiguracionJuego.cs" />
     <Compile Include="DetallePartida.cs" />
     <Compile Include="EstadoPartida.cs" />
+    <Compile Include="HistorialPartida.cs" />
     <Compile Include="Juego.cs" />
     <Compile Include="Partida.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

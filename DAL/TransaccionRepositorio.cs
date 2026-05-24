@@ -2,11 +2,14 @@ using ENTITY;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data;
 
 namespace DAL
 {
     public class TransaccionRepositorio : OracleBase<Transaccion>
     {
+        // ── CONSULTAS — no cambian, siguen contra la tabla directa ────────────
+
         public override IList<Transaccion> Consultar()
         {
             IList<Transaccion> lista = new List<Transaccion>();
@@ -60,57 +63,37 @@ namespace DAL
             });
         }
 
+        // ── DEPÓSITO — ahora delega en PKG_USUARIOS.pr_realizar_deposito ──────
+        // Antes: abría OracleTransaction manualmente, armaba el INSERT,
+        //        hacía commit/rollback en C#.
+        // Ahora: Oracle maneja todo eso internamente. El trigger
+        //        trg_actualizar_saldo sigue actualizando el saldo igual que antes.
+
         public string RegistrarDepositoConSaldo(int idUsuario, decimal monto)
         {
             using (OracleConnection con = ConexionOracle.Abrir())
-            using (OracleTransaction tx = con.BeginTransaction())
+            using (OracleCommand cmd = new OracleCommand("PKG_USUARIOS.pr_realizar_deposito", con))
             {
-                try
-                {
-                    EjecutarComandoTransaccional(con, tx,
-                        @"INSERT INTO transacciones (
-                              id_transaccion, id_usuario, tipo,
-                              monto, fecha, descripcion
-                          ) VALUES (
-                              seq_transacciones.NEXTVAL, :id_usuario, :tipo,
-                              :monto, CURRENT_TIMESTAMP, :descripcion
-                          )",
-                        new[]
-                        {
-                            (":id_usuario", (object)idUsuario),
-                            (":tipo", (object)"deposito"),
-                            (":monto", (object)monto),
-                            (":descripcion", (object)"Recarga de saldo")
-                        });
-
-                    tx.Commit();
-                    return "Deposito realizado correctamente.";
-                }
-                catch (Exception ex)
-                {
-                    try { tx.Rollback(); } catch { }
-                    return ex.Message;
-                }
-            }
-        }
-
-        private int EjecutarComandoTransaccional(
-            OracleConnection con,
-            OracleTransaction tx,
-            string sql,
-            (string nombre, object valor)[] parametros)
-        {
-            using (OracleCommand cmd = new OracleCommand(sql, con))
-            {
-                cmd.Transaction = tx;
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.BindByName = true;
 
-                foreach (var (nombre, valor) in parametros)
-                    cmd.Parameters.Add(new OracleParameter(nombre, valor));
+                cmd.Parameters.Add(new OracleParameter("p_id_usuario", idUsuario));
+                cmd.Parameters.Add(new OracleParameter("p_monto", monto));
 
-                return cmd.ExecuteNonQuery();
+                // Parámetro OUT: recibe 'Deposito realizado correctamente.' o el error
+                var pResultado = new OracleParameter("p_resultado", OracleDbType.Varchar2, 200)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                cmd.Parameters.Add(pResultado);
+
+                cmd.ExecuteNonQuery();
+
+                return pResultado.Value.ToString();
             }
         }
+
+        // ── Mapear — no cambia ────────────────────────────────────────────────
 
         private Transaccion Mapear(OracleDataReader r)
         {
@@ -120,7 +103,6 @@ namespace DAL
                 IdUsuario = r.GetInt32(1),
                 Tipo = r.GetString(2),
                 Monto = r.GetDecimal(3),
-                // Oracle devuelve TIMESTAMP como DateTime
                 Fecha = r.GetDateTime(4),
                 Descripcion = r.IsDBNull(5) ? null : r.GetString(5)
             };
