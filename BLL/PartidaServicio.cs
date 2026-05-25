@@ -22,23 +22,27 @@ namespace BLL
 
         public IList<Partida> ObtenerPorUsuario(int idUsuario)
         {
-            IList<Partida> resultado = new List<Partida>();
-            foreach (Partida p in _partidaRepo.Consultar())
-                if (p.IdUsuario == idUsuario) resultado.Add(p);
-            return resultado;
+            return _partidaRepo.ObtenerPorUsuario(idUsuario);
+        }
+
+        public IList<HistorialPartida> ObtenerHistorialPorUsuario(int idUsuario)
+        {
+            return _partidaRepo.ObtenerHistorialPorUsuario(idUsuario);
         }
 
         public IList<Transaccion> ObtenerTransaccionesPorUsuario(int idUsuario)
         {
-            IList<Transaccion> resultado = new List<Transaccion>();
-            foreach (Transaccion t in _transRepo.Consultar())
-                if (t.IdUsuario == idUsuario) resultado.Add(t);
-            return resultado;
+            return _transRepo.ObtenerPorUsuario(idUsuario);
         }
 
         public IList<Transaccion> ObtenerTodasTransacciones()
         {
             return _transRepo.Consultar();
+        }
+
+        public IList<Juego> ObtenerJuegos()
+        {
+            return _juegoRepo.Consultar();
         }
 
         public int ObtenerIdJuegoPorNombre(string nombre)
@@ -66,6 +70,11 @@ namespace BLL
             if (monto <= 0) return "El monto debe ser mayor a 0.";
 
             return _transRepo.RegistrarDepositoConSaldo(idUsuario, monto);
+        }
+
+        public string RealizarRetiro(int idUsuario, decimal monto)
+        {
+            return _usuarioSvc.RetirarSaldo(idUsuario, monto);
         }
 
         // ── Reportes ──────────────────────────────────────────────

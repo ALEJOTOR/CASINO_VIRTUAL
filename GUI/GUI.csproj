@@ -46,94 +46,67 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmAdmin.cs">
+    <Compile Include="Forms\Admin\FrmAdmin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CasinoTheme.cs" />
-    <Compile Include="FrmAdmin.Designer.cs">
+    <Compile Include="Core\CasinoTheme.cs" />
+    <Compile Include="Forms\Admin\FrmAdmin.Designer.cs">
       <DependentUpon>FrmAdmin.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmCliente.cs">
+    <Compile Include="Forms\Admin\FrmInputSaldo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmCliente.Designer.cs">
-      <DependentUpon>FrmCliente.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmInputSaldo.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmInputSaldo.Designer.cs">
+    <Compile Include="Forms\Admin\FrmInputSaldo.Designer.cs">
       <DependentUpon>FrmInputSaldo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmInputTexto.cs">
+    <Compile Include="Forms\Admin\FrmInputTexto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmInputTexto.Designer.cs">
+    <Compile Include="Forms\Admin\FrmInputTexto.Designer.cs">
       <DependentUpon>FrmInputTexto.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmLogin.cs">
+    <Compile Include="Forms\Auth\FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmLogin.Designer.cs">
+    <Compile Include="Forms\Auth\FrmLogin.Designer.cs">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmMinas.cs">
+    <Compile Include="Forms\Auth\FrmRegistro.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmMinas.Designer.cs">
-      <DependentUpon>FrmMinas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmRegistro.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmRegistro.Designer.cs">
+    <Compile Include="Forms\Auth\FrmRegistro.Designer.cs">
       <DependentUpon>FrmRegistro.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmRuleta.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmRuleta.Designer.cs">
-      <DependentUpon>FrmRuleta.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmTragamonedas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmTragamonedas.Designer.cs">
-      <DependentUpon>FrmTragamonedas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UcMinas.cs">
+    <Compile Include="Views\Games\UcMinas.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UcMinas.Designer.cs">
+    <Compile Include="Views\Games\UcMinas.Designer.cs">
       <DependentUpon>UcMinas.cs</DependentUpon>
     </Compile>
-    <Compile Include="UcRuleta.cs">
+    <Compile Include="Views\Games\UcRuleta.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UcRuleta.Designer.cs">
+    <Compile Include="Views\Games\UcRuleta.Designer.cs">
       <DependentUpon>UcRuleta.cs</DependentUpon>
     </Compile>
-    <Compile Include="UcTragamonedas.cs">
+    <Compile Include="Views\Games\UcTragamonedas.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UcTragamonedas.Designer.cs">
+    <Compile Include="Views\Games\UcTragamonedas.Designer.cs">
       <DependentUpon>UcTragamonedas.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Shell\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Shell\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FrmMinas.resx">
-      <DependentUpon>FrmMinas.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmRegistro.resx">
+    <EmbeddedResource Include="Forms\Auth\FrmRegistro.resx">
       <DependentUpon>FrmRegistro.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Shell\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -157,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="GUI_STRUCTURE.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\minas.png">

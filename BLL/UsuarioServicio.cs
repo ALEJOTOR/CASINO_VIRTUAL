@@ -102,6 +102,24 @@ namespace BLL
             });
         }
 
+        public string RetirarSaldo(int idUsuario, decimal monto)
+        {
+            if (monto <= 0) return "El monto debe ser mayor a 0.";
+
+            Usuario u = ObtenerPorId(idUsuario);
+            if (u == null) return "Usuario no encontrado.";
+            if (u.Saldo < monto) return "Saldo insuficiente.";
+
+            return _transaccionRepositorio.Guardar(new Transaccion
+            {
+                IdUsuario = idUsuario,
+                Tipo = "retiro",
+                Monto = monto,
+                Fecha = DateTime.Now,
+                Descripcion = "Retiro de saldo"
+            });
+        }
+
         public string ModificarSaldoAdmin(int idUsuario, decimal nuevoSaldo)
         {
             if (nuevoSaldo < 0) return "El saldo no puede ser negativo.";
@@ -169,6 +187,7 @@ namespace BLL
 
             Registrar(new Usuario
             {
+                IdUsuario = 1,
                 Username = "admin",
                 Password = "admin123",   // Registrar() hará el hash
                 Nombre1 = "Admin",
