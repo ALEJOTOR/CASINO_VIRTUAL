@@ -9,49 +9,8 @@ namespace BLL
     public class PartidaServicio
     {
         private readonly PartidaRepositorio _partidaRepo = new PartidaRepositorio();
-        private readonly TransaccionRepositorio _transRepo = new TransaccionRepositorio();
-        private readonly JuegoRepositorio _juegoRepo = new JuegoRepositorio();
         private readonly UsuarioServicio _usuarioSvc = new UsuarioServicio();
-
-        // ── Consultas ─────────────────────────────────────────────
-
-        public IList<Partida> ObtenerTodas()
-        {
-            return _partidaRepo.Consultar();
-        }
-
-        public IList<Partida> ObtenerPorUsuario(int idUsuario)
-        {
-            return _partidaRepo.ObtenerPorUsuario(idUsuario);
-        }
-
-        public IList<HistorialPartida> ObtenerHistorialPorUsuario(int idUsuario)
-        {
-            return _partidaRepo.ObtenerHistorialPorUsuario(idUsuario);
-        }
-
-        public IList<Transaccion> ObtenerTransaccionesPorUsuario(int idUsuario)
-        {
-            return _transRepo.ObtenerPorUsuario(idUsuario);
-        }
-
-        public IList<Transaccion> ObtenerTodasTransacciones()
-        {
-            return _transRepo.Consultar();
-        }
-
-        public IList<Juego> ObtenerJuegos()
-        {
-            return _juegoRepo.Consultar();
-        }
-
-        public int ObtenerIdJuegoPorNombre(string nombre)
-        {
-            Juego juego = _juegoRepo.ObtenerPorNombre(nombre);
-            return juego == null ? 0 : juego.IdJuego;
-        }
-
-        // ── Operaciones ───────────────────────────────────────────
+        private readonly JuegoServicio _juegoSvc = new JuegoServicio();
 
         public string RegistrarPartida(Partida p)
         {
@@ -65,38 +24,117 @@ namespace BLL
             return _partidaRepo.RegistrarConMovimientos(p);
         }
 
-        public string RealizarDeposito(int idUsuario, decimal monto)
+        public IList<Partida> ObtenerTodas()
         {
-            if (monto <= 0) return "El monto debe ser mayor a 0.";
-
-            return _transRepo.RegistrarDepositoConSaldo(idUsuario, monto);
+            return _partidaRepo.Consultar();
         }
 
-        public string RealizarRetiro(int idUsuario, decimal monto)
+        public IList<Partida> ObtenerPorUsuario(int idUsuario)
         {
-            return _usuarioSvc.RetirarSaldo(idUsuario, monto);
+            return _partidaRepo.ObtenerPorUsuario(idUsuario);
         }
 
-        // ── Reportes ──────────────────────────────────────────────
+        public int ObtenerIdJuegoPorNombre(string nombre)
+        {
+            return _juegoSvc.ObtenerIdPorNombre(nombre);
+        }
+
+        public IList<PartidaDisplayDto> ObtenerTodasConNombres()
+        {
+            IList<Partida> lista = _partidaRepo.Consultar();
+            IList<Usuario> usuarios = _usuarioSvc.ObtenerTodos();
+            IList<Juego> juegos = _juegoSvc.ObtenerTodos();
+            Dictionary<int, string> mapaUsuarios = usuarios.ToDictionary(u => u.IdUsuario, u => $"{u.Nombre1} {u.Apellido1}");
+            Dictionary<int, string> mapaJuegos = juegos.ToDictionary(j => j.IdJuego, j => j.Nombre);
+
+            return lista.Select(p => new PartidaDisplayDto
+            {
+                IdPartida = p.IdPartida,
+                Usuario = mapaUsuarios.ContainsKey(p.IdUsuario) ? mapaUsuarios[p.IdUsuario] : $"Usuario {p.IdUsuario}",
+                Juego = mapaJuegos.ContainsKey(p.IdJuego) ? mapaJuegos[p.IdJuego] : $"Juego {p.IdJuego}",
+                Estado = p.IdEstado == 1 ? "Activa" : p.IdEstado == 2 ? "Completada" : p.IdEstado == 3 ? "Cancelada" : $"Estado {p.IdEstado}",
+                Fecha = p.Fecha,
+                Apuesta = p.Apuesta,
+                Ganancia = p.Ganancia,
+                Resultado = p.Resultado ?? "Pendiente"
+            }).ToList();
+        }
 
         public string GenerarReporte()
         {
-            IList<Partida> partidas = _partidaRepo.Consultar();
-            int ganadas = partidas.Count(p => p.Resultado == "gano");
-            int perdidas = partidas.Count(p => p.Resultado == "perdio");
-            decimal apostado = partidas.Sum(p => p.Apuesta);
-            decimal ganado = partidas.Sum(p => p.Ganancia);
+            IList<Partida> lista = _partidaRepo.Consultar();
+            int total = lista.Count;
+            int ganadas = lista.Count(p => p.Resultado == "gano");
+            int perdidas = lista.Count(p => p.Resultado == "perdio");
+            decimal totalApostado = lista.Sum(p => p.Apuesta);
+            decimal totalGanado = lista.Sum(p => p.Ganancia);
 
             return $"REPORTE DE PARTIDAS\n" +
                    $"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm}\n" +
                    $"─────────────────────────────\n" +
-                   $"Total partidas:    {partidas.Count}\n" +
+                   $"Total partidas:    {total}\n" +
                    $"Ganadas:           {ganadas}\n" +
                    $"Perdidas:          {perdidas}\n" +
-                   $"Total apostado:    ${apostado:N2}\n" +
-                   $"Total ganado:      ${ganado:N2}\n" +
-                   $"Balance casino:    ${apostado - ganado:N2}\n";
+                   $"Total apostado:    ${totalApostado:N2}\n" +
+                   $"Total ganado:      ${totalGanado:N2}\n" +
+                   $"Ganancia neta:     ${totalGanado - totalApostado:N2}\n";
         }
 
+        public IList<HistorialPartida> ObtenerHistorialPorUsuario(int idUsuario)
+        {
+            return _partidaRepo.ObtenerHistorialPorUsuario(idUsuario);
+        }
+
+        public EstadisticasUsuario ObtenerEstadisticasUsuario(int idUsuario)
+        {
+            IList<Partida> partidas = _partidaRepo.ObtenerPorUsuario(idUsuario);
+
+            int total = partidas.Count;
+            int ganadas = partidas.Count(p => p.Resultado == "gano");
+            int perdidas = partidas.Count(p => p.Resultado == "perdio");
+            decimal totalApostado = partidas.Sum(p => p.Apuesta);
+            decimal totalGanado = partidas.Sum(p => p.Ganancia);
+
+            string favorito = partidas
+                .GroupBy(p => p.IdJuego)
+                .OrderByDescending(g => g.Count())
+                .Select(g =>
+                {
+                    Juego j = _juegoSvc.ObtenerTodos().FirstOrDefault(x => x.IdJuego == g.Key);
+                    return j?.Nombre ?? "Desconocido";
+                })
+                .FirstOrDefault() ?? "N/A";
+
+            int racha = 0;
+            string tipoRacha = "ninguna";
+            foreach (Partida p in partidas.OrderByDescending(p => p.Fecha))
+            {
+                if (p.Resultado == "gano" && (tipoRacha == "ninguna" || tipoRacha == "ganando"))
+                {
+                    racha++;
+                    tipoRacha = "ganando";
+                }
+                else if (p.Resultado == "perdio" && (tipoRacha == "ninguna" || tipoRacha == "perdiendo"))
+                {
+                    racha++;
+                    tipoRacha = "perdiendo";
+                }
+                else break;
+            }
+            if (racha == 0) tipoRacha = "ninguna";
+
+            return new EstadisticasUsuario
+            {
+                TotalPartidas = total,
+                PartidasGanadas = ganadas,
+                PartidasPerdidas = perdidas,
+                TotalApostado = totalApostado,
+                TotalGanado = totalGanado,
+                GananciaNeta = totalGanado - totalApostado,
+                JuegoFavorito = favorito,
+                RachaActual = racha,
+                TipoRacha = tipoRacha
+            };
+        }
     }
 }

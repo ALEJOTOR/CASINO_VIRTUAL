@@ -1,0 +1,217 @@
+using DAL;
+using ENTITY;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace BLL
+{
+    public class TransaccionServicio
+    {
+        private readonly TransaccionRepositorio _transRepo = new TransaccionRepositorio();
+        private readonly PartidaRepositorio _partidaRepo = new PartidaRepositorio();
+        private readonly JuegoRepositorio _juegoRepo = new JuegoRepositorio();
+        private readonly UsuarioServicio _usuarioSvc = new UsuarioServicio();
+
+        public string RealizarDeposito(int idUsuario, decimal monto)
+        {
+            if (monto <= 0) return "El monto debe ser mayor a 0.";
+            return _transRepo.RegistrarDepositoConSaldo(idUsuario, monto);
+        }
+
+        public string RealizarRetiro(int idUsuario, decimal monto)
+        {
+            return _usuarioSvc.RetirarSaldo(idUsuario, monto);
+        }
+
+        public IList<Transaccion> ObtenerPorUsuario(int idUsuario)
+        {
+            return _transRepo.ObtenerPorUsuario(idUsuario);
+        }
+
+        public IList<Transaccion> ObtenerTodas()
+        {
+            return _transRepo.Consultar();
+        }
+
+        public IList<TransaccionDisplayDto> ObtenerTodasConNombres()
+        {
+            IList<Transaccion> lista = _transRepo.Consultar();
+            IList<Usuario> usuarios = new UsuarioServicio().ObtenerTodos();
+            Dictionary<int, string> mapaUsuarios = usuarios.ToDictionary(u => u.IdUsuario, u => $"{u.Nombre1} {u.Apellido1}");
+
+            return lista.Select(t => new TransaccionDisplayDto
+            {
+                IdTransaccion = t.IdTransaccion,
+                Usuario = mapaUsuarios.ContainsKey(t.IdUsuario) ? mapaUsuarios[t.IdUsuario] : $"Usuario {t.IdUsuario}",
+                Tipo = char.ToUpper(t.Tipo[0]) + t.Tipo.Substring(1),
+                Monto = t.Monto,
+                Fecha = t.Fecha,
+                Descripcion = t.Descripcion ?? ""
+            }).ToList();
+        }
+
+        public IList<MovimientoResumen> ObtenerMovimientosResumen(
+            int idUsuario, string categoria, string filtro,
+            DateTime desde, DateTime hasta)
+        {
+            List<MovimientoResumen> resultado = new List<MovimientoResumen>();
+            Dictionary<int, string> nombresJuegos = ObtenerMapaNombresJuegos();
+
+            if (categoria == "Todos" || categoria == "Depositos")
+            {
+                foreach (Transaccion t in _transRepo.ObtenerPorUsuario(idUsuario))
+                {
+                    if (categoria == "Depositos" && t.Tipo != "deposito" && t.Tipo != "retiro")
+                        continue;
+
+                    bool entrada = t.Tipo == "deposito" || t.Tipo == "ganancia";
+                    MovimientoResumen m = new MovimientoResumen
+                    {
+                        Titulo = ResolverDescripcionMovimiento(t.Descripcion ?? t.Tipo, nombresJuegos),
+                        Tipo = t.Tipo,
+                        Fecha = t.Fecha,
+                        Monto = entrada ? t.Monto : -t.Monto
+                    };
+
+                    if (m.Fecha >= desde && m.Fecha <= hasta && CumpleFiltro(categoria, filtro, m))
+                        resultado.Add(m);
+                }
+            }
+            else
+            {
+                foreach (HistorialPartida p in _partidaRepo.ObtenerHistorialPorUsuario(idUsuario))
+                {
+                    string juego = ResolverNombreJuego(p.NombreJuego, nombresJuegos);
+
+                    MovimientoResumen apuesta = new MovimientoResumen
+                    {
+                        Titulo = $"{juego}: monto apostado",
+                        Tipo = "perdida",
+                        Fecha = p.Fecha,
+                        Monto = -p.Apuesta
+                    };
+
+                    if (apuesta.Fecha >= desde && apuesta.Fecha <= hasta &&
+                        CumpleFiltro(categoria, filtro, apuesta))
+                        resultado.Add(apuesta);
+
+                    if (p.Ganancia > 0)
+                    {
+                        MovimientoResumen ganancia = new MovimientoResumen
+                        {
+                            Titulo = $"{juego}: resultado de la apuesta",
+                            Tipo = "ganancia",
+                            Fecha = p.Fecha,
+                            Monto = p.Ganancia
+                        };
+
+                        if (ganancia.Fecha >= desde && ganancia.Fecha <= hasta &&
+                            CumpleFiltro(categoria, filtro, ganancia))
+                            resultado.Add(ganancia);
+                    }
+                }
+            }
+
+            return resultado.OrderByDescending(m => m.Fecha).ToList();
+        }
+
+        private bool CumpleFiltro(string categoria, string filtro, MovimientoResumen m)
+        {
+            if (filtro == "Todos" || filtro == "Todas") return true;
+
+            if (categoria == "Apuestas")
+            {
+                if (filtro == "Montos apostados") return m.Tipo == "perdida";
+                if (filtro == "Premios ganados") return m.Tipo == "ganancia";
+            }
+
+            if (categoria == "Depositos")
+            {
+                if (filtro == "Depositos") return m.Tipo == "deposito";
+                if (filtro == "Retiros") return m.Tipo == "retiro";
+            }
+
+            if (filtro == "Depositos") return m.Tipo == "deposito";
+            if (filtro == "Retiros") return m.Tipo == "retiro";
+            if (filtro == "Apuestas") return m.Tipo == "perdida";
+            if (filtro == "Ganancias") return m.Tipo == "ganancia";
+
+            return true;
+        }
+
+        private string ResolverDescripcionMovimiento(string descripcion, Dictionary<int, string> nombresJuegos)
+        {
+            if (string.IsNullOrWhiteSpace(descripcion)) return "Movimiento";
+
+            string texto = descripcion.Trim();
+            string lower = texto.ToLower();
+            int indiceJuego = lower.IndexOf("juego");
+            if (indiceJuego < 0) return texto;
+
+            int inicioNumero = indiceJuego + "juego".Length;
+            while (inicioNumero < texto.Length && texto[inicioNumero] == ' ')
+                inicioNumero++;
+
+            int finNumero = inicioNumero;
+            while (finNumero < texto.Length && char.IsDigit(texto[finNumero]))
+                finNumero++;
+
+            if (finNumero == inicioNumero) return texto;
+
+            string numero = texto.Substring(inicioNumero, finNumero - inicioNumero);
+            if (!int.TryParse(numero, out int idJuego)) return texto;
+
+            string nombre = ResolverNombreJuego(numero, nombresJuegos);
+            if (nombre == numero || nombre.ToLower().Contains("juego"))
+                nombre = NombreJuegoConocido(idJuego);
+
+            string reemplazo = texto.Substring(indiceJuego, finNumero - indiceJuego);
+            return texto.Replace(reemplazo, nombre);
+        }
+
+        private Dictionary<int, string> ObtenerMapaNombresJuegos()
+        {
+            try
+            {
+                return _juegoRepo.Consultar()
+                    .GroupBy(j => j.IdJuego)
+                    .ToDictionary(g => g.Key, g => g.First().Nombre);
+            }
+            catch
+            {
+                return new Dictionary<int, string>();
+            }
+        }
+
+        private string ResolverNombreJuego(string valor, Dictionary<int, string> nombresJuegos)
+        {
+            if (string.IsNullOrWhiteSpace(valor)) return "Juego";
+
+            string texto = valor.Trim();
+            string lower = texto.ToLower();
+            int id = 0;
+
+            if (lower.Contains("juego"))
+            {
+                string digitos = new string(texto.Where(char.IsDigit).ToArray());
+                if (int.TryParse(digitos, out id) && nombresJuegos.ContainsKey(id))
+                    return nombresJuegos[id];
+            }
+
+            if (int.TryParse(texto, out id) && nombresJuegos.ContainsKey(id))
+                return nombresJuegos[id];
+
+            return texto;
+        }
+
+        private string NombreJuegoConocido(int idJuego)
+        {
+            if (idJuego == 1) return "Minas";
+            if (idJuego == 2) return "Ruleta";
+            if (idJuego == 3) return "Tragamonedas";
+            if (idJuego == 4) return "Tragamonedas";
+            return "Juego";
+        }
+    }
+}

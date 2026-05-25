@@ -21,6 +21,11 @@ namespace BLL
             return _repositorio.Consultar();
         }
 
+        public IList<Usuario> ObtenerActivos()
+        {
+            return _repositorio.Consultar().Where(u => u.Estado == "activo").ToList();
+        }
+
         public Usuario ObtenerPorId(int id)
         {
             return _repositorio.ObtenerPorId(id);

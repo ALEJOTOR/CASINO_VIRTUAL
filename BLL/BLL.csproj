@@ -42,8 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InicializadorServicio.cs" />
+    <Compile Include="AdminServicio.cs" />
+    <Compile Include="JuegoServicio.cs" />
     <Compile Include="PartidaServicio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransaccionServicio.cs" />
     <Compile Include="UsuarioServicio.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -8,9 +8,13 @@ using System.Windows.Forms;
 
 namespace GUI
 {
-    public partial class UcRuleta : UserControl
+    public partial class UcRuleta : UserControl, IVistaJuego
     {
         public event EventHandler SaldoActualizado;
+
+        public void InicializarJuego(Usuario usuario)
+        {
+        }
 
         private readonly Usuario _usuario;
         private readonly PartidaServicio _servicio = new PartidaServicio();
