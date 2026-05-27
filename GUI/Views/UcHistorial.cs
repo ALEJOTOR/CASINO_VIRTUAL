@@ -17,12 +17,19 @@ namespace GUI
         {
             _usuario = usuario;
             InitializeComponent();
+            // Problema visual que resuelve: transacciones comparte fondo, tipografia y botones del resto del lobby.
+            AppTheme.ApplyView(this);
+            AppTheme.ApplyPrimaryButton(btnTodos, AppTheme.BgHover);
+            AppTheme.ApplyPrimaryButton(btnApuestas, AppTheme.BgHover);
+            AppTheme.ApplyPrimaryButton(btnDepositos, AppTheme.BgHover);
             CargarVista("Todos", 30);
         }
 
         public UcHistorial()
         {
             InitializeComponent();
+            // Problema visual que resuelve: mantiene consistente la vista en el Designer y en ejecucion.
+            AppTheme.ApplyView(this);
         }
 
         private void CargarVista(string categoria, int dias)
@@ -58,7 +65,7 @@ namespace GUI
             Label lblDesde = ControlFactory.CrearLabel("Desde", CasinoTheme.Muted, CasinoTheme.UiFont(8.5F, FontStyle.Bold), ContentAlignment.MiddleLeft);
             Label lblHasta = ControlFactory.CrearLabel("Hasta", CasinoTheme.Muted, CasinoTheme.UiFont(8.5F, FontStyle.Bold), ContentAlignment.MiddleLeft);
 
-            CasinoTheme.StyleActionButton(buscar, CasinoTheme.SurfaceAlt);
+            AppTheme.ApplyPrimaryButton(buscar, AppTheme.BgHover);
             CargarOpcionesFiltro(cboFiltro, categoria);
             hasta.Text = DateTime.Today.ToString("dd/MM/yyyy");
             desde.Text = DateTime.Today.AddDays(-dias).ToString("dd/MM/yyyy");

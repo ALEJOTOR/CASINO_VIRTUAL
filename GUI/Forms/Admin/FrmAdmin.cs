@@ -25,20 +25,23 @@ namespace GUI
 
         private void AplicarEstiloVisual()
         {
-            CasinoTheme.StylePage(this);
-            CasinoTheme.StyleHeader(panelNavbar);
-            CasinoTheme.StyleActionButton(btnCerrarSesion, CasinoTheme.Red);
-            mainLayout.BackColor = CasinoTheme.Page;
-            pnlContenido.BackColor = CasinoTheme.Page;
+            // Problema visual que resuelve: el panel admin comparte fondo, animacion inicial y navbar con el lobby.
+            AppTheme.ApplyForm(this);
+            AppTheme.ApplyNavbar(panelNavbar);
+            AppTheme.ApplyPrimaryButton(btnCerrarSesion, ColorTranslator.FromHtml("#E53E3E"));
+            mainLayout.BackColor = AppTheme.BgPrincipal;
+            pnlContenido.BackColor = AppTheme.BgPrincipal;
             panelNavbar.Margin = Padding.Empty;
             pnlContenido.Margin = Padding.Empty;
             mainLayout.Margin = Padding.Empty;
             menuStrip.RenderMode = ToolStripRenderMode.Professional;
             menuStrip.Renderer = new ToolStripProfessionalRenderer(new CasinoMenuColors());
+            AppTheme.ApplyTitle(lblAdminNombre);
             foreach (ToolStripMenuItem item in menuStrip.Items)
             {
-                item.Font = CasinoTheme.UiFont(11F, FontStyle.Bold);
-                item.ForeColor = CasinoTheme.Text;
+                // Problema visual que resuelve: los enlaces administrativos tienen la misma lectura y hover que el lobby.
+                item.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+                item.ForeColor = AppTheme.TextoPrimario;
                 item.Margin = new Padding(6, 0, 6, 0);
             }
         }
@@ -104,12 +107,12 @@ namespace GUI
 
         private sealed class CasinoMenuColors : ProfessionalColorTable
         {
-            public override Color MenuItemSelected => CasinoTheme.SurfaceAlt;
-            public override Color MenuItemBorder => CasinoTheme.Border;
-            public override Color ToolStripDropDownBackground => CasinoTheme.Header;
-            public override Color ImageMarginGradientBegin => CasinoTheme.Header;
-            public override Color ImageMarginGradientMiddle => CasinoTheme.Header;
-            public override Color ImageMarginGradientEnd => CasinoTheme.Header;
+            public override Color MenuItemSelected => AppTheme.BgHover;
+            public override Color MenuItemBorder => AppTheme.Dorado;
+            public override Color ToolStripDropDownBackground => AppTheme.BgNavbar;
+            public override Color ImageMarginGradientBegin => AppTheme.BgNavbar;
+            public override Color ImageMarginGradientMiddle => AppTheme.BgNavbar;
+            public override Color ImageMarginGradientEnd => AppTheme.BgNavbar;
         }
     }
 }

@@ -1,5 +1,6 @@
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using BLL;
 using ENTITY;
 
@@ -12,6 +13,37 @@ namespace GUI
         public FrmRegistro()
         {
             InitializeComponent();
+            // Problema visual que resuelve: el registro se agrupa en una tarjeta central y evita campos dispersos.
+            AppTheme.ApplyForm(this);
+            AppTheme.ApplyTitle(lblTitulo);
+            AppTheme.ApplyTypography(this);
+            AppTheme.ApplyPrimaryButton(btnGuardar);
+            AppTheme.ApplyPrimaryButton(btnCancelar, AppTheme.BgHover);
+            CrearTarjetaRegistro();
+        }
+
+        private void CrearTarjetaRegistro()
+        {
+            // Problema visual que resuelve: agrega margen externo de 24px y un contenedor redondeado sin alterar la logica de registro.
+            Panel card = new Panel
+            {
+                BackColor = AppTheme.BgCard,
+                Location = new Point(24, 24),
+                Size = new Size(ClientSize.Width - 48, ClientSize.Height - 48),
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
+            };
+            Controls.Add(card);
+            card.SendToBack();
+            AppTheme.ApplyCard(card, 12);
+
+            foreach (Control control in Controls.Cast<Control>().Where(c => c != card).ToList())
+            {
+                Point screen = control.PointToScreen(Point.Empty);
+                Point local = card.PointToClient(screen);
+                Controls.Remove(control);
+                control.Location = local;
+                card.Controls.Add(control);
+            }
         }
 
         private void btnGuardar_Click(object sender, System.EventArgs e)

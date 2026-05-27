@@ -15,6 +15,14 @@ namespace GUI
         public UcGestionUsuarios()
         {
             InitializeComponent();
+            // Problema visual que resuelve: filtros y grilla de usuarios usan el mismo lenguaje visual del admin.
+            AppTheme.ApplyView(this);
+            AppTheme.ApplyTitle(lblTitulo);
+            AppTheme.ApplyCard(pnlFiltros, 8);
+            AppTheme.ApplyTextBox(txtBuscar);
+            AppTheme.ApplyCombo(cboEstado);
+            AppTheme.ApplyPrimaryButton(btnCambiarEstado, AppTheme.Azul);
+            AppTheme.ApplyDataGrid(dgvUsuarios);
             CargarUsuarios();
         }
 

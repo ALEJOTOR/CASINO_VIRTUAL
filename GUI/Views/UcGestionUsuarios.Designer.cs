@@ -24,11 +24,12 @@ namespace GUI
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.SuspendLayout();
 
-            this.lblTitulo.Font = new System.Drawing.Font("Georgia", 26F, System.Drawing.FontStyle.Bold);
+            this.lblTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblTitulo.Font = new System.Drawing.Font("Georgia", 25F, System.Drawing.FontStyle.Bold);
             this.lblTitulo.ForeColor = System.Drawing.Color.FromArgb(250, 204, 21);
-            this.lblTitulo.Location = new System.Drawing.Point(34, 16);
+            this.lblTitulo.Location = new System.Drawing.Point(34, 22);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(600, 44);
+            this.lblTitulo.Size = new System.Drawing.Size(1248, 62);
             this.lblTitulo.Text = "Gestion de Usuarios";
             this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
@@ -39,22 +40,22 @@ namespace GUI
             this.pnlFiltros.Controls.Add(this.txtBuscar);
             this.pnlFiltros.Controls.Add(this.lblBuscar);
             this.pnlFiltros.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlFiltros.Location = new System.Drawing.Point(0, 68);
+            this.pnlFiltros.Location = new System.Drawing.Point(34, 84);
             this.pnlFiltros.Name = "pnlFiltros";
-            this.pnlFiltros.Padding = new System.Windows.Forms.Padding(34, 16, 34, 16);
-            this.pnlFiltros.Size = new System.Drawing.Size(1316, 76);
+            this.pnlFiltros.Padding = new System.Windows.Forms.Padding(18, 14, 18, 14);
+            this.pnlFiltros.Size = new System.Drawing.Size(1248, 78);
             this.pnlFiltros.TabIndex = 1;
 
             this.lblBuscar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblBuscar.ForeColor = System.Drawing.Color.FromArgb(203, 213, 225);
-            this.lblBuscar.Location = new System.Drawing.Point(34, 16);
+            this.lblBuscar.Location = new System.Drawing.Point(18, 14);
             this.lblBuscar.Size = new System.Drawing.Size(100, 20);
             this.lblBuscar.Text = "Buscar";
             this.txtBuscar.BackColor = System.Drawing.Color.FromArgb(8, 20, 34);
             this.txtBuscar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.txtBuscar.ForeColor = System.Drawing.Color.FromArgb(241, 245, 249);
-            this.txtBuscar.Location = new System.Drawing.Point(34, 36);
+            this.txtBuscar.Location = new System.Drawing.Point(18, 38);
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(280, 27);
             this.txtBuscar.TabIndex = 1;
@@ -62,7 +63,7 @@ namespace GUI
 
             this.lblEstado.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblEstado.ForeColor = System.Drawing.Color.FromArgb(203, 213, 225);
-            this.lblEstado.Location = new System.Drawing.Point(340, 16);
+            this.lblEstado.Location = new System.Drawing.Point(324, 14);
             this.lblEstado.Size = new System.Drawing.Size(100, 20);
             this.lblEstado.Text = "Estado";
             this.cboEstado.BackColor = System.Drawing.Color.FromArgb(8, 20, 34);
@@ -70,7 +71,7 @@ namespace GUI
             this.cboEstado.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.cboEstado.ForeColor = System.Drawing.Color.FromArgb(241, 245, 249);
             this.cboEstado.Items.AddRange(new object[] { "Todos", "activo", "suspendido", "inactivo" });
-            this.cboEstado.Location = new System.Drawing.Point(340, 36);
+            this.cboEstado.Location = new System.Drawing.Point(324, 38);
             this.cboEstado.Name = "cboEstado";
             this.cboEstado.Size = new System.Drawing.Size(160, 28);
             this.cboEstado.TabIndex = 2;
@@ -83,7 +84,8 @@ namespace GUI
             this.btnCambiarEstado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCambiarEstado.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnCambiarEstado.ForeColor = System.Drawing.Color.White;
-            this.btnCambiarEstado.Location = new System.Drawing.Point(740, 30);
+            this.btnCambiarEstado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCambiarEstado.Location = new System.Drawing.Point(1058, 29);
             this.btnCambiarEstado.Name = "btnCambiarEstado";
             this.btnCambiarEstado.Size = new System.Drawing.Size(170, 34);
             this.btnCambiarEstado.TabIndex = 3;
@@ -97,7 +99,7 @@ namespace GUI
             this.dgvUsuarios.BackgroundColor = System.Drawing.Color.FromArgb(8, 13, 24);
             this.dgvUsuarios.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvUsuarios.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvUsuarios.Location = new System.Drawing.Point(0, 144);
+            this.dgvUsuarios.Location = new System.Drawing.Point(34, 162);
             this.dgvUsuarios.Name = "dgvUsuarios";
             this.dgvUsuarios.ReadOnly = true;
             this.dgvUsuarios.RowHeadersVisible = false;
@@ -105,7 +107,7 @@ namespace GUI
             this.dgvUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             this.dgvUsuarios.ColumnHeadersHeight = 42;
             this.dgvUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsuarios.Size = new System.Drawing.Size(1316, 642);
+            this.dgvUsuarios.Size = new System.Drawing.Size(1248, 590);
             this.dgvUsuarios.TabIndex = 2;
             this.dgvUsuarios.EnableHeadersVisualStyles = false;
             this.dgvUsuarios.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(23, 37, 63);
@@ -130,6 +132,7 @@ namespace GUI
             this.Controls.Add(this.lblTitulo);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Name = "UcGestionUsuarios";
+            this.Padding = new System.Windows.Forms.Padding(34, 22, 34, 34);
             this.Size = new System.Drawing.Size(1316, 786);
             this.pnlFiltros.ResumeLayout(false);
             this.pnlFiltros.PerformLayout();

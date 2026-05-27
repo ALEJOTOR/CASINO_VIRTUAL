@@ -8,6 +8,10 @@ namespace GUI
         public UcAdminGrid()
         {
             InitializeComponent();
+            // Problema visual que resuelve: las tablas administrativas quedan legibles y alineadas con la paleta del sistema.
+            AppTheme.ApplyView(this);
+            AppTheme.ApplyTitle(lblTitulo);
+            AppTheme.ApplyDataGrid(dgvDatos);
         }
 
         public void Configurar(string titulo, string[] columnasVisibles, string[] encabezados)

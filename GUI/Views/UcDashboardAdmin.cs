@@ -15,6 +15,12 @@ namespace GUI
         public UcDashboardAdmin()
         {
             InitializeComponent();
+            // Problema visual que resuelve: dashboard admin hereda tema, tarjetas y tabla consistente.
+            AppTheme.ApplyView(this);
+            AppTheme.ApplyTitle(lblTitulo);
+            foreach (Panel card in new[] { cardTotalUsuarios, cardPartidasHoy, cardIngresosHoy, cardGananciaCasaHoy, pnlTopJugadores })
+                AppTheme.ApplyCard(card, 10);
+            AppTheme.ApplyDataGrid(dgvTopJugadores);
             CargarDatos();
         }
 
@@ -36,7 +42,7 @@ namespace GUI
             catch (Exception ex)
             {
                 Label[] targets = { lblTotalUsuariosValor, lblPartidasHoyValor, lblIngresosHoyValor, lblGananciaCasaHoyValor };
-                foreach (var t in targets) t.Text = "—";
+                foreach (var t in targets) t.Text = "--";
                 MessageBox.Show($"Error al cargar datos: {ex.Message}", "Dashboard",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -71,7 +77,7 @@ namespace GUI
             area.AxisY.LabelStyle.Format = "C0";
             chartIngresos.ChartAreas.Add(area);
 
-            chartIngresos.Titles.Add(new Title("Ingresos y Ganancia — Últimos 30 Días",
+            chartIngresos.Titles.Add(new Title("Ingresos y Ganancia - Ultimos 30 Dias",
                 Docking.Top, new Font("Segoe UI", 11F, FontStyle.Bold), CasinoTheme.Text));
 
             Dictionary<DateTime, decimal> ingresos = _adminSvc.ObtenerIngresosPorDia(30);

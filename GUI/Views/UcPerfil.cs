@@ -15,12 +15,18 @@ namespace GUI
         {
             _usuario = usuario;
             InitializeComponent();
+            // Problema visual que resuelve: perfil usa tarjetas, textos y colores comunes del tema global.
+            AppTheme.ApplyView(this);
+            AppTheme.ApplyCard(pnlDatosPersonales, 12);
+            AppTheme.ApplyCard(pnlEstadisticas, 12);
             CargarDatos();
         }
 
         public UcPerfil()
         {
             InitializeComponent();
+            // Problema visual que resuelve: el perfil conserva la misma estetica cuando se abre desde el Designer.
+            AppTheme.ApplyView(this);
         }
 
         private void CargarDatos()

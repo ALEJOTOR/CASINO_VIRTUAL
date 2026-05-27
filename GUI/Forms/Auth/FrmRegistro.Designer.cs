@@ -41,13 +41,13 @@ namespace GUI
             // 
             // lblTitulo
             // 
-            this.lblTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(24)))), ((int)(((byte)(39)))));
+            this.lblTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(16)))), ((int)(((byte)(30)))));
             this.lblTitulo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.lblTitulo.Font = new System.Drawing.Font("Georgia", 24F, System.Drawing.FontStyle.Bold);
             this.lblTitulo.ForeColor = System.Drawing.Color.Gold;
             this.lblTitulo.Location = new System.Drawing.Point(0, 0);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(520, 64);
+            this.lblTitulo.Size = new System.Drawing.Size(640, 76);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Crear cuenta";
             this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -57,7 +57,7 @@ namespace GUI
             this.lblUsername.AutoSize = true;
             this.lblUsername.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblUsername.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblUsername.Location = new System.Drawing.Point(110, 152);
+            this.lblUsername.Location = new System.Drawing.Point(92, 154);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new System.Drawing.Size(64, 19);
             this.lblUsername.TabIndex = 1;
@@ -68,7 +68,7 @@ namespace GUI
             this.lblPassword.AutoSize = true;
             this.lblPassword.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblPassword.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblPassword.Location = new System.Drawing.Point(86, 190);
+            this.lblPassword.Location = new System.Drawing.Point(68, 196);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(88, 19);
             this.lblPassword.TabIndex = 3;
@@ -79,7 +79,7 @@ namespace GUI
             this.lblNombre1.AutoSize = true;
             this.lblNombre1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblNombre1.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblNombre1.Location = new System.Drawing.Point(58, 228);
+            this.lblNombre1.Location = new System.Drawing.Point(40, 238);
             this.lblNombre1.Name = "lblNombre1";
             this.lblNombre1.Size = new System.Drawing.Size(116, 19);
             this.lblNombre1.TabIndex = 5;
@@ -90,7 +90,7 @@ namespace GUI
             this.lblNombre2.AutoSize = true;
             this.lblNombre2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblNombre2.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblNombre2.Location = new System.Drawing.Point(45, 266);
+            this.lblNombre2.Location = new System.Drawing.Point(27, 280);
             this.lblNombre2.Name = "lblNombre2";
             this.lblNombre2.Size = new System.Drawing.Size(129, 19);
             this.lblNombre2.TabIndex = 7;
@@ -101,7 +101,7 @@ namespace GUI
             this.lblApellido1.AutoSize = true;
             this.lblApellido1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblApellido1.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblApellido1.Location = new System.Drawing.Point(56, 304);
+            this.lblApellido1.Location = new System.Drawing.Point(38, 322);
             this.lblApellido1.Name = "lblApellido1";
             this.lblApellido1.Size = new System.Drawing.Size(118, 19);
             this.lblApellido1.TabIndex = 9;
@@ -112,7 +112,7 @@ namespace GUI
             this.lblApellido2.AutoSize = true;
             this.lblApellido2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblApellido2.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblApellido2.Location = new System.Drawing.Point(43, 342);
+            this.lblApellido2.Location = new System.Drawing.Point(25, 364);
             this.lblApellido2.Name = "lblApellido2";
             this.lblApellido2.Size = new System.Drawing.Size(131, 19);
             this.lblApellido2.TabIndex = 11;
@@ -123,7 +123,7 @@ namespace GUI
             this.lblCorreo.AutoSize = true;
             this.lblCorreo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblCorreo.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblCorreo.Location = new System.Drawing.Point(114, 380);
+            this.lblCorreo.Location = new System.Drawing.Point(96, 406);
             this.lblCorreo.Name = "lblCorreo";
             this.lblCorreo.Size = new System.Drawing.Size(60, 19);
             this.lblCorreo.TabIndex = 13;
@@ -134,7 +134,7 @@ namespace GUI
             this.lblFechaNac.AutoSize = true;
             this.lblFechaNac.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblFechaNac.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblFechaNac.Location = new System.Drawing.Point(45, 418);
+            this.lblFechaNac.Location = new System.Drawing.Point(27, 448);
             this.lblFechaNac.Name = "lblFechaNac";
             this.lblFechaNac.Size = new System.Drawing.Size(129, 19);
             this.lblFechaNac.TabIndex = 15;
@@ -144,85 +144,92 @@ namespace GUI
             // 
             this.txtUsername.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.txtUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(37)))), ((int)(((byte)(63)))));
             this.txtUsername.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUsername.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtUsername.Location = new System.Drawing.Point(210, 150);
+            this.txtUsername.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtUsername.Location = new System.Drawing.Point(220, 152);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(260, 25);
+            this.txtUsername.Size = new System.Drawing.Size(340, 25);
             this.txtUsername.TabIndex = 2;
             // 
             // txtPassword
             // 
             this.txtPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(37)))), ((int)(((byte)(63)))));
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPassword.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtPassword.Location = new System.Drawing.Point(210, 188);
+            this.txtPassword.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtPassword.Location = new System.Drawing.Point(220, 194);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(260, 25);
+            this.txtPassword.Size = new System.Drawing.Size(340, 25);
             this.txtPassword.TabIndex = 4;
             // 
             // txtNombre1
             // 
             this.txtNombre1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtNombre1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.txtNombre1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(37)))), ((int)(((byte)(63)))));
             this.txtNombre1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtNombre1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtNombre1.Location = new System.Drawing.Point(210, 226);
+            this.txtNombre1.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtNombre1.Location = new System.Drawing.Point(220, 236);
             this.txtNombre1.Name = "txtNombre1";
-            this.txtNombre1.Size = new System.Drawing.Size(260, 25);
+            this.txtNombre1.Size = new System.Drawing.Size(340, 25);
             this.txtNombre1.TabIndex = 6;
             // 
             // txtNombre2
             // 
             this.txtNombre2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtNombre2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.txtNombre2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(37)))), ((int)(((byte)(63)))));
             this.txtNombre2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtNombre2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtNombre2.Location = new System.Drawing.Point(210, 264);
+            this.txtNombre2.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtNombre2.Location = new System.Drawing.Point(220, 278);
             this.txtNombre2.Name = "txtNombre2";
-            this.txtNombre2.Size = new System.Drawing.Size(260, 25);
+            this.txtNombre2.Size = new System.Drawing.Size(340, 25);
             this.txtNombre2.TabIndex = 8;
             // 
             // txtApellido1
             // 
             this.txtApellido1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtApellido1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.txtApellido1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(37)))), ((int)(((byte)(63)))));
             this.txtApellido1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtApellido1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtApellido1.Location = new System.Drawing.Point(210, 302);
+            this.txtApellido1.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtApellido1.Location = new System.Drawing.Point(220, 320);
             this.txtApellido1.Name = "txtApellido1";
-            this.txtApellido1.Size = new System.Drawing.Size(260, 25);
+            this.txtApellido1.Size = new System.Drawing.Size(340, 25);
             this.txtApellido1.TabIndex = 10;
             // 
             // txtApellido2
             // 
             this.txtApellido2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtApellido2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.txtApellido2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(37)))), ((int)(((byte)(63)))));
             this.txtApellido2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtApellido2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtApellido2.Location = new System.Drawing.Point(210, 340);
+            this.txtApellido2.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtApellido2.Location = new System.Drawing.Point(220, 362);
             this.txtApellido2.Name = "txtApellido2";
-            this.txtApellido2.Size = new System.Drawing.Size(260, 25);
+            this.txtApellido2.Size = new System.Drawing.Size(340, 25);
             this.txtApellido2.TabIndex = 12;
             // 
             // txtCorreo
             // 
             this.txtCorreo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCorreo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.txtCorreo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(37)))), ((int)(((byte)(63)))));
             this.txtCorreo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCorreo.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtCorreo.Location = new System.Drawing.Point(210, 378);
+            this.txtCorreo.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtCorreo.Location = new System.Drawing.Point(220, 404);
             this.txtCorreo.Name = "txtCorreo";
-            this.txtCorreo.Size = new System.Drawing.Size(260, 25);
+            this.txtCorreo.Size = new System.Drawing.Size(340, 25);
             this.txtCorreo.TabIndex = 14;
             // 
             // dtpFechaNac
@@ -232,23 +239,23 @@ namespace GUI
             this.dtpFechaNac.CalendarFont = new System.Drawing.Font("Segoe UI", 9F);
             this.dtpFechaNac.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.dtpFechaNac.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaNac.Location = new System.Drawing.Point(210, 416);
+            this.dtpFechaNac.Location = new System.Drawing.Point(220, 446);
             this.dtpFechaNac.Name = "dtpFechaNac";
-            this.dtpFechaNac.Size = new System.Drawing.Size(260, 25);
+            this.dtpFechaNac.Size = new System.Drawing.Size(340, 25);
             this.dtpFechaNac.TabIndex = 16;
             // 
             // btnGuardar
             // 
             this.btnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
+            this.btnGuardar.BackColor = System.Drawing.Color.Gold;
             this.btnGuardar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnGuardar.FlatAppearance.BorderSize = 0;
             this.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGuardar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnGuardar.ForeColor = System.Drawing.Color.White;
-            this.btnGuardar.Location = new System.Drawing.Point(210, 524);
+            this.btnGuardar.ForeColor = System.Drawing.Color.Black;
+            this.btnGuardar.Location = new System.Drawing.Point(220, 520);
             this.btnGuardar.Name = "btnGuardar";
-            this.btnGuardar.Size = new System.Drawing.Size(125, 38);
+            this.btnGuardar.Size = new System.Drawing.Size(160, 40);
             this.btnGuardar.TabIndex = 17;
             this.btnGuardar.Text = "Registrar";
             this.btnGuardar.UseVisualStyleBackColor = false;
@@ -257,15 +264,15 @@ namespace GUI
             // btnCancelar
             // 
             this.btnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.btnCancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(37)))), ((int)(((byte)(53)))));
             this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancelar.FlatAppearance.BorderSize = 0;
             this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancelar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnCancelar.ForeColor = System.Drawing.Color.White;
-            this.btnCancelar.Location = new System.Drawing.Point(345, 524);
+            this.btnCancelar.Location = new System.Drawing.Point(400, 520);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(125, 38);
+            this.btnCancelar.Size = new System.Drawing.Size(160, 40);
             this.btnCancelar.TabIndex = 18;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = false;
@@ -276,30 +283,31 @@ namespace GUI
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label1.Location = new System.Drawing.Point(75, 109);
+            this.label1.Location = new System.Drawing.Point(57, 112);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 19);
+            this.label1.Size = new System.Drawing.Size(103, 19);
             this.label1.TabIndex = 19;
-            this.label1.Text = "Identificación";
+            this.label1.Text = "Identificacion:";
             // 
             // txtIdentificacion
             // 
             this.txtIdentificacion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtIdentificacion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.txtIdentificacion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(37)))), ((int)(((byte)(63)))));
             this.txtIdentificacion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtIdentificacion.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtIdentificacion.Location = new System.Drawing.Point(210, 107);
+            this.txtIdentificacion.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtIdentificacion.Location = new System.Drawing.Point(220, 110);
             this.txtIdentificacion.Name = "txtIdentificacion";
-            this.txtIdentificacion.Size = new System.Drawing.Size(260, 25);
+            this.txtIdentificacion.Size = new System.Drawing.Size(340, 25);
             this.txtIdentificacion.TabIndex = 1;
             // 
             // FrmRegistro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.ClientSize = new System.Drawing.Size(520, 594);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(13)))), ((int)(((byte)(24)))));
+            this.ClientSize = new System.Drawing.Size(640, 620);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtIdentificacion);
             this.Controls.Add(this.lblTitulo);
@@ -324,7 +332,7 @@ namespace GUI
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(536, 524);
+            this.MinimumSize = new System.Drawing.Size(656, 659);
             this.Name = "FrmRegistro";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Casino Virtual - Registro";

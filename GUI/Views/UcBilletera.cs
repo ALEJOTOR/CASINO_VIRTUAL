@@ -20,17 +20,22 @@ namespace GUI
         {
             _usuario = usuario;
             InitializeComponent();
+            // Problema visual que resuelve: la billetera abre con el fondo y la tipografia del tema antes de cargar datos.
+            AppTheme.ApplyView(this);
             CargarVista();
         }
 
         public UcBilletera()
         {
             InitializeComponent();
+            // Problema visual que resuelve: la vista vacia de billetera tambien respeta el tema en el Designer.
+            AppTheme.ApplyView(this);
         }
 
         private void CargarVista()
         {
-            CasinoTheme.StylePage(this);
+            // Problema visual que resuelve: la billetera usa la misma base oscura y tipografia del lobby.
+            AppTheme.ApplyView(this);
 
             if (_usuario == null) return;
 
@@ -60,10 +65,10 @@ namespace GUI
             pnlMetricas.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 23F));
             pnlMetricas.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 23F));
 
-            pnlMetricas.Controls.Add(CrearMetricaBilletera("Saldo disponible", $"${_usuario.Saldo:N2}", _usuario.Saldo > 0 ? "Cuenta activa" : "Sin saldo", CasinoTheme.Green), 0, 0);
-            pnlMetricas.Controls.Add(CrearMetricaBilletera("Depositos", $"${totalDepositos:N2}", "Total registrado", CasinoTheme.Cyan), 1, 0);
-            pnlMetricas.Controls.Add(CrearMetricaBilletera("Retiros", $"${totalRetiros:N2}", "Total retirado", CasinoTheme.Red), 2, 0);
-            pnlMetricas.Controls.Add(CrearMetricaBilletera("Movimientos", cantidadMovimientos.ToString(), "En transacciones", CasinoTheme.Gold), 3, 0);
+            pnlMetricas.Controls.Add(CrearMetricaBilletera("Saldo disponible", $"${_usuario.Saldo:N2}", _usuario.Saldo > 0 ? "Cuenta activa" : "Sin saldo", AppTheme.Verde), 0, 0);
+            pnlMetricas.Controls.Add(CrearMetricaBilletera("Depositos", $"${totalDepositos:N2}", "Total registrado", AppTheme.Azul), 1, 0);
+            pnlMetricas.Controls.Add(CrearMetricaBilletera("Retiros", $"${totalRetiros:N2}", "Total retirado", AppTheme.Rojo), 2, 0);
+            pnlMetricas.Controls.Add(CrearMetricaBilletera("Movimientos", cantidadMovimientos.ToString(), "En transacciones", AppTheme.Dorado), 3, 0);
 
             CargarTarjetasAccion();
         }
@@ -72,7 +77,7 @@ namespace GUI
         {
             Panel tarjeta = new Panel
             {
-                BackColor = CasinoTheme.Surface,
+                BackColor = AppTheme.BgCard,
                 Dock = DockStyle.Fill,
                 Margin = new Padding(0, 0, 14, 0)
             };
@@ -85,9 +90,9 @@ namespace GUI
                     e.Graphics.FillRectangle(brush, 1, 5, tarjeta.Width - 2, tarjeta.Height - 6);
             };
 
-            Label lblTitulo = ControlFactory.CrearLabel(titulo, CasinoTheme.Muted, CasinoTheme.UiFont(9.5F, FontStyle.Bold), ContentAlignment.MiddleLeft);
-            Label lblValor = ControlFactory.CrearLabel(valor, acento, CasinoTheme.UiFont(20F, FontStyle.Bold), ContentAlignment.MiddleLeft);
-            Label lblDetalle = ControlFactory.CrearLabel(detalle, CasinoTheme.Muted, CasinoTheme.UiFont(9F), ContentAlignment.MiddleLeft);
+            Label lblTitulo = ControlFactory.CrearLabel(titulo, AppTheme.TextoSecundario, AppTheme.Subtitulo, ContentAlignment.MiddleLeft);
+            Label lblValor = ControlFactory.CrearLabel(valor, acento, AppTheme.TituloGrande, ContentAlignment.MiddleLeft);
+            Label lblDetalle = ControlFactory.CrearLabel(detalle, AppTheme.TextoSecundario, AppTheme.Subtitulo, ContentAlignment.MiddleLeft);
 
             tarjeta.Controls.Add(lblTitulo);
             tarjeta.Controls.Add(lblValor);
@@ -116,7 +121,7 @@ namespace GUI
                 "Agrega dinero a tu cuenta y dejalo listo para jugar.",
                 "Monto a depositar",
                 "Depositar",
-                CasinoTheme.Green,
+                AppTheme.Verde,
                 monto => _transSvc.RealizarDeposito(_usuario.IdUsuario, monto));
             tarjetaDeposito.Margin = new Padding(0, 0, 10, 0);
 
@@ -125,7 +130,7 @@ namespace GUI
                 "Retira una parte de tu saldo disponible.",
                 "Monto a retirar",
                 "Retirar",
-                CasinoTheme.Red,
+                AppTheme.Rojo,
                 monto => _transSvc.RealizarRetiro(_usuario.IdUsuario, monto));
             tarjetaRetiro.Margin = new Padding(10, 0, 0, 0);
 
@@ -137,7 +142,7 @@ namespace GUI
         {
             Panel tarjeta = new Panel
             {
-                BackColor = CasinoTheme.Surface,
+                BackColor = AppTheme.BgCard,
                 Dock = DockStyle.Fill,
                 Margin = new Padding(0, 0, 0, 14),
                 Padding = new Padding(24)
@@ -151,18 +156,15 @@ namespace GUI
                     e.Graphics.FillRectangle(brush, 1, 6, tarjeta.Width - 2, 54);
             };
 
-            Label lblTitulo = ControlFactory.CrearLabel(titulo, CasinoTheme.Gold, CasinoTheme.UiFont(16F, FontStyle.Bold), ContentAlignment.MiddleLeft);
-            Label lblDescripcion = ControlFactory.CrearLabel(descripcion, CasinoTheme.Muted, CasinoTheme.UiFont(10F), ContentAlignment.MiddleLeft);
-            Label lblMonto = ControlFactory.CrearLabel(etiquetaMonto, CasinoTheme.Text, CasinoTheme.UiFont(9.5F, FontStyle.Bold), ContentAlignment.MiddleLeft);
+            Label lblTitulo = ControlFactory.CrearLabel(titulo, AppTheme.Dorado, AppTheme.TituloGrande, ContentAlignment.MiddleLeft);
+            Label lblDescripcion = ControlFactory.CrearLabel(descripcion, AppTheme.TextoSecundario, AppTheme.Subtitulo, ContentAlignment.MiddleLeft);
+            Label lblMonto = ControlFactory.CrearLabel(etiquetaMonto, AppTheme.TextoPrimario, AppTheme.Cuerpo, ContentAlignment.MiddleLeft);
             TextBox txtMonto = new TextBox();
             Button btnAccion = new Button { Text = textoBoton };
 
-            CasinoTheme.StyleInput(txtMonto);
-            txtMonto.BackColor = CasinoTheme.SurfaceAlt;
-            txtMonto.ForeColor = CasinoTheme.Text;
-            txtMonto.BorderStyle = BorderStyle.FixedSingle;
-            txtMonto.Font = CasinoTheme.UiFont(13F, FontStyle.Bold);
-            CasinoTheme.StyleActionButton(btnAccion, acento);
+            AppTheme.ApplyTextBox(txtMonto);
+            txtMonto.Font = AppTheme.Valor;
+            AppTheme.ApplyPrimaryButton(btnAccion, acento);
 
             btnAccion.Click += (s, e) =>
             {

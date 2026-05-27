@@ -34,28 +34,29 @@ namespace GUI
             // 
             this.mainLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(26)))));
             this.mainLayout.ColumnCount = 1;
-            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.mainLayout.Controls.Add(this.panelNavbar, 0, 0);
             this.mainLayout.Controls.Add(this.pnlContenido, 0, 1);
             this.mainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainLayout.Location = new System.Drawing.Point(0, 0);
             this.mainLayout.Name = "mainLayout";
             this.mainLayout.RowCount = 2;
-            this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 75F));
+            this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.mainLayout.Size = new System.Drawing.Size(1219, 729);
+            this.mainLayout.Size = new System.Drawing.Size(1280, 760);
             this.mainLayout.TabIndex = 0;
             // 
             // panelNavbar
             // 
-            this.panelNavbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(18)))), ((int)(((byte)(32)))));
+            this.panelNavbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(15)))), ((int)(((byte)(30)))));
             this.panelNavbar.Controls.Add(this.btnCerrarSesion);
             this.panelNavbar.Controls.Add(this.lblAdminNombre);
             this.panelNavbar.Controls.Add(this.menuStrip);
             this.panelNavbar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelNavbar.Location = new System.Drawing.Point(3, 3);
+            this.panelNavbar.Location = new System.Drawing.Point(0, 0);
+            this.panelNavbar.Margin = new System.Windows.Forms.Padding(0);
             this.panelNavbar.Name = "panelNavbar";
-            this.panelNavbar.Size = new System.Drawing.Size(1213, 69);
+            this.panelNavbar.Size = new System.Drawing.Size(1280, 60);
             this.panelNavbar.TabIndex = 0;
             // 
             // btnCerrarSesion
@@ -65,11 +66,11 @@ namespace GUI
             this.btnCerrarSesion.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCerrarSesion.FlatAppearance.BorderSize = 0;
             this.btnCerrarSesion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCerrarSesion.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.btnCerrarSesion.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnCerrarSesion.ForeColor = System.Drawing.Color.White;
-            this.btnCerrarSesion.Location = new System.Drawing.Point(1090, 12);
+            this.btnCerrarSesion.Location = new System.Drawing.Point(1142, 14);
             this.btnCerrarSesion.Name = "btnCerrarSesion";
-            this.btnCerrarSesion.Size = new System.Drawing.Size(112, 30);
+            this.btnCerrarSesion.Size = new System.Drawing.Size(120, 32);
             this.btnCerrarSesion.TabIndex = 4;
             this.btnCerrarSesion.Text = "Cerrar sesion";
             this.btnCerrarSesion.UseVisualStyleBackColor = false;
@@ -77,20 +78,20 @@ namespace GUI
             // 
             // lblAdminNombre
             // 
-            this.lblAdminNombre.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Bold);
-            this.lblAdminNombre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(204)))), ((int)(((byte)(21)))));
-            this.lblAdminNombre.Location = new System.Drawing.Point(9, 12);
+            this.lblAdminNombre.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.lblAdminNombre.ForeColor = System.Drawing.Color.Gold;
+            this.lblAdminNombre.Location = new System.Drawing.Point(24, 0);
             this.lblAdminNombre.Name = "lblAdminNombre";
-            this.lblAdminNombre.Size = new System.Drawing.Size(370, 54);
+            this.lblAdminNombre.Size = new System.Drawing.Size(330, 60);
             this.lblAdminNombre.TabIndex = 5;
             this.lblAdminNombre.Text = "Administrador";
             this.lblAdminNombre.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // menuStrip
             // 
-            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(18)))), ((int)(((byte)(32)))));
+            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(15)))), ((int)(((byte)(30)))));
             this.menuStrip.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.menuStrip.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular);
+            this.menuStrip.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dashboardToolStripMenuItem,
             this.usuariosToolStripMenuItem,
@@ -99,58 +100,64 @@ namespace GUI
             this.reportesToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Padding = new System.Windows.Forms.Padding(380, 0, 0, 0);
-            this.menuStrip.Size = new System.Drawing.Size(1213, 69);
+            this.menuStrip.Padding = new System.Windows.Forms.Padding(370, 10, 0, 8);
+            this.menuStrip.Size = new System.Drawing.Size(1280, 60);
             this.menuStrip.TabIndex = 1;
             // 
             // dashboardToolStripMenuItem
             // 
             this.dashboardToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.dashboardToolStripMenuItem.Name = "dashboardToolStripMenuItem";
-            this.dashboardToolStripMenuItem.Size = new System.Drawing.Size(116, 69);
+            this.dashboardToolStripMenuItem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.dashboardToolStripMenuItem.Size = new System.Drawing.Size(99, 42);
             this.dashboardToolStripMenuItem.Text = "Dashboard";
             // 
             // usuariosToolStripMenuItem
             // 
             this.usuariosToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(96, 69);
+            this.usuariosToolStripMenuItem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(82, 42);
             this.usuariosToolStripMenuItem.Text = "Usuarios";
             // 
             // partidasToolStripMenuItem
             // 
             this.partidasToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.partidasToolStripMenuItem.Name = "partidasToolStripMenuItem";
-            this.partidasToolStripMenuItem.Size = new System.Drawing.Size(96, 69);
+            this.partidasToolStripMenuItem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.partidasToolStripMenuItem.Size = new System.Drawing.Size(78, 42);
             this.partidasToolStripMenuItem.Text = "Partidas";
             // 
             // transaccionesToolStripMenuItem
             // 
             this.transaccionesToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.transaccionesToolStripMenuItem.Name = "transaccionesToolStripMenuItem";
-            this.transaccionesToolStripMenuItem.Size = new System.Drawing.Size(145, 69);
+            this.transaccionesToolStripMenuItem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.transaccionesToolStripMenuItem.Size = new System.Drawing.Size(128, 42);
             this.transaccionesToolStripMenuItem.Text = "Transacciones";
             // 
             // reportesToolStripMenuItem
             // 
             this.reportesToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
-            this.reportesToolStripMenuItem.Size = new System.Drawing.Size(99, 69);
+            this.reportesToolStripMenuItem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.reportesToolStripMenuItem.Size = new System.Drawing.Size(82, 42);
             this.reportesToolStripMenuItem.Text = "Reportes";
             // 
             // pnlContenido
             // 
             this.pnlContenido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(26)))));
             this.pnlContenido.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlContenido.Location = new System.Drawing.Point(3, 78);
+            this.pnlContenido.Location = new System.Drawing.Point(0, 60);
+            this.pnlContenido.Margin = new System.Windows.Forms.Padding(0);
             this.pnlContenido.Name = "pnlContenido";
-            this.pnlContenido.Size = new System.Drawing.Size(1213, 648);
+            this.pnlContenido.Size = new System.Drawing.Size(1280, 700);
             this.pnlContenido.TabIndex = 1;
             // 
             // FrmAdmin
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(26)))));
-            this.ClientSize = new System.Drawing.Size(1219, 729);
+            this.ClientSize = new System.Drawing.Size(1280, 760);
             this.Controls.Add(this.mainLayout);
             this.MinimumSize = new System.Drawing.Size(800, 670);
             this.Name = "FrmAdmin";

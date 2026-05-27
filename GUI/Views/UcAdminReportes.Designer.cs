@@ -23,11 +23,12 @@ namespace GUI
             // 
             // lblTitulo
             // 
-            this.lblTitulo.Font = new System.Drawing.Font("Georgia", 26F, System.Drawing.FontStyle.Bold);
+            this.lblTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblTitulo.Font = new System.Drawing.Font("Georgia", 25F, System.Drawing.FontStyle.Bold);
             this.lblTitulo.ForeColor = System.Drawing.Color.FromArgb(250, 204, 21);
-            this.lblTitulo.Location = new System.Drawing.Point(34, 16);
+            this.lblTitulo.Location = new System.Drawing.Point(34, 22);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(600, 44);
+            this.lblTitulo.Size = new System.Drawing.Size(1248, 62);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Reportes del Sistema";
             this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -37,9 +38,10 @@ namespace GUI
             this.pnlBotones.BackColor = System.Drawing.Color.FromArgb(17, 28, 50);
             this.pnlBotones.Controls.Add(this.btnReporteUsuarios);
             this.pnlBotones.Controls.Add(this.btnReportePartidas);
-            this.pnlBotones.Location = new System.Drawing.Point(34, 70);
+            this.pnlBotones.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlBotones.Location = new System.Drawing.Point(34, 84);
             this.pnlBotones.Name = "pnlBotones";
-            this.pnlBotones.Size = new System.Drawing.Size(1248, 70);
+            this.pnlBotones.Size = new System.Drawing.Size(1248, 76);
             this.pnlBotones.TabIndex = 1;
             // 
             // btnReporteUsuarios
@@ -50,9 +52,9 @@ namespace GUI
             this.btnReporteUsuarios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReporteUsuarios.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.btnReporteUsuarios.ForeColor = System.Drawing.Color.White;
-            this.btnReporteUsuarios.Location = new System.Drawing.Point(18, 18);
+            this.btnReporteUsuarios.Location = new System.Drawing.Point(18, 20);
             this.btnReporteUsuarios.Name = "btnReporteUsuarios";
-            this.btnReporteUsuarios.Size = new System.Drawing.Size(220, 36);
+            this.btnReporteUsuarios.Size = new System.Drawing.Size(220, 38);
             this.btnReporteUsuarios.TabIndex = 0;
             this.btnReporteUsuarios.Text = "Reporte Usuarios";
             this.btnReporteUsuarios.UseVisualStyleBackColor = false;
@@ -66,9 +68,9 @@ namespace GUI
             this.btnReportePartidas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReportePartidas.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.btnReportePartidas.ForeColor = System.Drawing.Color.White;
-            this.btnReportePartidas.Location = new System.Drawing.Point(254, 18);
+            this.btnReportePartidas.Location = new System.Drawing.Point(254, 20);
             this.btnReportePartidas.Name = "btnReportePartidas";
-            this.btnReportePartidas.Size = new System.Drawing.Size(220, 36);
+            this.btnReportePartidas.Size = new System.Drawing.Size(220, 38);
             this.btnReportePartidas.TabIndex = 1;
             this.btnReportePartidas.Text = "Reporte Partidas";
             this.btnReportePartidas.UseVisualStyleBackColor = false;
@@ -77,14 +79,16 @@ namespace GUI
             // txtReporte
             // 
             this.txtReporte.BackColor = System.Drawing.Color.FromArgb(17, 28, 50);
+            this.txtReporte.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtReporte.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtReporte.Font = new System.Drawing.Font("Courier New", 10F);
             this.txtReporte.ForeColor = System.Drawing.Color.FromArgb(241, 245, 249);
-            this.txtReporte.Location = new System.Drawing.Point(34, 150);
+            this.txtReporte.Location = new System.Drawing.Point(34, 160);
             this.txtReporte.Multiline = true;
             this.txtReporte.Name = "txtReporte";
             this.txtReporte.ReadOnly = true;
             this.txtReporte.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtReporte.Size = new System.Drawing.Size(1248, 600);
+            this.txtReporte.Size = new System.Drawing.Size(1248, 592);
             this.txtReporte.TabIndex = 2;
             // 
             // UcAdminReportes
@@ -97,6 +101,7 @@ namespace GUI
             this.Controls.Add(this.lblTitulo);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Name = "UcAdminReportes";
+            this.Padding = new System.Windows.Forms.Padding(34, 22, 34, 34);
             this.Size = new System.Drawing.Size(1316, 786);
             this.pnlBotones.ResumeLayout(false);
             this.ResumeLayout(false);

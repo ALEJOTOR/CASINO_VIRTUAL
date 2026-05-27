@@ -36,29 +36,30 @@
             // 
             this.mainLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(26)))));
             this.mainLayout.ColumnCount = 1;
-            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.mainLayout.Controls.Add(this.panelNavbar, 0, 0);
             this.mainLayout.Controls.Add(this.pnlContenido, 0, 1);
             this.mainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainLayout.Location = new System.Drawing.Point(0, 0);
             this.mainLayout.Name = "mainLayout";
             this.mainLayout.RowCount = 2;
-            this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 75F));
+            this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.mainLayout.Size = new System.Drawing.Size(1219, 729);
             this.mainLayout.TabIndex = 0;
             // 
             // panelNavbar
             // 
-            this.panelNavbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(18)))), ((int)(((byte)(32)))));
+            this.panelNavbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(15)))), ((int)(((byte)(30)))));
             this.panelNavbar.Controls.Add(this.btnCerrarSesion);
             this.panelNavbar.Controls.Add(this.lblSaldo);
             this.panelNavbar.Controls.Add(this._lblMarca);
             this.panelNavbar.Controls.Add(this.menuStrip);
             this.panelNavbar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelNavbar.Location = new System.Drawing.Point(3, 3);
+            this.panelNavbar.Location = new System.Drawing.Point(0, 0);
+            this.panelNavbar.Margin = new System.Windows.Forms.Padding(0);
             this.panelNavbar.Name = "panelNavbar";
-            this.panelNavbar.Size = new System.Drawing.Size(1213, 69);
+            this.panelNavbar.Size = new System.Drawing.Size(1219, 60);
             this.panelNavbar.TabIndex = 0;
             // 
             // btnCerrarSesion
@@ -70,9 +71,9 @@
             this.btnCerrarSesion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCerrarSesion.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.btnCerrarSesion.ForeColor = System.Drawing.Color.White;
-            this.btnCerrarSesion.Location = new System.Drawing.Point(1090, 12);
+            this.btnCerrarSesion.Location = new System.Drawing.Point(1084, 14);
             this.btnCerrarSesion.Name = "btnCerrarSesion";
-            this.btnCerrarSesion.Size = new System.Drawing.Size(112, 30);
+            this.btnCerrarSesion.Size = new System.Drawing.Size(120, 32);
             this.btnCerrarSesion.TabIndex = 4;
             this.btnCerrarSesion.Text = "Cerrar sesion";
             this.btnCerrarSesion.UseVisualStyleBackColor = false;
@@ -81,73 +82,76 @@
             // lblSaldo
             // 
             this.lblSaldo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblSaldo.AutoSize = true;
-            this.lblSaldo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(36)))), ((int)(((byte)(60)))));
-            this.lblSaldo.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSaldo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(222)))), ((int)(((byte)(128)))));
-            this.lblSaldo.Location = new System.Drawing.Point(890, 22);
+            this.lblSaldo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(27)))), ((int)(((byte)(39)))));
+            this.lblSaldo.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
+            this.lblSaldo.ForeColor = System.Drawing.Color.Gold;
+            this.lblSaldo.Location = new System.Drawing.Point(870, 12);
             this.lblSaldo.Name = "lblSaldo";
-            this.lblSaldo.Padding = new System.Windows.Forms.Padding(10);
-            this.lblSaldo.Size = new System.Drawing.Size(150, 39);
+            this.lblSaldo.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
+            this.lblSaldo.Size = new System.Drawing.Size(190, 36);
             this.lblSaldo.TabIndex = 2;
             this.lblSaldo.Text = "Saldo: $250.000";
-            this.lblSaldo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblSaldo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // _lblMarca
             // 
             this._lblMarca.BackColor = System.Drawing.Color.Transparent;
-            this._lblMarca.Font = new System.Drawing.Font("Georgia", 18F, System.Drawing.FontStyle.Bold);
-            this._lblMarca.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(204)))), ((int)(((byte)(21)))));
-            this._lblMarca.Location = new System.Drawing.Point(9, 12);
+            this._lblMarca.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this._lblMarca.ForeColor = System.Drawing.Color.Gold;
+            this._lblMarca.Location = new System.Drawing.Point(24, 0);
             this._lblMarca.Name = "_lblMarca";
-            this._lblMarca.Size = new System.Drawing.Size(170, 54);
+            this._lblMarca.Size = new System.Drawing.Size(210, 60);
             this._lblMarca.TabIndex = 5;
             this._lblMarca.Text = "CASINO ROYAL";
             this._lblMarca.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // menuStrip
             // 
-            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(18)))), ((int)(((byte)(32)))));
+            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(15)))), ((int)(((byte)(30)))));
             this.menuStrip.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.menuStrip.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.menuStrip.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.inicioToolStripMenuItem,
             this.historialToolStripMenuItem,
             this.billeteraToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Padding = new System.Windows.Forms.Padding(190, 0, 0, 0);
-            this.menuStrip.Size = new System.Drawing.Size(1213, 69);
+            this.menuStrip.Padding = new System.Windows.Forms.Padding(250, 10, 0, 8);
+            this.menuStrip.Size = new System.Drawing.Size(1219, 60);
             this.menuStrip.TabIndex = 1;
             // 
             // inicioToolStripMenuItem
             // 
             this.inicioToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.inicioToolStripMenuItem.Name = "inicioToolStripMenuItem";
-            this.inicioToolStripMenuItem.Size = new System.Drawing.Size(67, 69);
+            this.inicioToolStripMenuItem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.inicioToolStripMenuItem.Size = new System.Drawing.Size(61, 42);
             this.inicioToolStripMenuItem.Text = "Inicio";
             // 
             // historialToolStripMenuItem
             // 
             this.historialToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.historialToolStripMenuItem.Name = "historialToolStripMenuItem";
-            this.historialToolStripMenuItem.Size = new System.Drawing.Size(145, 69);
+            this.historialToolStripMenuItem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.historialToolStripMenuItem.Size = new System.Drawing.Size(124, 42);
             this.historialToolStripMenuItem.Text = "Transacciones";
             // 
             // billeteraToolStripMenuItem
             // 
             this.billeteraToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.billeteraToolStripMenuItem.Name = "billeteraToolStripMenuItem";
-            this.billeteraToolStripMenuItem.Size = new System.Drawing.Size(90, 69);
+            this.billeteraToolStripMenuItem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.billeteraToolStripMenuItem.Size = new System.Drawing.Size(79, 42);
             this.billeteraToolStripMenuItem.Text = "Billetera";
             // 
             // pnlContenido
             // 
             this.pnlContenido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(26)))));
             this.pnlContenido.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlContenido.Location = new System.Drawing.Point(3, 78);
+            this.pnlContenido.Location = new System.Drawing.Point(0, 60);
+            this.pnlContenido.Margin = new System.Windows.Forms.Padding(0);
             this.pnlContenido.Name = "pnlContenido";
-            this.pnlContenido.Size = new System.Drawing.Size(1213, 648);
+            this.pnlContenido.Size = new System.Drawing.Size(1219, 669);
             this.pnlContenido.TabIndex = 1;
             // 
             // MainForm

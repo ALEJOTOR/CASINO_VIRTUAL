@@ -50,11 +50,11 @@ namespace GUI
             // 
             // lblTitulo
             // 
-            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblTitulo.ForeColor = System.Drawing.Color.FromArgb(241, 245, 249);
-            this.lblTitulo.Location = new System.Drawing.Point(44, 28);
+            this.lblTitulo.Font = new System.Drawing.Font("Georgia", 25F, System.Drawing.FontStyle.Bold);
+            this.lblTitulo.ForeColor = System.Drawing.Color.FromArgb(250, 204, 21);
+            this.lblTitulo.Location = new System.Drawing.Point(44, 24);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(200, 32);
+            this.lblTitulo.Size = new System.Drawing.Size(360, 46);
             this.lblTitulo.TabIndex = 3;
             this.lblTitulo.Text = "Dashboard";
             this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -75,10 +75,10 @@ namespace GUI
             this.tlpKPIs.Location = new System.Drawing.Point(0, 0);
             this.tlpKPIs.Margin = new System.Windows.Forms.Padding(0);
             this.tlpKPIs.Name = "tlpKPIs";
-            this.tlpKPIs.Padding = new System.Windows.Forms.Padding(44, 80, 44, 16);
+            this.tlpKPIs.Padding = new System.Windows.Forms.Padding(44, 88, 44, 18);
             this.tlpKPIs.RowCount = 1;
-            this.tlpKPIs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 112));
-            this.tlpKPIs.Size = new System.Drawing.Size(1270, 208);
+            this.tlpKPIs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 120));
+            this.tlpKPIs.Size = new System.Drawing.Size(1270, 226);
             this.tlpKPIs.TabIndex = 1;
             // 
             // cardTotalUsuarios
@@ -87,21 +87,21 @@ namespace GUI
             this.cardTotalUsuarios.Controls.Add(this.lblTotalUsuariosValor);
             this.cardTotalUsuarios.Controls.Add(this.lblTotalUsuarios);
             this.cardTotalUsuarios.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cardTotalUsuarios.Location = new System.Drawing.Point(47, 83);
+            this.cardTotalUsuarios.Location = new System.Drawing.Point(47, 91);
             this.cardTotalUsuarios.Margin = new System.Windows.Forms.Padding(3, 3, 12, 3);
             this.cardTotalUsuarios.Name = "cardTotalUsuarios";
-            this.cardTotalUsuarios.Padding = new System.Windows.Forms.Padding(20, 14, 20, 10);
-            this.cardTotalUsuarios.Size = new System.Drawing.Size(279, 68);
+            this.cardTotalUsuarios.Padding = new System.Windows.Forms.Padding(20, 16, 20, 12);
+            this.cardTotalUsuarios.Size = new System.Drawing.Size(279, 82);
             this.cardTotalUsuarios.TabIndex = 0;
             // 
             // lblTotalUsuariosValor
             // 
             this.lblTotalUsuariosValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTotalUsuariosValor.Font = new System.Drawing.Font("Segoe UI", 26F, System.Drawing.FontStyle.Bold);
+            this.lblTotalUsuariosValor.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.lblTotalUsuariosValor.ForeColor = System.Drawing.Color.FromArgb(56, 189, 248);
-            this.lblTotalUsuariosValor.Location = new System.Drawing.Point(20, 34);
+            this.lblTotalUsuariosValor.Location = new System.Drawing.Point(20, 40);
             this.lblTotalUsuariosValor.Name = "lblTotalUsuariosValor";
-            this.lblTotalUsuariosValor.Size = new System.Drawing.Size(239, 24);
+            this.lblTotalUsuariosValor.Size = new System.Drawing.Size(239, 30);
             this.lblTotalUsuariosValor.TabIndex = 0;
             this.lblTotalUsuariosValor.Text = "0";
             // 
@@ -110,9 +110,9 @@ namespace GUI
             this.lblTotalUsuarios.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblTotalUsuarios.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
             this.lblTotalUsuarios.ForeColor = System.Drawing.Color.FromArgb(148, 163, 184);
-            this.lblTotalUsuarios.Location = new System.Drawing.Point(20, 14);
+            this.lblTotalUsuarios.Location = new System.Drawing.Point(20, 16);
             this.lblTotalUsuarios.Name = "lblTotalUsuarios";
-            this.lblTotalUsuarios.Size = new System.Drawing.Size(239, 16);
+            this.lblTotalUsuarios.Size = new System.Drawing.Size(239, 20);
             this.lblTotalUsuarios.TabIndex = 1;
             this.lblTotalUsuarios.Text = "USUARIOS REGISTRADOS";
             this.lblTotalUsuarios.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -123,11 +123,11 @@ namespace GUI
             this.cardPartidasHoy.Controls.Add(this.lblPartidasHoyValor);
             this.cardPartidasHoy.Controls.Add(this.lblPartidasHoy);
             this.cardPartidasHoy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cardPartidasHoy.Location = new System.Drawing.Point(345, 83);
+            this.cardPartidasHoy.Location = new System.Drawing.Point(345, 91);
             this.cardPartidasHoy.Margin = new System.Windows.Forms.Padding(6, 3, 12, 3);
             this.cardPartidasHoy.Name = "cardPartidasHoy";
-            this.cardPartidasHoy.Padding = new System.Windows.Forms.Padding(20, 14, 20, 10);
-            this.cardPartidasHoy.Size = new System.Drawing.Size(279, 68);
+            this.cardPartidasHoy.Padding = new System.Windows.Forms.Padding(20, 16, 20, 12);
+            this.cardPartidasHoy.Size = new System.Drawing.Size(279, 82);
             this.cardPartidasHoy.TabIndex = 4;
             // 
             // lblPartidasHoyValor
@@ -135,9 +135,9 @@ namespace GUI
             this.lblPartidasHoyValor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblPartidasHoyValor.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
             this.lblPartidasHoyValor.ForeColor = System.Drawing.Color.FromArgb(250, 204, 21);
-            this.lblPartidasHoyValor.Location = new System.Drawing.Point(20, 34);
+            this.lblPartidasHoyValor.Location = new System.Drawing.Point(20, 40);
             this.lblPartidasHoyValor.Name = "lblPartidasHoyValor";
-            this.lblPartidasHoyValor.Size = new System.Drawing.Size(239, 24);
+            this.lblPartidasHoyValor.Size = new System.Drawing.Size(239, 30);
             this.lblPartidasHoyValor.TabIndex = 0;
             this.lblPartidasHoyValor.Text = "0";
             // 
@@ -146,9 +146,9 @@ namespace GUI
             this.lblPartidasHoy.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblPartidasHoy.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
             this.lblPartidasHoy.ForeColor = System.Drawing.Color.FromArgb(148, 163, 184);
-            this.lblPartidasHoy.Location = new System.Drawing.Point(20, 14);
+            this.lblPartidasHoy.Location = new System.Drawing.Point(20, 16);
             this.lblPartidasHoy.Name = "lblPartidasHoy";
-            this.lblPartidasHoy.Size = new System.Drawing.Size(239, 16);
+            this.lblPartidasHoy.Size = new System.Drawing.Size(239, 20);
             this.lblPartidasHoy.TabIndex = 1;
             this.lblPartidasHoy.Text = "PARTIDAS HOY";
             this.lblPartidasHoy.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -159,11 +159,11 @@ namespace GUI
             this.cardIngresosHoy.Controls.Add(this.lblIngresosHoyValor);
             this.cardIngresosHoy.Controls.Add(this.lblIngresosHoy);
             this.cardIngresosHoy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cardIngresosHoy.Location = new System.Drawing.Point(642, 83);
+            this.cardIngresosHoy.Location = new System.Drawing.Point(642, 91);
             this.cardIngresosHoy.Margin = new System.Windows.Forms.Padding(6, 3, 12, 3);
             this.cardIngresosHoy.Name = "cardIngresosHoy";
-            this.cardIngresosHoy.Padding = new System.Windows.Forms.Padding(20, 14, 20, 10);
-            this.cardIngresosHoy.Size = new System.Drawing.Size(279, 68);
+            this.cardIngresosHoy.Padding = new System.Windows.Forms.Padding(20, 16, 20, 12);
+            this.cardIngresosHoy.Size = new System.Drawing.Size(279, 82);
             this.cardIngresosHoy.TabIndex = 2;
             // 
             // lblIngresosHoyValor
@@ -171,9 +171,9 @@ namespace GUI
             this.lblIngresosHoyValor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblIngresosHoyValor.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
             this.lblIngresosHoyValor.ForeColor = System.Drawing.Color.FromArgb(59, 130, 246);
-            this.lblIngresosHoyValor.Location = new System.Drawing.Point(20, 34);
+            this.lblIngresosHoyValor.Location = new System.Drawing.Point(20, 40);
             this.lblIngresosHoyValor.Name = "lblIngresosHoyValor";
-            this.lblIngresosHoyValor.Size = new System.Drawing.Size(239, 24);
+            this.lblIngresosHoyValor.Size = new System.Drawing.Size(239, 30);
             this.lblIngresosHoyValor.TabIndex = 0;
             this.lblIngresosHoyValor.Text = "$0";
             // 
@@ -182,9 +182,9 @@ namespace GUI
             this.lblIngresosHoy.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblIngresosHoy.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
             this.lblIngresosHoy.ForeColor = System.Drawing.Color.FromArgb(148, 163, 184);
-            this.lblIngresosHoy.Location = new System.Drawing.Point(20, 14);
+            this.lblIngresosHoy.Location = new System.Drawing.Point(20, 16);
             this.lblIngresosHoy.Name = "lblIngresosHoy";
-            this.lblIngresosHoy.Size = new System.Drawing.Size(239, 16);
+            this.lblIngresosHoy.Size = new System.Drawing.Size(239, 20);
             this.lblIngresosHoy.TabIndex = 1;
             this.lblIngresosHoy.Text = "INGRESOS HOY";
             this.lblIngresosHoy.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -195,11 +195,11 @@ namespace GUI
             this.cardGananciaCasaHoy.Controls.Add(this.lblGananciaCasaHoyValor);
             this.cardGananciaCasaHoy.Controls.Add(this.lblGananciaCasaHoy);
             this.cardGananciaCasaHoy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cardGananciaCasaHoy.Location = new System.Drawing.Point(949, 83);
+            this.cardGananciaCasaHoy.Location = new System.Drawing.Point(949, 91);
             this.cardGananciaCasaHoy.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
             this.cardGananciaCasaHoy.Name = "cardGananciaCasaHoy";
-            this.cardGananciaCasaHoy.Padding = new System.Windows.Forms.Padding(20, 14, 20, 10);
-            this.cardGananciaCasaHoy.Size = new System.Drawing.Size(318, 68);
+            this.cardGananciaCasaHoy.Padding = new System.Windows.Forms.Padding(20, 16, 20, 12);
+            this.cardGananciaCasaHoy.Size = new System.Drawing.Size(318, 82);
             this.cardGananciaCasaHoy.TabIndex = 5;
             // 
             // lblGananciaCasaHoyValor
@@ -207,9 +207,9 @@ namespace GUI
             this.lblGananciaCasaHoyValor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblGananciaCasaHoyValor.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
             this.lblGananciaCasaHoyValor.ForeColor = System.Drawing.Color.FromArgb(34, 197, 94);
-            this.lblGananciaCasaHoyValor.Location = new System.Drawing.Point(20, 34);
+            this.lblGananciaCasaHoyValor.Location = new System.Drawing.Point(20, 40);
             this.lblGananciaCasaHoyValor.Name = "lblGananciaCasaHoyValor";
-            this.lblGananciaCasaHoyValor.Size = new System.Drawing.Size(278, 24);
+            this.lblGananciaCasaHoyValor.Size = new System.Drawing.Size(278, 30);
             this.lblGananciaCasaHoyValor.TabIndex = 0;
             this.lblGananciaCasaHoyValor.Text = "$0";
             // 
@@ -218,9 +218,9 @@ namespace GUI
             this.lblGananciaCasaHoy.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblGananciaCasaHoy.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
             this.lblGananciaCasaHoy.ForeColor = System.Drawing.Color.FromArgb(148, 163, 184);
-            this.lblGananciaCasaHoy.Location = new System.Drawing.Point(20, 14);
+            this.lblGananciaCasaHoy.Location = new System.Drawing.Point(20, 16);
             this.lblGananciaCasaHoy.Name = "lblGananciaCasaHoy";
-            this.lblGananciaCasaHoy.Size = new System.Drawing.Size(278, 16);
+            this.lblGananciaCasaHoy.Size = new System.Drawing.Size(278, 20);
             this.lblGananciaCasaHoy.TabIndex = 1;
             this.lblGananciaCasaHoy.Text = "GANANCIA CASA HOY";
             this.lblGananciaCasaHoy.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -230,9 +230,9 @@ namespace GUI
             this.chartIngresos.BackColor = System.Drawing.Color.FromArgb(17, 28, 50);
             this.chartIngresos.BorderlineColor = System.Drawing.Color.Transparent;
             this.chartIngresos.Dock = System.Windows.Forms.DockStyle.Top;
-            this.chartIngresos.Location = new System.Drawing.Point(44, 170);
+            this.chartIngresos.Location = new System.Drawing.Point(44, 186);
             this.chartIngresos.Name = "chartIngresos";
-            this.chartIngresos.Size = new System.Drawing.Size(1182, 480);
+            this.chartIngresos.Size = new System.Drawing.Size(1182, 440);
             this.chartIngresos.TabIndex = 0;
             // 
             // bottomTlp
@@ -244,7 +244,7 @@ namespace GUI
             this.bottomTlp.Controls.Add(this.chartPartidas, 0, 0);
             this.bottomTlp.Controls.Add(this.pnlTopJugadores, 1, 0);
             this.bottomTlp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bottomTlp.Location = new System.Drawing.Point(44, 650);
+            this.bottomTlp.Location = new System.Drawing.Point(44, 626);
             this.bottomTlp.Name = "bottomTlp";
             this.bottomTlp.Padding = new System.Windows.Forms.Padding(0, 12, 0, 12);
             this.bottomTlp.RowCount = 1;
@@ -340,7 +340,7 @@ namespace GUI
             this.pnlContent.Location = new System.Drawing.Point(0, 0);
             this.pnlContent.Name = "pnlContent";
             this.pnlContent.Padding = new System.Windows.Forms.Padding(0, 0, 46, 0);
-            this.pnlContent.Size = new System.Drawing.Size(1316, 1008);
+            this.pnlContent.Size = new System.Drawing.Size(1316, 984);
             this.pnlContent.TabIndex = 0;
             // 
             // UcDashboardAdmin

@@ -53,6 +53,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Core\CasinoTheme.cs" />
+    <Compile Include="Core\AppTheme.cs" />
     <Compile Include="Core\ControlFactory.cs" />
     <Compile Include="Core\IVistaJuego.cs" />
     <Compile Include="Forms\Admin\FrmAdmin.Designer.cs">

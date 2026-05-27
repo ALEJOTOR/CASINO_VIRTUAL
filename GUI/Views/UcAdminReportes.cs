@@ -12,6 +12,13 @@ namespace GUI
         public UcAdminReportes()
         {
             InitializeComponent();
+            // Problema visual que resuelve: reportes deja de verse como area plana y usa botones/textarea del tema.
+            AppTheme.ApplyView(this);
+            AppTheme.ApplyTitle(lblTitulo);
+            AppTheme.ApplyCard(pnlBotones, 8);
+            AppTheme.ApplyPrimaryButton(btnReporteUsuarios, AppTheme.Azul);
+            AppTheme.ApplyPrimaryButton(btnReportePartidas, AppTheme.Verde);
+            AppTheme.ApplyTextBox(txtReporte);
         }
 
         private void btnReporteUsuarios_Click(object sender, EventArgs e)

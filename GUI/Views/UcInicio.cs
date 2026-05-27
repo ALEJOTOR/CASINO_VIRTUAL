@@ -28,6 +28,8 @@ namespace GUI
         public UcInicio()
         {
             InitializeComponent();
+            // Problema visual que resuelve: el lobby conserva el estilo base cuando se revisa desde el Designer.
+            AplicarEstiloVisual();
         }
 
         public void RecargarSaldo()
@@ -45,11 +47,12 @@ namespace GUI
 
         private void AplicarEstiloVisual()
         {
-            CasinoTheme.StylePage(this);
-            layoutInicio.BackColor = CasinoTheme.Page;
-            panelHero.BackColor = CasinoTheme.Page;
-            panelFooter.BackColor = CasinoTheme.Header;
-            tlpStats.BackColor = CasinoTheme.Header;
+            // Problema visual que resuelve: el lobby adopta la paleta nueva y mantiene tarjetas alineadas.
+            AppTheme.ApplyView(this);
+            layoutInicio.BackColor = AppTheme.BgPrincipal;
+            panelHero.BackColor = AppTheme.BgPrincipal;
+            panelFooter.BackColor = AppTheme.BgNavbar;
+            tlpStats.BackColor = AppTheme.BgNavbar;
             layoutInicio.Margin = Padding.Empty;
             panelHero.Margin = Padding.Empty;
             tlpStats.Margin = Padding.Empty;
@@ -60,11 +63,11 @@ namespace GUI
             _badgeRuleta.BringToFront();
             _badgeSlot.BringToFront();
 
-            CasinoTheme.StyleTitle(lblBienvenido, 28F);
-            CasinoTheme.StyleLabel(lblDescripcion, CasinoTheme.Muted, 12F, FontStyle.Regular);
-            CasinoTheme.StyleLabel(lblUsuarios, CasinoTheme.Gold, 14F, FontStyle.Bold);
-            CasinoTheme.StyleLabel(lblPremios, CasinoTheme.Gold, 14F, FontStyle.Bold);
-            CasinoTheme.StyleLabel(lblSoporte, CasinoTheme.Gold, 14F, FontStyle.Bold);
+            AppTheme.ApplyTitle(lblBienvenido);
+            AppTheme.ApplySubtitle(lblDescripcion);
+            lblUsuarios.ForeColor = AppTheme.Dorado;
+            lblPremios.ForeColor = AppTheme.Dorado;
+            lblSoporte.ForeColor = AppTheme.Dorado;
             lblBienvenido.AutoSize = false;
             lblDescripcion.AutoSize = false;
             lblUsuarios.Text = "3 juegos\nActivos";
@@ -80,9 +83,9 @@ namespace GUI
             lblDescripcionRuleta.Visible = false;
             lblDescripcionSlot.Visible = false;
 
-            StyleGameCard(panelMinas, btnMinas, lblMinas, lblDescripcionMinas, CasinoTheme.Green);
-            StyleGameCard(panelRuleta, btnRuleta, lblRuleta, lblDescripcionRuleta, CasinoTheme.Red);
-            StyleGameCard(panelSlot, btnSlot, lblSlot, lblDescripcionSlot, CasinoTheme.Blue);
+            StyleGameCard(panelMinas, btnMinas, lblMinas, lblDescripcionMinas, AppTheme.Verde);
+            StyleGameCard(panelRuleta, btnRuleta, lblRuleta, lblDescripcionRuleta, AppTheme.Rojo);
+            StyleGameCard(panelSlot, btnSlot, lblSlot, lblDescripcionSlot, AppTheme.Azul);
 
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
@@ -116,13 +119,15 @@ namespace GUI
 
         private void StyleGameCard(Panel panel, Button button, Label title, Label description, Color accent)
         {
-            panel.BackColor = CasinoTheme.Surface;
+            // Problema visual que resuelve: las tarjetas de juego quedan del mismo lenguaje visual y con llamada a la accion clara.
+            panel.BackColor = AppTheme.BgCard;
             panel.BorderStyle = BorderStyle.None;
             panel.Padding = Padding.Empty;
-            CasinoTheme.StyleActionButton(button, accent);
-            CasinoTheme.StyleLabel(title, CasinoTheme.Gold, 15F, FontStyle.Bold);
-            CasinoTheme.StyleLabel(description, CasinoTheme.Muted, 9.5F, FontStyle.Regular);
+            AppTheme.ApplyPrimaryButton(button, accent);
+            AppTheme.ApplyTitle(title);
+            AppTheme.ApplySubtitle(description);
             button.Text = "Jugar ahora";
+            button.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
             button.Dock = DockStyle.None;
             title.Dock = DockStyle.None;
             description.Dock = DockStyle.None;
@@ -201,11 +206,28 @@ namespace GUI
             if (badge == null || image == null) return;
 
             int pad = 18;
-            titulo.SetBounds(pad, 16, panel.Width - pad * 2 - 94, 30);
-            badge.SetBounds(panel.Width - pad - 86, 18, 86, 24);
+            // Problema visual que resuelve: los nombres, la imagen y el boton quedan en filas separadas sin montarse.
+            titulo.Dock = DockStyle.None;
+            image.Dock = DockStyle.None;
+            boton.Dock = DockStyle.None;
+            boton.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+            image.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
+            titulo.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
+
+            int buttonH = 40;
+            int buttonY = Math.Max(112, panel.ClientSize.Height - pad - buttonH);
+            int imageY = 58;
+            int imageH = Math.Max(96, buttonY - imageY - 14);
+
+            titulo.SetBounds(pad, 14, panel.Width - pad * 2, 34);
+            titulo.TextAlign = ContentAlignment.MiddleLeft;
+            badge.SetBounds(panel.Width - pad - 86, 20, 86, 24);
+            badge.Visible = false;
             descripcion.Visible = false;
-            image.SetBounds(pad, 62, panel.Width - pad * 2, Math.Max(120, panel.Height - 126));
-            boton.SetBounds(pad, panel.Height - 48, panel.Width - pad * 2, 34);
+            image.SetBounds(pad, imageY, panel.Width - pad * 2, imageH);
+            boton.SetBounds(pad, buttonY, panel.Width - pad * 2, buttonH);
+            boton.BringToFront();
+            AppTheme.ApplyRoundedRegion(boton, 8);
         }
 
         private PictureBox ObtenerImagenTarjeta(Panel panel)

@@ -20,11 +20,12 @@ namespace GUI
             // 
             // lblTitulo
             // 
+            this.lblTitulo.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblTitulo.Font = new System.Drawing.Font("Georgia", 24F, System.Drawing.FontStyle.Bold);
             this.lblTitulo.ForeColor = System.Drawing.Color.FromArgb(250, 204, 21);
-            this.lblTitulo.Location = new System.Drawing.Point(34, 28);
+            this.lblTitulo.Location = new System.Drawing.Point(34, 24);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(500, 40);
+            this.lblTitulo.Size = new System.Drawing.Size(932, 58);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Titulo";
             this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -36,6 +37,7 @@ namespace GUI
             this.dgvDatos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvDatos.BackgroundColor = System.Drawing.Color.FromArgb(8, 13, 24);
             this.dgvDatos.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvDatos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvDatos.Location = new System.Drawing.Point(34, 82);
             this.dgvDatos.Name = "dgvDatos";
             this.dgvDatos.ReadOnly = true;
@@ -44,7 +46,7 @@ namespace GUI
             this.dgvDatos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             this.dgvDatos.ColumnHeadersHeight = 44;
             this.dgvDatos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDatos.Size = new System.Drawing.Size(932, 500);
+            this.dgvDatos.Size = new System.Drawing.Size(932, 484);
             this.dgvDatos.TabIndex = 1;
             this.dgvDatos.EnableHeadersVisualStyles = false;
             this.dgvDatos.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(23, 37, 63);
@@ -70,6 +72,7 @@ namespace GUI
             this.Controls.Add(this.lblTitulo);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Name = "UcAdminGrid";
+            this.Padding = new System.Windows.Forms.Padding(34, 24, 34, 34);
             this.Size = new System.Drawing.Size(1000, 600);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatos)).EndInit();
             this.ResumeLayout(false);

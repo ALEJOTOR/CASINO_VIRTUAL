@@ -9,6 +9,12 @@ namespace GUI
         public FrmInputSaldo(string username, decimal saldoActual)
         {
             InitializeComponent();
+            // Problema visual que resuelve: las ventanas auxiliares dejan de verse como dialogos basicos de Windows.
+            AppTheme.ApplyForm(this);
+            AppTheme.ApplySubtitle(lblInfo);
+            AppTheme.ApplyTextBox(txtSaldo);
+            AppTheme.ApplyPrimaryButton(btnAceptar);
+            AppTheme.ApplyPrimaryButton(btnCancelar, AppTheme.BgHover);
             lblInfo.Text  = $"Usuario: {username}\nSaldo actual: ${saldoActual:N2}\n\nIngrese el nuevo saldo:";
             txtSaldo.Text = saldoActual.ToString("F2");
         }

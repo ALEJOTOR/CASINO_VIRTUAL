@@ -11,6 +11,17 @@ namespace GUI
         public FrmLogin()
         {
             InitializeComponent();
+            // Problema visual que resuelve: el login queda centrado en una tarjeta oscura con tipografia y botones uniformes.
+            AppTheme.ApplyForm(this);
+            AppTheme.ApplyCard(panelFormulario, 12);
+            AppTheme.ApplyTitle(lblTitulo);
+            AppTheme.ApplySubtitle(lblSubtitulo);
+            AppTheme.ApplyTitle(lblMarca);
+            AppTheme.ApplySubtitle(lblMarcaDetalle);
+            AppTheme.ApplyTextBox(txtUsername);
+            AppTheme.ApplyTextBox(txtPassword);
+            AppTheme.ApplyPrimaryButton(btnIngresar);
+            AppTheme.ApplyPrimaryButton(btnRegistrar, AppTheme.BgHover);
         }
 
         private void btnIngresar_Click(object sender, System.EventArgs e)

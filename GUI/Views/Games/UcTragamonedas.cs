@@ -129,18 +129,26 @@ namespace GUI
         private void ConfigurarVista()
         {
             DoubleBuffered = true;
-            CasinoTheme.StylePage(this);
-            CasinoTheme.StyleHeader(panelTop);
-            CasinoTheme.StyleTitle(lblTitulo);
-            CasinoTheme.StyleInput(txtApuesta);
-            CasinoTheme.StyleActionButton(btnGirar, CasinoTheme.Green);
-            panelJuego.BackColor = CasinoTheme.Page;
-            panelMaquina.BackColor = CasinoTheme.Purple;
-            lblReglas.ForeColor = CasinoTheme.Text;
-            lblJackpot.ForeColor = CasinoTheme.Gold;
+            // Problema visual que resuelve: tragamonedas comparte navbar, saldo y controles del tema global con acento azul.
+            AppTheme.ApplyView(this);
+            AppTheme.ApplyNavbar(panelTop);
+            AppTheme.ApplyTitle(lblTitulo);
+            AppTheme.ApplySaldoLabel(lblSaldo);
+            AppTheme.ApplyTextBox(txtApuesta);
+            AppTheme.ApplyPrimaryButton(btnGirar, AppTheme.Azul);
+            panelJuego.BackColor = AppTheme.BgPrincipal;
+            panelMaquina.BackColor = Color.FromArgb(10, 30, 65);
+            panelMaquina.BorderStyle = BorderStyle.None;
+            panelRollos.CellBorderStyle = TableLayoutPanelCellBorderStyle.None;
+            panelRollos.BackColor = Color.Transparent;
+            lblResultado.BorderStyle = BorderStyle.None;
+            lblJackpot.BorderStyle = BorderStyle.None;
+            lblPalanca.BorderStyle = BorderStyle.None;
+            lblReglas.ForeColor = AppTheme.TextoPrimario;
+            lblJackpot.ForeColor = AppTheme.Dorado;
 
             txtApuesta.Text = "1000";
-            lblJackpot.Text = "Tabla de pagos: 2 iguales x2 | 3 iguales x8";
+            lblJackpot.Text = "JACKPOT ROYAL";
             panelJuego.Resize += (s, e) => AplicarLayout();
             panelMaquina.Paint += panelMaquina_Paint;
             panelRollos.Paint += panelRollos_Paint;
@@ -193,9 +201,9 @@ namespace GUI
         {
             if (panelJuego.ClientSize.Width <= 0 || panelJuego.ClientSize.Height <= 0) return;
 
-            int margen = 34;
-            int ancho = Math.Min(1060, panelJuego.ClientSize.Width - margen * 2);
-            int alto = Math.Min(560, panelJuego.ClientSize.Height - margen * 2);
+            int margen = 28;
+            int ancho = Math.Min(1100, panelJuego.ClientSize.Width - margen * 2);
+            int alto = Math.Min(590, panelJuego.ClientSize.Height - margen * 2);
             ancho = Math.Max(760, ancho);
             alto = Math.Max(500, alto);
 
@@ -209,11 +217,13 @@ namespace GUI
             int machineW = panelMaquina.ClientSize.Width;
             int machineH = panelMaquina.ClientSize.Height;
 
-            lblReglas.SetBounds(inner, 28, machineW - inner * 2, 32);
-            lblJackpot.SetBounds(inner + 80, 76, machineW - (inner + 80) * 2, 56);
-            panelRollos.SetBounds(inner, 158, machineW - inner * 2, Math.Max(130, machineH / 4));
+            // Problema visual que resuelve: los elementos de la maquina se distribuyen por zonas fijas y no se pisan al redimensionar.
+            lblReglas.SetBounds(inner, 28, machineW - inner * 2, 28);
+            lblJackpot.SetBounds(inner + 84, 66, machineW - (inner + 84) * 2, 58);
+            int rollosH = Math.Min(190, Math.Max(140, machineH / 3));
+            panelRollos.SetBounds(inner, 150, machineW - inner * 2, rollosH);
 
-            int controlsY = panelRollos.Bottom + 28;
+            int controlsY = panelRollos.Bottom + 24;
             lblApuesta.SetBounds(inner, controlsY, 160, 24);
             txtApuesta.SetBounds(inner, controlsY + 30, 180, 34);
 
@@ -225,10 +235,11 @@ namespace GUI
                     controlsY + (i / 3) * 40, chipW, 34);
             }
 
-            btnGirar.SetBounds(machineW - inner - 190, controlsY + 10, 190, 58);
-            lblPalanca.SetBounds(inner, btnGirar.Bottom + 22, 150, 46);
-            lblResultado.SetBounds(lblPalanca.Right + 22, btnGirar.Bottom + 22,
-                machineW - lblPalanca.Right - inner - 22, 46);
+            btnGirar.SetBounds(machineW - inner - 210, controlsY + 8, 210, 62);
+            int resultadoY = Math.Min(machineH - inner - 54, btnGirar.Bottom + 18);
+            lblPalanca.SetBounds(inner, resultadoY, 150, 50);
+            lblResultado.SetBounds(lblPalanca.Right + 22, resultadoY,
+                Math.Max(240, machineW - lblPalanca.Right - inner - 22), 50);
 
             panelMaquina.Invalidate();
             panelRollos.Invalidate();
@@ -277,40 +288,68 @@ namespace GUI
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            Rectangle area = new Rectangle(8, 8, panelMaquina.ClientSize.Width - 17, panelMaquina.ClientSize.Height - 17);
+            Rectangle area = new Rectangle(6, 6, panelMaquina.ClientSize.Width - 13, panelMaquina.ClientSize.Height - 13);
+            using (GraphicsPath path = RoundedPath(area, 18))
             using (LinearGradientBrush fondo = new LinearGradientBrush(area,
-                Color.FromArgb(88, 28, 135), Color.FromArgb(30, 41, 59), 35f))
+                Color.FromArgb(16, 42, 95), Color.FromArgb(8, 14, 30), 90f))
             {
-                e.Graphics.FillRectangle(fondo, area);
+                e.Graphics.FillPath(fondo, path);
             }
 
-            using (Pen borde = new Pen(Color.Gold, 4))
-                e.Graphics.DrawRectangle(borde, area);
+            using (GraphicsPath path = RoundedPath(area, 18))
+            using (Pen borde = new Pen(AppTheme.Dorado, 5))
+                e.Graphics.DrawPath(borde, path);
+
+            Rectangle marquee = new Rectangle(area.X + 74, area.Y + 16, area.Width - 148, 70);
+            using (GraphicsPath path = RoundedPath(marquee, 16))
+            using (LinearGradientBrush brush = new LinearGradientBrush(marquee,
+                Color.FromArgb(132, 24, 24), Color.FromArgb(48, 12, 18), 90F))
+            {
+                e.Graphics.FillPath(brush, path);
+                using (Pen pen = new Pen(AppTheme.Dorado, 3))
+                    e.Graphics.DrawPath(pen, path);
+            }
+
+            for (int i = 0; i < 16; i++)
+            {
+                int x = area.X + 18 + i * Math.Max(1, (area.Width - 36) / 15);
+                using (SolidBrush luz = new SolidBrush(i % 2 == 0 ? AppTheme.Dorado : Color.FromArgb(59, 130, 246)))
+                    e.Graphics.FillEllipse(luz, x - 5, area.Y + 10, 10, 10);
+            }
 
             using (Pen brillo = new Pen(Color.FromArgb(120, Color.White), 1))
-                e.Graphics.DrawRectangle(brillo, new Rectangle(18, 18, panelMaquina.ClientSize.Width - 37, panelMaquina.ClientSize.Height - 37));
+            using (GraphicsPath path = RoundedPath(new Rectangle(18, 18, panelMaquina.ClientSize.Width - 37, panelMaquina.ClientSize.Height - 37), 14))
+                e.Graphics.DrawPath(brillo, path);
         }
 
         private void panelRollos_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            using (Pen borde = new Pen(Color.FromArgb(234, 179, 8), 5))
-                e.Graphics.DrawRectangle(borde, new Rectangle(2, 2, panelRollos.ClientSize.Width - 5, panelRollos.ClientSize.Height - 5));
+            Rectangle area = new Rectangle(0, 0, panelRollos.ClientSize.Width - 1, panelRollos.ClientSize.Height - 1);
+            using (GraphicsPath path = RoundedPath(area, 14))
+            using (LinearGradientBrush fondo = new LinearGradientBrush(area, Color.FromArgb(12, 18, 32), Color.FromArgb(40, 47, 65), 90F))
+            {
+                e.Graphics.FillPath(fondo, path);
+                using (Pen borde = new Pen(AppTheme.Dorado, 5))
+                    e.Graphics.DrawPath(borde, path);
+            }
         }
 
         private void Rollo_Paint(object sender, PaintEventArgs e)
         {
             Label rollo = (Label)sender;
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            e.Graphics.Clear(Color.FromArgb(255, 250, 240));
+            e.Graphics.Clear(Color.Transparent);
 
             Rectangle area = new Rectangle(14, 14, rollo.ClientSize.Width - 28, rollo.ClientSize.Height - 28);
+            using (GraphicsPath path = RoundedPath(area, 12))
             using (LinearGradientBrush fondo = new LinearGradientBrush(area, Color.White, Color.FromArgb(226, 232, 240), 90f))
-                e.Graphics.FillRectangle(fondo, area);
+                e.Graphics.FillPath(fondo, path);
 
+            using (GraphicsPath path = RoundedPath(area, 12))
             using (Pen borde = new Pen(Color.FromArgb(203, 213, 225), 3))
-                e.Graphics.DrawRectangle(borde, area);
+                e.Graphics.DrawPath(borde, path);
 
             string simbolo = Convert.ToString(rollo.Tag);
             if (simbolo == "7")
@@ -323,6 +362,18 @@ namespace GUI
                 DibujarDiamante(e.Graphics, area);
             else
                 DibujarCereza(e.Graphics, area);
+        }
+
+        private GraphicsPath RoundedPath(Rectangle bounds, int radius)
+        {
+            int d = radius * 2;
+            GraphicsPath path = new GraphicsPath();
+            path.AddArc(bounds.X, bounds.Y, d, d, 180, 90);
+            path.AddArc(bounds.Right - d, bounds.Y, d, d, 270, 90);
+            path.AddArc(bounds.Right - d, bounds.Bottom - d, d, d, 0, 90);
+            path.AddArc(bounds.X, bounds.Bottom - d, d, d, 90, 90);
+            path.CloseFigure();
+            return path;
         }
 
         private void DibujarSiete(Graphics g, Rectangle area)

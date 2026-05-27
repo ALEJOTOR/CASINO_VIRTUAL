@@ -24,29 +24,48 @@ namespace GUI
 
         private void AplicarEstiloVisual()
         {
-            CasinoTheme.StylePage(this);
-            CasinoTheme.StyleHeader(panelNavbar);
-            CasinoTheme.StyleActionButton(btnCerrarSesion, CasinoTheme.Red);
-            mainLayout.BackColor = CasinoTheme.Page;
-            pnlContenido.BackColor = CasinoTheme.Page;
+            // Problema visual que resuelve: unifica el fondo general y prepara el fade-in de la ventana principal.
+            AppTheme.ApplyForm(this);
+            AppTheme.ApplyNavbar(panelNavbar);
+            AppTheme.ApplyPrimaryButton(btnCerrarSesion, ColorTranslator.FromHtml("#E53E3E"));
+            mainLayout.BackColor = AppTheme.BgPrincipal;
+            pnlContenido.BackColor = AppTheme.BgPrincipal;
             panelNavbar.Margin = Padding.Empty;
             pnlContenido.Margin = Padding.Empty;
             mainLayout.Margin = Padding.Empty;
             _lblMarca.BringToFront();
             lblSaldo.BringToFront();
             btnCerrarSesion.BringToFront();
-            lblSaldo.BackColor = CasinoTheme.SurfaceAlt;
-            lblSaldo.ForeColor = CasinoTheme.Green;
-            lblSaldo.Font = CasinoTheme.UiFont(12F, FontStyle.Bold);
-            lblSaldo.TextAlign = ContentAlignment.MiddleRight;
+            // Problema visual que resuelve: el saldo queda como indicador importante con borde dorado y flash al cambiar.
+            AppTheme.ApplySaldoLabel(lblSaldo);
+            AppTheme.ApplyTitle(_lblMarca);
+            // Problema visual que resuelve: evita que el saldo y cerrar sesion queden fuera de lugar al maximizar o abrir en el Designer.
+            panelNavbar.Resize += (s, e) => ReubicarNavbar();
+            ReubicarNavbar();
             menuStrip.RenderMode = ToolStripRenderMode.Professional;
             menuStrip.Renderer = new ToolStripProfessionalRenderer(new CasinoMenuColors());
             foreach (ToolStripMenuItem item in menuStrip.Items)
             {
-                item.Font = CasinoTheme.UiFont(11F, FontStyle.Bold);
-                item.ForeColor = CasinoTheme.Text;
+                // Problema visual que resuelve: los enlaces de navegacion quedan legibles y consistentes con el navbar.
+                item.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+                item.ForeColor = AppTheme.TextoPrimario;
                 item.Margin = new Padding(6, 0, 6, 0);
             }
+        }
+
+        private void ReubicarNavbar()
+        {
+            if (panelNavbar.ClientSize.Width <= 0) return;
+
+            int margen = 16;
+            int btnW = 134;
+            int saldoW = 236;
+            btnCerrarSesion.Text = "Cerrar sesion";
+            btnCerrarSesion.SetBounds(panelNavbar.ClientSize.Width - margen - btnW, 14, btnW, 32);
+            lblSaldo.SetBounds(btnCerrarSesion.Left - 14 - saldoW, 12, saldoW, 36);
+            _lblMarca.SetBounds(24, 0, 210, 60);
+            menuStrip.Padding = new Padding(250, 10, 0, 8);
+            menuStrip.Size = new Size(Math.Max(300, lblSaldo.Left - 260), 60);
         }
 
         private void PrepararNavegacion()
@@ -108,12 +127,12 @@ namespace GUI
 
         private sealed class CasinoMenuColors : ProfessionalColorTable
         {
-            public override Color MenuItemSelected => CasinoTheme.SurfaceAlt;
-            public override Color MenuItemBorder => CasinoTheme.Border;
-            public override Color ToolStripDropDownBackground => CasinoTheme.Header;
-            public override Color ImageMarginGradientBegin => CasinoTheme.Header;
-            public override Color ImageMarginGradientMiddle => CasinoTheme.Header;
-            public override Color ImageMarginGradientEnd => CasinoTheme.Header;
+            public override Color MenuItemSelected => AppTheme.BgHover;
+            public override Color MenuItemBorder => AppTheme.Dorado;
+            public override Color ToolStripDropDownBackground => AppTheme.BgNavbar;
+            public override Color ImageMarginGradientBegin => AppTheme.BgNavbar;
+            public override Color ImageMarginGradientMiddle => AppTheme.BgNavbar;
+            public override Color ImageMarginGradientEnd => AppTheme.BgNavbar;
         }
     }
 }

@@ -198,7 +198,8 @@ namespace GUI
             // 
             this.btnMinas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
             this.btnMinas.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnMinas.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnMinas.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right) 
+            | System.Windows.Forms.AnchorStyles.Bottom)));
             this.btnMinas.FlatAppearance.BorderSize = 0;
             this.btnMinas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMinas.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold);
@@ -278,7 +279,8 @@ namespace GUI
             // 
             this.btnRuleta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.btnRuleta.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRuleta.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnRuleta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right) 
+            | System.Windows.Forms.AnchorStyles.Bottom)));
             this.btnRuleta.FlatAppearance.BorderSize = 0;
             this.btnRuleta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRuleta.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold);
@@ -358,7 +360,8 @@ namespace GUI
             // 
             this.btnSlot.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.btnSlot.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSlot.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnSlot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right) 
+            | System.Windows.Forms.AnchorStyles.Bottom)));
             this.btnSlot.FlatAppearance.BorderSize = 0;
             this.btnSlot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSlot.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold);

@@ -9,6 +9,12 @@ namespace GUI
         public FrmInputTexto(string titulo, string pregunta)
         {
             InitializeComponent();
+            // Problema visual que resuelve: el input de texto comparte la estetica oscura y botones destacados del admin.
+            AppTheme.ApplyForm(this);
+            AppTheme.ApplySubtitle(lblInfo);
+            AppTheme.ApplyTextBox(txtValor);
+            AppTheme.ApplyPrimaryButton(btnAceptar);
+            AppTheme.ApplyPrimaryButton(btnCancelar, AppTheme.BgHover);
             this.Text    = titulo;
             lblInfo.Text = pregunta;
         }

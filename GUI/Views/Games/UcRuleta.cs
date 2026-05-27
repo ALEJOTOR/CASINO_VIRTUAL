@@ -24,6 +24,7 @@ namespace GUI
         private readonly List<Label> _zonasNumero = new List<Label>();
         private readonly List<Label> _zonasExternas = new List<Label>();
         private decimal _fichaSeleccionada = 50m;
+        private int _numeroGanadorActual = -1;
 
         public UcRuleta()
         {
@@ -41,14 +42,22 @@ namespace GUI
 
         private void ConfigurarApuestasIniciales()
         {
-            CasinoTheme.StylePage(this);
-            CasinoTheme.StyleHeader(panelTop);
-            CasinoTheme.StyleTitle(lblTitulo);
-            CasinoTheme.StyleActionButton(btnGirarRuleta, CasinoTheme.Red);
-            CasinoTheme.StyleSecondaryButton(btnLimpiarMesa);
-            CasinoTheme.StyleInput(txtApuesta);
-            panelJuego.BackColor = CasinoTheme.Page;
-            panelControles.BackColor = CasinoTheme.Surface;
+            // Problema visual que resuelve: la ruleta queda integrada al tema global sin perder su acento rojo de casino.
+            AppTheme.ApplyView(this);
+            AppTheme.ApplyNavbar(panelTop);
+            AppTheme.ApplyTitle(lblTitulo);
+            AppTheme.ApplySaldoLabel(lblSaldo);
+            AppTheme.ApplyPrimaryButton(btnGirarRuleta, AppTheme.Rojo);
+            AppTheme.ApplyPrimaryButton(btnLimpiarMesa, AppTheme.BgHover);
+            AppTheme.ApplyTextBox(txtApuesta);
+            panelJuego.BackColor = AppTheme.BgPrincipal;
+            panelControles.BackColor = AppTheme.BgCard;
+            panelControles.BorderStyle = BorderStyle.None;
+            panelTapete.BorderStyle = BorderStyle.None;
+            panelRueda.BorderStyle = BorderStyle.None;
+            lblMesa.ForeColor = AppTheme.TextoPrimario;
+            lblResultado.ForeColor = AppTheme.TextoSecundario;
+            lblPremio.ForeColor = AppTheme.Dorado;
 
             txtApuesta.Text = FormatearFicha(_fichaSeleccionada);
             cboTipoApuesta.Visible = false;
@@ -61,6 +70,9 @@ namespace GUI
             panelJuego.Resize += (s, e) => AplicarLayoutRuleta();
             panelTapete.Resize += (s, e) => ReubicarZonasMesa();
             panelRueda.Resize += (s, e) => ReubicarNumeroGanador();
+            // Problema visual que resuelve: transforma el fondo plano en una mesa con profundidad de casino real.
+            panelJuego.Paint += panelJuego_Paint;
+            panelControles.Paint += panelControles_Paint;
             AplicarLayoutRuleta();
             ActualizarTotalApostado();
         }
@@ -272,7 +284,7 @@ namespace GUI
             Label zona = new Label
             {
                 BackColor = color,
-                BorderStyle = BorderStyle.FixedSingle,
+                BorderStyle = BorderStyle.None,
                 Cursor = Cursors.Hand,
                 Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
                 ForeColor = Color.White,
@@ -284,9 +296,23 @@ namespace GUI
             };
 
             zona.Click += ZonaApuesta_Click;
+            zona.Paint += ZonaExterna_Paint;
             panelTapete.Controls.Add(zona);
             _zonasExternas.Add(zona);
             zona.BringToFront();
+        }
+
+        private void ZonaExterna_Paint(object sender, PaintEventArgs e)
+        {
+            Label zona = (Label)sender;
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            Rectangle r = new Rectangle(0, 0, zona.Width - 1, zona.Height - 1);
+            using (SolidBrush brush = new SolidBrush(zona.BackColor))
+                e.Graphics.FillRectangle(brush, r);
+            using (Pen pen = new Pen(Color.FromArgb(180, 241, 245, 249), 1))
+                e.Graphics.DrawRectangle(pen, r);
+            TextRenderer.DrawText(e.Graphics, zona.Text, zona.Font, zona.ClientRectangle, zona.ForeColor,
+                TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
         }
 
         private void AplicarLayoutRuleta()
@@ -294,22 +320,22 @@ namespace GUI
             if (panelJuego.ClientSize.Width <= 0 || panelJuego.ClientSize.Height <= 0) return;
 
             int margen = 28;
-            int espacio = 28;
-            int yContenido = 62;
-            int altoMensajes = 96;
-            int anchoControles = 310;
-            int altoDisponible = Math.Max(390, panelJuego.ClientSize.Height - yContenido - altoMensajes);
+            int espacio = 24;
+            int yContenido = 68;
+            int altoMensajes = 110;
+            int anchoControles = 300;
+            int altoDisponible = Math.Max(430, panelJuego.ClientSize.Height - yContenido - altoMensajes);
 
-            lblMesa.SetBounds(margen, 18, panelJuego.ClientSize.Width - margen * 2, 34);
+            lblMesa.SetBounds(margen, 18, panelJuego.ClientSize.Width - margen * 2, 38);
 
             panelControles.SetBounds(
                 panelJuego.ClientSize.Width - margen - anchoControles,
                 yContenido,
                 anchoControles,
-                Math.Min(450, altoDisponible));
+                Math.Min(500, altoDisponible));
 
             int anchoZonaJuego = panelControles.Left - margen - espacio;
-            int anchoRueda = Math.Min(470, Math.Max(330, (int)(anchoZonaJuego * 0.34)));
+            int anchoRueda = Math.Min(430, Math.Max(310, (int)(anchoZonaJuego * 0.30)));
             panelRueda.SetBounds(margen, yContenido, anchoRueda, altoDisponible);
 
             int xTapete = panelRueda.Right + espacio;
@@ -326,8 +352,8 @@ namespace GUI
             anchoTapete = Math.Max(280, anchoTapete);
             panelTapete.SetBounds(xTapete, yContenido, anchoTapete, altoDisponible);
 
-            lblResultado.SetBounds(margen, panelJuego.ClientSize.Height - 82, panelJuego.ClientSize.Width - margen * 2, 30);
-            lblPremio.SetBounds(margen, panelJuego.ClientSize.Height - 50, panelJuego.ClientSize.Width - margen * 2, 42);
+            lblResultado.SetBounds(margen, panelJuego.ClientSize.Height - 92, panelJuego.ClientSize.Width - margen * 2, 32);
+            lblPremio.SetBounds(margen, panelJuego.ClientSize.Height - 58, panelJuego.ClientSize.Width - margen * 2, 46);
 
             ReubicarPanelControles();
             ReubicarZonasMesa();
@@ -343,7 +369,9 @@ namespace GUI
 
             lblApuesta.Location = new Point(margen, 24);
             txtApuesta.SetBounds(margen, 50, ancho, 32);
-            lblTipoApuesta.Location = new Point(margen, 104);
+            // Problema visual que resuelve: el selector de fichas queda como panel compacto y no como formulario viejo.
+            lblTipoApuesta.Text = "Fichas disponibles";
+            lblTipoApuesta.SetBounds(margen, 98, ancho, 24);
 
             int fichaW = (ancho - 18) / 4;
             int fichaH = 38;
@@ -357,12 +385,12 @@ namespace GUI
                 }
             }
 
-            lblNumero.SetBounds(margen, 230, ancho, 22);
-            numNumero.SetBounds(margen, 256, ancho, 32);
-            cboTipoApuesta.SetBounds(margen, 256, ancho, 32);
-            lblTotalApostado.SetBounds(margen, 300, ancho, 28);
-            btnGirarRuleta.SetBounds(margen, panelControles.ClientSize.Height - 86, ancho, 46);
-            btnLimpiarMesa.SetBounds(margen, panelControles.ClientSize.Height - 36, ancho, 26);
+            lblNumero.SetBounds(margen, 226, ancho, 42);
+            numNumero.SetBounds(margen, 278, ancho, 32);
+            cboTipoApuesta.SetBounds(margen, 278, ancho, 32);
+            lblTotalApostado.SetBounds(margen, 292, ancho, 34);
+            btnGirarRuleta.SetBounds(margen, panelControles.ClientSize.Height - 104, ancho, 52);
+            btnLimpiarMesa.SetBounds(margen, panelControles.ClientSize.Height - 44, ancho, 30);
         }
 
         private void ReubicarZonasMesa()
@@ -707,6 +735,7 @@ namespace GUI
 
         private void MostrarNumeroEnRueda(int numero, string color)
         {
+            _numeroGanadorActual = numero;
             lblNumeroGanador.Text = numero.ToString();
 
             if (color == "Rojo")
@@ -719,72 +748,147 @@ namespace GUI
             panelRueda.Invalidate();
         }
 
+        private void panelJuego_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            Rectangle area = panelJuego.ClientRectangle;
+            using (LinearGradientBrush fondo = new LinearGradientBrush(area,
+                Color.FromArgb(6, 10, 18), Color.FromArgb(14, 22, 36), 90F))
+            {
+                e.Graphics.FillRectangle(fondo, area);
+            }
+
+            using (SolidBrush brillo = new SolidBrush(Color.FromArgb(28, AppTheme.Dorado)))
+                e.Graphics.FillRectangle(brillo, 0, 0, area.Width, 2);
+        }
+
+        private void panelControles_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            Rectangle area = new Rectangle(0, 0, panelControles.Width - 1, panelControles.Height - 1);
+            using (LinearGradientBrush fondo = new LinearGradientBrush(area,
+                Color.FromArgb(22, 27, 39), Color.FromArgb(11, 17, 30), 90F))
+            {
+                e.Graphics.FillRectangle(fondo, area);
+            }
+            using (Pen borde = new Pen(Color.FromArgb(130, AppTheme.Dorado), 1))
+                e.Graphics.DrawRectangle(borde, area);
+            using (SolidBrush luz = new SolidBrush(Color.FromArgb(20, AppTheme.Dorado)))
+                e.Graphics.FillRectangle(luz, 1, 1, area.Width - 2, 44);
+        }
+
         private void panelRueda_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            e.Graphics.Clear(Color.FromArgb(32, 18, 11));
+            Rectangle panel = panelRueda.ClientRectangle;
+            using (LinearGradientBrush mesa = new LinearGradientBrush(panel,
+                Color.FromArgb(42, 20, 10), Color.FromArgb(12, 8, 6), 90F))
+            {
+                e.Graphics.FillRectangle(mesa, panel);
+            }
+
+            using (Pen marco = new Pen(Color.FromArgb(110, AppTheme.Dorado), 1))
+                e.Graphics.DrawRectangle(marco, 0, 0, panelRueda.Width - 1, panelRueda.Height - 1);
+
             int lado = Math.Min(panelRueda.ClientSize.Width, panelRueda.ClientSize.Height) - 42;
             lado = Math.Max(220, lado);
             Rectangle rueda = new Rectangle((panelRueda.ClientSize.Width - lado) / 2, 20, lado, lado);
-            using (SolidBrush madera = new SolidBrush(Color.FromArgb(92, 48, 21)))
-                e.Graphics.FillEllipse(madera, rueda);
-
-            using (Pen bordeDorado = new Pen(Color.Gold, Math.Max(6, lado / 45)))
-                e.Graphics.DrawEllipse(bordeDorado, rueda);
-
-            int margenExterior = lado / 10;
-            Rectangle exterior = new Rectangle(rueda.X + margenExterior, rueda.Y + margenExterior,
-                rueda.Width - margenExterior * 2, rueda.Height - margenExterior * 2);
-            float angulo = -90f;
-            for (int i = 0; i < 18; i++)
+            using (LinearGradientBrush madera = new LinearGradientBrush(rueda,
+                Color.FromArgb(124, 62, 22), Color.FromArgb(45, 25, 13), 45F))
             {
-                Color color = i % 2 == 0 ? Color.FromArgb(185, 28, 28) : Color.FromArgb(12, 12, 14);
-                using (SolidBrush brush = new SolidBrush(color))
-                    e.Graphics.FillPie(brush, exterior, angulo, 20f);
-                angulo += 20f;
+                e.Graphics.FillEllipse(madera, rueda);
             }
 
-            using (SolidBrush verde = new SolidBrush(Color.FromArgb(22, 163, 74)))
-                e.Graphics.FillPie(verde, exterior, -100f, 20f);
+            using (Pen bordeDorado = new Pen(AppTheme.Dorado, Math.Max(7, lado / 42)))
+                e.Graphics.DrawEllipse(bordeDorado, rueda);
+            using (Pen bordeOscuro = new Pen(Color.FromArgb(75, 36, 14), Math.Max(5, lado / 70)))
+                e.Graphics.DrawEllipse(bordeOscuro, new Rectangle(rueda.X + 12, rueda.Y + 12, rueda.Width - 24, rueda.Height - 24));
 
-            int centroLado = lado / 3;
-            Rectangle centro = new Rectangle(rueda.X + (rueda.Width - centroLado) / 2,
-                rueda.Y + (rueda.Height - centroLado) / 2, centroLado, centroLado);
-            using (SolidBrush centroBrush = new SolidBrush(Color.FromArgb(239, 184, 16)))
-                e.Graphics.FillEllipse(centroBrush, centro);
-            using (Pen centroPen = new Pen(Color.WhiteSmoke, Math.Max(3, lado / 80)))
-                e.Graphics.DrawEllipse(centroPen, centro);
+            int margenExterior = lado / 9;
+            Rectangle exterior = new Rectangle(rueda.X + margenExterior, rueda.Y + margenExterior,
+                rueda.Width - margenExterior * 2, rueda.Height - margenExterior * 2);
+            int[] secuenciaEuropea = { 0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26 };
+            float angulo = -90f;
+            float paso = 360f / secuenciaEuropea.Length;
+            using (Pen divisor = new Pen(Color.FromArgb(210, 230, 230, 230), 1))
+            {
+                for (int i = 0; i < secuenciaEuropea.Length; i++)
+                {
+                    int numero = secuenciaEuropea[i];
+                    Color color = numero == 0
+                        ? Color.FromArgb(22, 163, 74)
+                        : ObtenerColor(numero) == "Rojo" ? Color.FromArgb(185, 28, 28) : Color.FromArgb(12, 12, 14);
+                    using (SolidBrush brush = new SolidBrush(color))
+                        e.Graphics.FillPie(brush, exterior, angulo, paso);
+                    e.Graphics.DrawPie(divisor, exterior, angulo, paso);
+
+                    double rad = (angulo + paso / 2) * Math.PI / 180.0;
+                    Point centroTexto = new Point(
+                        exterior.X + exterior.Width / 2 + (int)((exterior.Width * 0.39) * Math.Cos(rad)),
+                        exterior.Y + exterior.Height / 2 + (int)((exterior.Height * 0.39) * Math.Sin(rad)));
+                    using (Font f = new Font("Segoe UI", Math.Max(6F, lado / 42F), FontStyle.Bold))
+                    {
+                        TextRenderer.DrawText(e.Graphics, numero.ToString(), f,
+                            new Rectangle(centroTexto.X - 14, centroTexto.Y - 9, 28, 18),
+                            Color.White, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+                    }
+                    angulo += paso;
+                }
+            }
 
             using (SolidBrush sombra = new SolidBrush(Color.FromArgb(28, Color.Black)))
                 e.Graphics.FillEllipse(sombra, new Rectangle(rueda.X + lado / 5, rueda.Y + lado / 5,
                     lado - (lado / 5) * 2, lado - (lado / 5) * 2));
 
-            using (Pen divisor = new Pen(Color.FromArgb(230, 230, 230), 1))
+            int centroLado = lado / 3;
+            Rectangle centro = new Rectangle(rueda.X + (rueda.Width - centroLado) / 2,
+                rueda.Y + (rueda.Height - centroLado) / 2, centroLado, centroLado);
+            using (LinearGradientBrush centroBrush = new LinearGradientBrush(centro,
+                Color.FromArgb(255, 218, 75), Color.FromArgb(160, 92, 18), 45F))
             {
-                Point centroPunto = new Point(rueda.X + rueda.Width / 2, rueda.Y + rueda.Height / 2);
-                for (int i = 0; i < 18; i++)
-                {
-                    double rad = (-90 + i * 20) * Math.PI / 180.0;
-                    Point borde = new Point(
-                        centroPunto.X + (int)((exterior.Width / 2) * Math.Cos(rad)),
-                        centroPunto.Y + (int)((exterior.Height / 2) * Math.Sin(rad)));
-                    e.Graphics.DrawLine(divisor, centroPunto, borde);
-                }
+                e.Graphics.FillEllipse(centroBrush, centro);
             }
+            using (Pen centroPen = new Pen(Color.WhiteSmoke, Math.Max(3, lado / 80)))
+                e.Graphics.DrawEllipse(centroPen, centro);
 
+            double bolaAngulo = (_numeroGanadorActual >= 0 ? Array.IndexOf(secuenciaEuropea, _numeroGanadorActual) * paso : 4 * paso) - 90 + paso / 2;
+            double bolaRad = bolaAngulo * Math.PI / 180.0;
+            Point centroRueda = new Point(rueda.X + rueda.Width / 2, rueda.Y + rueda.Height / 2);
+            // Problema visual que resuelve: la bola queda en el carril exterior y no tapa el numero ganador.
+            int radioBola = exterior.Width / 2 + lado / 22;
+            int bolaTam = Math.Max(10, lado / 30);
+            Rectangle bolaRect = new Rectangle(
+                centroRueda.X + (int)(radioBola * Math.Cos(bolaRad)) - bolaTam / 2,
+                centroRueda.Y + (int)(radioBola * Math.Sin(bolaRad)) - bolaTam / 2,
+                bolaTam,
+                bolaTam);
+            using (SolidBrush sombraBola = new SolidBrush(Color.FromArgb(90, Color.Black)))
+                e.Graphics.FillEllipse(sombraBola, bolaRect.X + 3, bolaRect.Y + 4, bolaRect.Width, bolaRect.Height);
             using (SolidBrush bola = new SolidBrush(Color.White))
-                e.Graphics.FillEllipse(bola, new Rectangle(rueda.Right - lado / 4, rueda.Y + lado / 4, lado / 16, lado / 16));
+                e.Graphics.FillEllipse(bola, bolaRect);
         }
 
         private void panelTapete_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            e.Graphics.Clear(Color.FromArgb(5, 91, 53));
+            Rectangle area = panelTapete.ClientRectangle;
+            using (LinearGradientBrush fieltro = new LinearGradientBrush(area,
+                Color.FromArgb(7, 112, 64), Color.FromArgb(2, 63, 41), 90F))
+            {
+                e.Graphics.FillRectangle(fieltro, area);
+            }
 
-            using (Pen lineaDecorativa = new Pen(Color.FromArgb(55, 255, 255, 255), 2))
+            using (SolidBrush brillo = new SolidBrush(Color.FromArgb(20, Color.White)))
+                e.Graphics.FillEllipse(brillo, new Rectangle(-panelTapete.Width / 4, -panelTapete.Height / 3,
+                    panelTapete.Width, panelTapete.Height));
+
+            using (Pen lineaDecorativa = new Pen(Color.FromArgb(130, AppTheme.Dorado), 2))
                 e.Graphics.DrawRectangle(lineaDecorativa, new Rectangle(10, 10,
                     panelTapete.ClientSize.Width - 21, panelTapete.ClientSize.Height - 21));
+            using (Pen lineaInterna = new Pen(Color.FromArgb(80, 241, 245, 249), 1))
+                e.Graphics.DrawRectangle(lineaInterna, new Rectangle(18, 18,
+                    panelTapete.ClientSize.Width - 37, panelTapete.ClientSize.Height - 37));
 
             using (Font font = new Font("Segoe UI", Math.Max(10F, panelTapete.ClientSize.Height / 35F), FontStyle.Bold))
             using (Pen borde = new Pen(Color.WhiteSmoke, 1))
