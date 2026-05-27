@@ -8,7 +8,6 @@ namespace DAL
 {
     public class TransaccionRepositorio : OracleBase<Transaccion>
     {
-        // ── CONSULTAS — no cambian, siguen contra la tabla directa ────────────
 
         public override IList<Transaccion> Consultar()
         {

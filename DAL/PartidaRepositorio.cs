@@ -8,7 +8,6 @@ namespace DAL
 {
     public class PartidaRepositorio : OracleBase<Partida>
     {
-        // ── CONSULTAS — no cambian, siguen contra la tabla directa ────────────
 
         public override IList<Partida> Consultar()
         {
@@ -45,12 +44,6 @@ namespace DAL
 
             return lista;
         }
-
-        // ── HISTORIAL CON VISTA — nuevo método usando vw_historial_partidas ───
-        // A diferencia de ObtenerPorUsuario (que devuelve IDs crudos),
-        // este método devuelve nombres legibles directamente desde la vista:
-        // nombre del juego ("Minas") y estado ("ganada", "perdida"), etc.
-        // Úsalo en la pantalla de historial del cliente.
 
         public IList<HistorialPartida> ObtenerHistorialPorUsuario(int idUsuario)
         {
@@ -104,12 +97,6 @@ namespace DAL
             });
         }
 
-        // ── REGISTRO COMPLETO — ahora delega en PKG_PARTIDAS.pr_registrar_partida
-        // Antes: ~50 líneas armando OracleTransaction manualmente en C#,
-        //        con 2-3 INSERTs y commit/rollback explícitos.
-        // Ahora: Oracle ejecuta todo en un solo bloque atómico.
-        //        El trigger trg_actualizar_saldo sigue funcionando igual.
-
         public string RegistrarConMovimientos(Partida p)
         {
             using (OracleConnection con = ConexionOracle.Abrir())
@@ -125,7 +112,6 @@ namespace DAL
                 cmd.Parameters.Add(new OracleParameter("p_ganancia", p.Ganancia));
                 cmd.Parameters.Add(new OracleParameter("p_resultado", (object)p.Resultado ?? DBNull.Value));
 
-                // Parámetro OUT: recibe 'Guardado correctamente.' o el error
                 var pMsg = new OracleParameter("p_msg", OracleDbType.Varchar2, 200)
                 {
                     Direction = ParameterDirection.Output
@@ -138,7 +124,6 @@ namespace DAL
             }
         }
 
-        // ── Mapear — no cambia ────────────────────────────────────────────────
 
         private Partida Mapear(OracleDataReader r)
         {
