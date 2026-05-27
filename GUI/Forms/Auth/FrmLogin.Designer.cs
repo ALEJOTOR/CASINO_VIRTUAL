@@ -14,14 +14,14 @@ namespace GUI
         private void InitializeComponent()
         {
             this.panelMarca = new System.Windows.Forms.Panel();
-            this.lblMarca = new System.Windows.Forms.Label();
             this.lblMarcaDetalle = new System.Windows.Forms.Label();
+            this.lblMarca = new System.Windows.Forms.Label();
             this.panelFormulario = new System.Windows.Forms.Panel();
             this.lblSubtitulo = new System.Windows.Forms.Label();
             this.lblTitulo = new System.Windows.Forms.Label();
             this.lblUsername = new System.Windows.Forms.Label();
-            this.lblPassword = new System.Windows.Forms.Label();
             this.txtUsername = new System.Windows.Forms.TextBox();
+            this.lblPassword = new System.Windows.Forms.Label();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.btnIngresar = new System.Windows.Forms.Button();
             this.btnRegistrar = new System.Windows.Forms.Button();
@@ -40,8 +40,20 @@ namespace GUI
             this.panelMarca.Size = new System.Drawing.Size(310, 430);
             this.panelMarca.TabIndex = 0;
             // 
+            // lblMarcaDetalle
+            // 
+            this.lblMarcaDetalle.BackColor = System.Drawing.Color.Transparent;
+            this.lblMarcaDetalle.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.lblMarcaDetalle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
+            this.lblMarcaDetalle.Location = new System.Drawing.Point(38, 214);
+            this.lblMarcaDetalle.Name = "lblMarcaDetalle";
+            this.lblMarcaDetalle.Size = new System.Drawing.Size(220, 88);
+            this.lblMarcaDetalle.TabIndex = 1;
+            this.lblMarcaDetalle.Text = "Lobby, juegos, billetera y transacciones en una sola experiencia.";
+            // 
             // lblMarca
             // 
+            this.lblMarca.BackColor = System.Drawing.Color.Transparent;
             this.lblMarca.Font = new System.Drawing.Font("Georgia", 27F, System.Drawing.FontStyle.Bold);
             this.lblMarca.ForeColor = System.Drawing.Color.Gold;
             this.lblMarca.Location = new System.Drawing.Point(34, 88);
@@ -50,16 +62,6 @@ namespace GUI
             this.lblMarca.TabIndex = 0;
             this.lblMarca.Text = "CASINO\r\nROYAL";
             this.lblMarca.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblMarcaDetalle
-            // 
-            this.lblMarcaDetalle.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.lblMarcaDetalle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
-            this.lblMarcaDetalle.Location = new System.Drawing.Point(38, 214);
-            this.lblMarcaDetalle.Name = "lblMarcaDetalle";
-            this.lblMarcaDetalle.Size = new System.Drawing.Size(220, 88);
-            this.lblMarcaDetalle.TabIndex = 1;
-            this.lblMarcaDetalle.Text = "Lobby, juegos, billetera y transacciones en una sola experiencia.";
             // 
             // panelFormulario
             // 
@@ -85,7 +87,7 @@ namespace GUI
             this.lblSubtitulo.Name = "lblSubtitulo";
             this.lblSubtitulo.Size = new System.Drawing.Size(288, 28);
             this.lblSubtitulo.TabIndex = 1;
-            this.lblSubtitulo.Text = "Ingresa con tu cuenta para continuar.";
+            this.lblSubtitulo.Text = "Ingresa con tus credenciales para continuar.";
             // 
             // lblTitulo
             // 
@@ -106,7 +108,7 @@ namespace GUI
             this.lblUsername.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lblUsername.Location = new System.Drawing.Point(34, 124);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(60, 19);
+            this.lblUsername.Size = new System.Drawing.Size(64, 19);
             this.lblUsername.TabIndex = 2;
             this.lblUsername.Text = "Usuario:";
             // 
@@ -128,7 +130,7 @@ namespace GUI
             this.lblPassword.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lblPassword.Location = new System.Drawing.Point(34, 190);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(87, 19);
+            this.lblPassword.Size = new System.Drawing.Size(88, 19);
             this.lblPassword.TabIndex = 4;
             this.lblPassword.Text = "Contrasena:";
             // 
@@ -195,6 +197,7 @@ namespace GUI
             this.panelFormulario.ResumeLayout(false);
             this.panelFormulario.PerformLayout();
             this.ResumeLayout(false);
+
         }
         #endregion
 

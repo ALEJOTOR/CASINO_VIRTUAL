@@ -2,17 +2,11 @@ using ENTITY;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
-using System.Data;
 
 namespace DAL
 {
     public class UsuarioRepositorio : OracleBase<Usuario>
     {
-        // ── CONSULTAS — ahora usan la vista vw_usuarios_detalle ───────────────
-        // El JOIN con estado_usuario ya no se repite aquí; lo resuelve la vista.
-        // El orden de columnas es idéntico al Mapear() original, así que ese
-        // método no cambia en absoluto.
-
         public override IList<Usuario> Consultar()
         {
             IList<Usuario> lista = new List<Usuario>();
@@ -49,60 +43,35 @@ namespace DAL
             }
         }
 
-        // ── INSERT — ahora delega en PKG_USUARIOS.pr_registrar_usuario ────────
-        // El procedimiento Oracle maneja la secuencia, busca el id_estado
-        // por nombre y hace el COMMIT. Aquí solo armamos la llamada.
-
         public override string Guardar(Usuario u)
         {
-            using (OracleConnection con = ConexionOracle.Abrir())
-            using (OracleCommand cmd = new OracleCommand("PKG_USUARIOS.pr_registrar_usuario", con))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.BindByName = true;
-
-                cmd.Parameters.Add(new OracleParameter("p_id_usuario", u.IdUsuario));
-                cmd.Parameters.Add(new OracleParameter("p_username", u.Username));
-                cmd.Parameters.Add(new OracleParameter("p_password", u.Password));
-                cmd.Parameters.Add(new OracleParameter("p_nombre_1", u.Nombre1));
-                cmd.Parameters.Add(new OracleParameter("p_nombre_2", (object)u.Nombre2 ?? DBNull.Value));
-                cmd.Parameters.Add(new OracleParameter("p_apellido_1", u.Apellido1));
-                cmd.Parameters.Add(new OracleParameter("p_apellido_2", (object)u.Apellido2 ?? DBNull.Value));
-                cmd.Parameters.Add(new OracleParameter("p_correo", u.Correo));
-                cmd.Parameters.Add(new OracleParameter("p_fecha_nac", u.FechaNacimiento));
-                cmd.Parameters.Add(new OracleParameter("p_id_rol", u.IdRol));
-
-                // Parámetro OUT: Oracle escribe aquí el resultado ('OK' o error)
-                var pResultado = new OracleParameter("p_resultado", OracleDbType.Varchar2, 200)
-                {
-                    Direction = ParameterDirection.Output
-                };
-                cmd.Parameters.Add(pResultado);
-
-                cmd.ExecuteNonQuery();
-
-                return pResultado.Value.ToString();
-            }
+            return EjecutarSP("PKG_USUARIOS.pr_registrar_usuario", "p_resultado",
+                ("p_id_usuario", u.IdUsuario),
+                ("p_username", u.Username),
+                ("p_password", u.Password),
+                ("p_nombre_1", u.Nombre1),
+                ("p_nombre_2", (object)u.Nombre2 ?? DBNull.Value),
+                ("p_apellido_1", u.Apellido1),
+                ("p_apellido_2", (object)u.Apellido2 ?? DBNull.Value),
+                ("p_correo", u.Correo),
+                ("p_fecha_nac", u.FechaNacimiento),
+                ("p_id_rol", u.IdRol));
         }
-
-        // ── UPDATE y DELETE — no cambian, no tienen equivalente en los paquetes
 
         public string Actualizar(Usuario u)
         {
-            string sql = @"UPDATE usuarios SET
-                               username         = :username,
-                               password         = :password,
-                               nombre_1         = :nombre1,
-                               nombre_2         = :nombre2,
-                               apellido_1       = :apellido1,
-                               apellido_2       = :apellido2,
-                               correo           = :correo,
-                               fecha_nacimiento = TO_DATE(:fecha_nac, 'YYYY-MM-DD'),
-                               id_rol           = :id_rol,
-                               id_estado        = (SELECT id_estado FROM estado_usuario WHERE nombre = :estado)
-                           WHERE id_usuario = :id";
-
-            return EjecutarComando(sql, new[]
+            EjecutarComando(@"UPDATE usuarios SET
+                                username         = :username,
+                                password         = :password,
+                                nombre_1         = :nombre1,
+                                nombre_2         = :nombre2,
+                                apellido_1       = :apellido1,
+                                apellido_2       = :apellido2,
+                                correo           = :correo,
+                                fecha_nacimiento = TO_DATE(:fecha_nac, 'YYYY-MM-DD'),
+                                id_rol           = :id_rol,
+                                id_estado        = (SELECT id_estado FROM estado_usuario WHERE nombre = :estado)
+                            WHERE id_usuario = :id", new[]
             {
                 (":username",  (object)u.Username),
                 (":password",  (object)u.Password),
@@ -116,17 +85,17 @@ namespace DAL
                 (":estado",    (object)(u.Estado ?? "activo")),
                 (":id",        (object)u.IdUsuario)
             });
+            return "Guardado correctamente.";
         }
 
         public string Eliminar(int idUsuario)
         {
-            return EjecutarComando(
+            EjecutarComando(
                 "DELETE FROM usuarios WHERE id_usuario = :id",
                 new[] { (":id", (object)idUsuario) }
             );
+            return "Guardado correctamente.";
         }
-
-        // ── Mapear — no cambia: el orden de columnas de la vista es idéntico ──
 
         private Usuario Mapear(OracleDataReader r)
         {

@@ -2,7 +2,6 @@ using ENTITY;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
-using System.Data;
 
 namespace DAL
 {
@@ -45,54 +44,28 @@ namespace DAL
 
         public override string Guardar(Transaccion t)
         {
-            string sql = @"INSERT INTO transacciones (
-                               id_transaccion, id_usuario, tipo,
-                               monto, fecha, descripcion
-                           ) VALUES (
-                               seq_transacciones.NEXTVAL, :id_usuario, :tipo,
-                               :monto, CURRENT_TIMESTAMP, :descripcion
-                           )";
-
-            return EjecutarComando(sql, new[]
+            EjecutarComando(@"INSERT INTO transacciones (
+                                id_transaccion, id_usuario, tipo,
+                                monto, fecha, descripcion
+                            ) VALUES (
+                                seq_transacciones.NEXTVAL, :id_usuario, :tipo,
+                                :monto, CURRENT_TIMESTAMP, :descripcion
+                            )", new[]
             {
                 (":id_usuario",  (object)t.IdUsuario),
                 (":tipo",        (object)t.Tipo),
                 (":monto",       (object)t.Monto),
                 (":descripcion", (object)(t.Descripcion ?? (object)DBNull.Value))
             });
+            return "Guardado correctamente.";
         }
-
-        // ── DEPÓSITO — ahora delega en PKG_USUARIOS.pr_realizar_deposito ──────
-        // Antes: abría OracleTransaction manualmente, armaba el INSERT,
-        //        hacía commit/rollback en C#.
-        // Ahora: Oracle maneja todo eso internamente. El trigger
-        //        trg_actualizar_saldo sigue actualizando el saldo igual que antes.
 
         public string RegistrarDepositoConSaldo(int idUsuario, decimal monto)
         {
-            using (OracleConnection con = ConexionOracle.Abrir())
-            using (OracleCommand cmd = new OracleCommand("PKG_USUARIOS.pr_realizar_deposito", con))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.BindByName = true;
-
-                cmd.Parameters.Add(new OracleParameter("p_id_usuario", idUsuario));
-                cmd.Parameters.Add(new OracleParameter("p_monto", monto));
-
-                // Parámetro OUT: recibe 'Deposito realizado correctamente.' o el error
-                var pResultado = new OracleParameter("p_resultado", OracleDbType.Varchar2, 200)
-                {
-                    Direction = ParameterDirection.Output
-                };
-                cmd.Parameters.Add(pResultado);
-
-                cmd.ExecuteNonQuery();
-
-                return pResultado.Value.ToString();
-            }
+            return EjecutarSP("PKG_USUARIOS.pr_realizar_deposito", "p_resultado",
+                ("p_id_usuario", idUsuario),
+                ("p_monto", monto));
         }
-
-        // ── Mapear — no cambia ────────────────────────────────────────────────
 
         private Transaccion Mapear(OracleDataReader r)
         {

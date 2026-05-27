@@ -1,7 +1,6 @@
 using ENTITY;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
-using System.IO;
 
 namespace DAL
 {
@@ -19,7 +18,6 @@ namespace DAL
             return lista;
         }
 
-        // Solo los juegos que el cliente puede jugar
         public IList<Juego> ObtenerActivos()
         {
             IList<Juego> lista = new List<Juego>();
@@ -45,7 +43,7 @@ namespace DAL
 
         public override string Guardar(Juego j)
         {
-            return EjecutarComando(
+            EjecutarComando(
                 @"INSERT INTO juegos VALUES (seq_juegos.NEXTVAL, :nombre, :descripcion, :estado)",
                 new[]
                 {
@@ -53,6 +51,7 @@ namespace DAL
                     (":descripcion", (object)(j.Descripcion ?? (object)System.DBNull.Value)),
                     (":estado",      (object)(j.Estado ?? "activo"))
                 });
+            return "Guardado correctamente.";
         }
 
         private Juego MapearJuego(OracleDataReader r)

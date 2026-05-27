@@ -20,7 +20,7 @@ namespace DAL
 
         public override string Guardar(EstadoPartida estado)
         {
-            return EjecutarComando(
+            EjecutarComando(
                 @"INSERT INTO estado_partidas (id_estado, nombre_estado, descripcion)
                   VALUES (:id_estado, :nombre_estado, :descripcion)",
                 new[]
@@ -29,6 +29,7 @@ namespace DAL
                     (":nombre_estado", (object)estado.NombreEstado),
                     (":descripcion", (object)(estado.Descripcion ?? (object)System.DBNull.Value))
                 });
+            return "Guardado correctamente.";
         }
 
         private EstadoPartida Mapear(OracleDataReader r)

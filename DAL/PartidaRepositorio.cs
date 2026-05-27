@@ -2,7 +2,6 @@ using ENTITY;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
-using System.Data;
 
 namespace DAL
 {
@@ -76,17 +75,15 @@ namespace DAL
 
         public override string Guardar(Partida p)
         {
-            string sql = @"INSERT INTO partidas (
-                               id_partida, id_usuario, id_juego,
-                               id_estado, fecha, apuesta,
-                               ganancia, resultado
-                           ) VALUES (
-                               seq_partidas.NEXTVAL, :id_usuario, :id_juego,
-                               :id_estado, CURRENT_TIMESTAMP, :apuesta,
-                               :ganancia, :resultado
-                           )";
-
-            return EjecutarComando(sql, new[]
+            EjecutarComando(@"INSERT INTO partidas (
+                                id_partida, id_usuario, id_juego,
+                                id_estado, fecha, apuesta,
+                                ganancia, resultado
+                            ) VALUES (
+                                seq_partidas.NEXTVAL, :id_usuario, :id_juego,
+                                :id_estado, CURRENT_TIMESTAMP, :apuesta,
+                                :ganancia, :resultado
+                            )", new[]
             {
                 (":id_usuario", (object)p.IdUsuario),
                 (":id_juego",   (object)p.IdJuego),
@@ -95,35 +92,19 @@ namespace DAL
                 (":ganancia",   (object)p.Ganancia),
                 (":resultado",  (object)(p.Resultado ?? (object)DBNull.Value))
             });
+            return "Guardado correctamente.";
         }
 
         public string RegistrarConMovimientos(Partida p)
         {
-            using (OracleConnection con = ConexionOracle.Abrir())
-            using (OracleCommand cmd = new OracleCommand("PKG_PARTIDAS.pr_registrar_partida", con))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.BindByName = true;
-
-                cmd.Parameters.Add(new OracleParameter("p_id_usuario", p.IdUsuario));
-                cmd.Parameters.Add(new OracleParameter("p_id_juego", p.IdJuego));
-                cmd.Parameters.Add(new OracleParameter("p_id_estado", p.IdEstado));
-                cmd.Parameters.Add(new OracleParameter("p_apuesta", p.Apuesta));
-                cmd.Parameters.Add(new OracleParameter("p_ganancia", p.Ganancia));
-                cmd.Parameters.Add(new OracleParameter("p_resultado", (object)p.Resultado ?? DBNull.Value));
-
-                var pMsg = new OracleParameter("p_msg", OracleDbType.Varchar2, 200)
-                {
-                    Direction = ParameterDirection.Output
-                };
-                cmd.Parameters.Add(pMsg);
-
-                cmd.ExecuteNonQuery();
-
-                return pMsg.Value.ToString();
-            }
+            return EjecutarSP("PKG_PARTIDAS.pr_registrar_partida", "p_msg",
+                ("p_id_usuario", p.IdUsuario),
+                ("p_id_juego", p.IdJuego),
+                ("p_id_estado", p.IdEstado),
+                ("p_apuesta", p.Apuesta),
+                ("p_ganancia", p.Ganancia),
+                ("p_resultado", (object)p.Resultado ?? DBNull.Value));
         }
-
 
         private Partida Mapear(OracleDataReader r)
         {

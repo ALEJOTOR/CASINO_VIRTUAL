@@ -1,7 +1,6 @@
 using ENTITY;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
-using System.IO;
 
 namespace DAL
 {
@@ -21,13 +20,14 @@ namespace DAL
 
         public override string Guardar(Rol r)
         {
-            return EjecutarComando(
+            EjecutarComando(
                 "INSERT INTO roles VALUES (seq_roles.NEXTVAL, :nombre, :descripcion)",
                 new[]
                 {
                     (":nombre",      (object)r.NombreRol),
                     (":descripcion", (object)(r.Descripcion ?? (object)System.DBNull.Value))
                 });
+            return "Guardado correctamente.";
         }
 
         private Rol Mapear(OracleDataReader r)
