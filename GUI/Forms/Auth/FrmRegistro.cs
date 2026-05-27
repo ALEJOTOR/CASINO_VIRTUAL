@@ -16,7 +16,6 @@ namespace GUI
             // Problema visual que resuelve: el registro se agrupa en una tarjeta central y evita campos dispersos.
             AppTheme.ApplyForm(this);
             AppTheme.ApplyTitle(lblTitulo);
-            AppTheme.ApplyTypography(this);
             AppTheme.ApplyPrimaryButton(btnGuardar);
             AppTheme.ApplyPrimaryButton(btnCancelar, AppTheme.BgHover);
             CrearTarjetaRegistro();

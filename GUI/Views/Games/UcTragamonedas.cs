@@ -97,8 +97,7 @@ namespace GUI
                     IdJuego = _servicio.ObtenerIdJuegoPorNombre("Tragamonedas"),
                     IdEstado = gano ? 2 : 3,
                     Apuesta = apuesta,
-                    Ganancia = ganancia,
-                    Resultado = gano ? "gano" : "perdio"
+                    Ganancia = ganancia
                 };
 
                 if (partida.IdJuego == 0)

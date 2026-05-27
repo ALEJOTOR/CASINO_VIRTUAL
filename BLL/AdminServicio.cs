@@ -13,12 +13,27 @@ namespace BLL
         private readonly TransaccionRepositorio _transRepo = new TransaccionRepositorio();
         private readonly JuegoRepositorio _juegoRepo = new JuegoRepositorio();
 
+        private HashSet<int> _adminIdsCache;
+        private HashSet<int> ObtenerAdminIds()
+        {
+            if (_adminIdsCache == null)
+                _adminIdsCache = new HashSet<int>(
+                    _usuarioRepo.Consultar().Where(u => u.IdRol == 1).Select(u => u.IdUsuario)
+                );
+            return _adminIdsCache;
+        }
+
         public ResumenAdmin ObtenerResumenGeneral()
         {
             IList<Partida> partidas = _partidaRepo.Consultar();
             IList<Usuario> usuarios = _usuarioRepo.Consultar();
             IList<Transaccion> transacciones = _transRepo.Consultar();
             IList<Juego> juegos = _juegoRepo.Consultar();
+
+            var adminIds = ObtenerAdminIds();
+            partidas = partidas.Where(p => !adminIds.Contains(p.IdUsuario)).ToList();
+            transacciones = transacciones.Where(t => !adminIds.Contains(t.IdUsuario)).ToList();
+            usuarios = usuarios.Where(u => u.IdRol != 1).ToList();
 
             DateTime hoy = DateTime.Today;
             DateTime manana = hoy.AddDays(1);
@@ -69,6 +84,8 @@ namespace BLL
         {
             IList<Partida> todas = _partidaRepo.Consultar();
             IList<Usuario> usuarios = _usuarioRepo.Consultar();
+            var adminIds = ObtenerAdminIds();
+            todas = todas.Where(p => !adminIds.Contains(p.IdUsuario)).ToList();
             Dictionary<int, Usuario> mapaUsuarios = usuarios.ToDictionary(u => u.IdUsuario);
 
             return todas
@@ -79,8 +96,8 @@ namespace BLL
                     TotalApostado = g.Sum(p => p.Apuesta),
                     TotalGanado = g.Sum(p => p.Ganancia),
                     TotalPartidas = g.Count(),
-                    Ganadas = g.Count(p => p.Resultado == "gano"),
-                    Perdidas = g.Count(p => p.Resultado == "perdio")
+                    Ganadas = g.Count(p => p.IdEstado == 2),
+                    Perdidas = g.Count(p => p.IdEstado == 3)
                 })
                 .OrderByDescending(x => x.TotalApostado)
                 .Take(cantidad)
@@ -108,6 +125,8 @@ namespace BLL
         {
             IList<Partida> todas = _partidaRepo.Consultar();
             IList<Juego> juegos = _juegoRepo.Consultar();
+            var adminIds = ObtenerAdminIds();
+            todas = todas.Where(p => !adminIds.Contains(p.IdUsuario)).ToList();
             Dictionary<int, string> nombreJuego = juegos.ToDictionary(j => j.IdJuego, j => j.Nombre);
 
             return todas
@@ -121,6 +140,8 @@ namespace BLL
         {
             IList<Transaccion> transacciones = _transRepo.Consultar();
             DateTime limite = DateTime.Today.AddDays(-dias + 1);
+            var adminIds = ObtenerAdminIds();
+            transacciones = transacciones.Where(t => !adminIds.Contains(t.IdUsuario)).ToList();
 
             var depositos = transacciones
                 .Where(t => t.Tipo == "deposito" && t.Fecha >= limite)
@@ -140,6 +161,8 @@ namespace BLL
         {
             IList<Partida> partidas = _partidaRepo.Consultar();
             DateTime limite = DateTime.Today.AddDays(-dias + 1);
+            var adminIds = ObtenerAdminIds();
+            partidas = partidas.Where(p => !adminIds.Contains(p.IdUsuario)).ToList();
 
             var agrupadas = partidas
                 .Where(p => p.Fecha >= limite)
@@ -157,7 +180,80 @@ namespace BLL
 
         public IList<Partida> ObtenerPartidasRecientes(int cantidad)
         {
-            return _partidaRepo.Consultar().Take(cantidad).ToList();
+            var adminIds = ObtenerAdminIds();
+            return _partidaRepo.Consultar().Where(p => !adminIds.Contains(p.IdUsuario)).Take(cantidad).ToList();
+        }
+
+        public IList<(int IdUsuario, decimal TotalDepositado, int NumDepositos)> ObtenerTopDepositantes(int cantidad)
+        {
+            IList<Transaccion> transacciones = _transRepo.Consultar();
+            IList<Usuario> usuarios = _usuarioRepo.Consultar();
+            var adminIds = ObtenerAdminIds();
+            transacciones = transacciones.Where(t => !adminIds.Contains(t.IdUsuario)).ToList();
+            Dictionary<int, string[]> mapaUsuarios = usuarios.Where(u => u.IdRol != 1).ToDictionary(
+                u => u.IdUsuario,
+                u => new[] { $"{u.Nombre1} {u.Apellido1}", u.Username });
+
+            return transacciones
+                .Where(t => t.Tipo == "deposito")
+                .GroupBy(t => t.IdUsuario)
+                .Select(g => (IdUsuario: g.Key, TotalDepositado: g.Sum(t => t.Monto), NumDepositos: g.Count()))
+                .OrderByDescending(x => x.TotalDepositado)
+                .Take(cantidad)
+                .ToList();
+        }
+
+        public decimal ObtenerTotalTransacciones(string tipo)
+        {
+            var adminIds = ObtenerAdminIds();
+            return _transRepo.Consultar()
+                .Where(t => t.Tipo == tipo && !adminIds.Contains(t.IdUsuario))
+                .Sum(t => t.Monto);
+        }
+
+        public IList<(string Juego, int Partidas, decimal TotalApostado, decimal GananciaCasa, decimal Margen)> ObtenerRentabilidadPorJuego()
+        {
+            IList<Partida> partidas = _partidaRepo.Consultar();
+            IList<Juego> juegos = _juegoRepo.Consultar();
+            var adminIds = ObtenerAdminIds();
+            partidas = partidas.Where(p => !adminIds.Contains(p.IdUsuario)).ToList();
+            Dictionary<int, string> nombreJuego = juegos.ToDictionary(j => j.IdJuego, j => j.Nombre);
+
+            return partidas
+                .GroupBy(p => p.IdJuego)
+                .Select(g =>
+                {
+                    decimal apostado = g.Sum(p => p.Apuesta);
+                    decimal ganado = g.Sum(p => p.Ganancia);
+                    decimal ganancia = apostado - ganado;
+                    decimal margen = apostado > 0 ? ganancia / apostado * 100m : 0m;
+                    string nombre = nombreJuego.ContainsKey(g.Key) ? nombreJuego[g.Key] : $"Juego {g.Key}";
+                    return (Juego: nombre, Partidas: g.Count(), TotalApostado: apostado, GananciaCasa: ganancia, Margen: margen);
+                })
+                .OrderByDescending(x => x.GananciaCasa)
+                .ToList();
+        }
+
+        public Dictionary<string, (decimal Depositos, decimal Retiros)> ObtenerMovimientosPorMes(int meses)
+        {
+            IList<Transaccion> transacciones = _transRepo.Consultar();
+            var adminIds = ObtenerAdminIds();
+            transacciones = transacciones.Where(t => !adminIds.Contains(t.IdUsuario)).ToList();
+            var resultado = new Dictionary<string, (decimal, decimal)>();
+
+            for (int i = meses - 1; i >= 0; i--)
+            {
+                DateTime mes = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(-i);
+                string clave = mes.ToString("MMM yy");
+                decimal dep = transacciones
+                    .Where(t => t.Tipo == "deposito" && t.Fecha.Year == mes.Year && t.Fecha.Month == mes.Month)
+                    .Sum(t => t.Monto);
+                decimal ret = transacciones
+                    .Where(t => t.Tipo == "retiro" && t.Fecha.Year == mes.Year && t.Fecha.Month == mes.Month)
+                    .Sum(t => t.Monto);
+                resultado[clave] = (dep, ret);
+            }
+            return resultado;
         }
     }
 }

@@ -42,9 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfiguracionJuego.cs" />
-    <Compile Include="DetallePartida.cs" />
     <Compile Include="EstadoPartida.cs" />
+    <Compile Include="EstadoUsuario.cs" />
     <Compile Include="EstadisticasUsuario.cs" />
     <Compile Include="HistorialPartida.cs" />
     <Compile Include="Juego.cs" />

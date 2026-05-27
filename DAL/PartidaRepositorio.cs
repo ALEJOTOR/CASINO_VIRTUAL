@@ -14,7 +14,7 @@ namespace DAL
 
             string sql = @"SELECT id_partida, id_usuario, id_juego,
                                   id_estado, fecha, apuesta,
-                                  ganancia, resultado
+                                  ganancia
                              FROM partidas
                             ORDER BY fecha DESC";
 
@@ -31,7 +31,7 @@ namespace DAL
 
             string sql = @"SELECT id_partida, id_usuario, id_juego,
                                   id_estado, fecha, apuesta,
-                                  ganancia, resultado
+                                  ganancia
                              FROM partidas
                             WHERE id_usuario = :id
                             ORDER BY fecha DESC";
@@ -50,7 +50,7 @@ namespace DAL
 
             string sql = @"SELECT id_partida, id_usuario, nombre_juego,
                                   estado, fecha, apuesta,
-                                  ganancia, resultado
+                                  ganancia
                              FROM vw_historial_partidas
                             WHERE id_usuario = :id
                             ORDER BY fecha DESC";
@@ -66,8 +66,7 @@ namespace DAL
                         Estado = r.GetString(3),
                         Fecha = r.GetDateTime(4),
                         Apuesta = r.GetDecimal(5),
-                        Ganancia = r.GetDecimal(6),
-                        Resultado = r.IsDBNull(7) ? null : r.GetString(7)
+                        Ganancia = r.GetDecimal(6)
                     });
 
             return lista;
@@ -78,19 +77,18 @@ namespace DAL
             EjecutarComando(@"INSERT INTO partidas (
                                 id_partida, id_usuario, id_juego,
                                 id_estado, fecha, apuesta,
-                                ganancia, resultado
+                                ganancia
                             ) VALUES (
                                 seq_partidas.NEXTVAL, :id_usuario, :id_juego,
                                 :id_estado, CURRENT_TIMESTAMP, :apuesta,
-                                :ganancia, :resultado
+                                :ganancia
                             )", new[]
             {
                 (":id_usuario", (object)p.IdUsuario),
                 (":id_juego",   (object)p.IdJuego),
                 (":id_estado",  (object)p.IdEstado),
                 (":apuesta",    (object)p.Apuesta),
-                (":ganancia",   (object)p.Ganancia),
-                (":resultado",  (object)(p.Resultado ?? (object)DBNull.Value))
+                (":ganancia",   (object)p.Ganancia)
             });
             return "Guardado correctamente.";
         }
@@ -102,8 +100,7 @@ namespace DAL
                 ("p_id_juego", p.IdJuego),
                 ("p_id_estado", p.IdEstado),
                 ("p_apuesta", p.Apuesta),
-                ("p_ganancia", p.Ganancia),
-                ("p_resultado", (object)p.Resultado ?? DBNull.Value));
+                ("p_ganancia", p.Ganancia));
         }
 
         private Partida Mapear(OracleDataReader r)
@@ -116,8 +113,7 @@ namespace DAL
                 IdEstado = r.GetInt32(3),
                 Fecha = r.GetDateTime(4),
                 Apuesta = r.GetDecimal(5),
-                Ganancia = r.GetDecimal(6),
-                Resultado = r.IsDBNull(7) ? null : r.GetString(7)
+                Ganancia = r.GetDecimal(6)
             };
         }
     }

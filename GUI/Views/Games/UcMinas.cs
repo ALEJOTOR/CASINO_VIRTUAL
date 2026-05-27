@@ -529,8 +529,7 @@ namespace GUI
                 IdJuego = _servicio.ObtenerIdJuegoPorNombre("Minas"),
                 IdEstado = gano ? 2 : 3,
                 Apuesta = _apuesta,
-                Ganancia = ganancia,
-                Resultado = gano ? "gano" : "perdio"
+                Ganancia = ganancia
             };
 
             if (p.IdJuego == 0)

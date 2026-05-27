@@ -96,6 +96,27 @@ namespace GUI
             FiltrarYMostrar();
         }
 
+        private void dgvUsuarios_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            Usuario u = dgvUsuarios.Rows[e.RowIndex].DataBoundItem as Usuario;
+            if (u == null) return;
+
+            if (u.IdRol == 1)
+            {
+                MessageBox.Show("No se puede editar un administrador desde esta pantalla.", "Aviso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (FrmEditarUsuario form = new FrmEditarUsuario(u))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    CargarUsuarios();
+            }
+        }
+
         private void btnCambiarEstado_Click(object sender, EventArgs e)
         {
             if (dgvUsuarios.CurrentRow == null)

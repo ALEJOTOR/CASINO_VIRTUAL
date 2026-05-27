@@ -1,3 +1,5 @@
+using System;
+
 namespace GUI
 {
     partial class UcGestionUsuarios
@@ -109,6 +111,7 @@ namespace GUI
             this.dgvUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvUsuarios.Size = new System.Drawing.Size(1248, 590);
             this.dgvUsuarios.TabIndex = 2;
+            this.dgvUsuarios.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsuarios_CellDoubleClick);
             this.dgvUsuarios.EnableHeadersVisualStyles = false;
             this.dgvUsuarios.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(23, 37, 63);
             this.dgvUsuarios.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(241, 245, 249);

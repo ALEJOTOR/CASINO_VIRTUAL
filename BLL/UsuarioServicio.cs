@@ -11,8 +11,14 @@ namespace BLL
     public class UsuarioServicio
     {
         private readonly UsuarioRepositorio _repositorio = new UsuarioRepositorio();
+        private readonly EstadoUsuarioRepositorio _estadoRepo = new EstadoUsuarioRepositorio();
         private readonly RolRepositorio _rolRepositorio = new RolRepositorio();
         private readonly TransaccionRepositorio _transaccionRepositorio = new TransaccionRepositorio();
+
+        public IList<EstadoUsuario> ObtenerEstados()
+        {
+            return _estadoRepo.Consultar();
+        }
 
         // ── Consultas ─────────────────────────────────────────────
 
@@ -167,7 +173,7 @@ namespace BLL
 
         public string GenerarReporte()
         {
-            IList<Usuario> lista = _repositorio.Consultar();
+            IList<Usuario> lista = _repositorio.Consultar().Where(u => u.IdRol != 1).ToList();
             int activos = lista.Count(u => u.Estado == "activo");
             int inactivos = lista.Count(u => u.Estado == "inactivo");
             int suspendidos = lista.Count(u => u.Estado == "suspendido");

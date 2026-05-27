@@ -59,17 +59,11 @@
     <Compile Include="Forms\Admin\FrmAdmin.Designer.cs">
       <DependentUpon>FrmAdmin.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Admin\FrmInputSaldo.cs">
+    <Compile Include="Forms\Admin\FrmEditarUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Admin\FrmInputSaldo.Designer.cs">
-      <DependentUpon>FrmInputSaldo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Admin\FrmInputTexto.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Admin\FrmInputTexto.Designer.cs">
-      <DependentUpon>FrmInputTexto.cs</DependentUpon>
+    <Compile Include="Forms\Admin\FrmEditarUsuario.Designer.cs">
+      <DependentUpon>FrmEditarUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Auth\FrmLogin.cs">
       <SubType>Form</SubType>

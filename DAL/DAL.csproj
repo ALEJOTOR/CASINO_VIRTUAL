@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="ConexionOracle.cs" />
     <Compile Include="EstadoPartidaRepositorio.cs" />
+    <Compile Include="EstadoUsuarioRepositorio.cs" />
     <Compile Include="JuegoRepositorio.cs" />
     <Compile Include="OracleBase.cs" />
     <Compile Include="PartidaRepositorio.cs" />

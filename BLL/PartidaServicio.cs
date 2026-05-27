@@ -9,6 +9,7 @@ namespace BLL
     public class PartidaServicio
     {
         private readonly PartidaRepositorio _partidaRepo = new PartidaRepositorio();
+        private readonly EstadoPartidaRepositorio _estadoRepo = new EstadoPartidaRepositorio();
         private readonly UsuarioServicio _usuarioSvc = new UsuarioServicio();
         private readonly JuegoServicio _juegoSvc = new JuegoServicio();
 
@@ -47,25 +48,31 @@ namespace BLL
             Dictionary<int, string> mapaUsuarios = usuarios.ToDictionary(u => u.IdUsuario, u => $"{u.Nombre1} {u.Apellido1}");
             Dictionary<int, string> mapaJuegos = juegos.ToDictionary(j => j.IdJuego, j => j.Nombre);
 
+            Dictionary<int, string> mapaEstados = _estadoRepo.Consultar()
+                .ToDictionary(e => e.IdEstado, e => e.NombreEstado);
+
             return lista.Select(p => new PartidaDisplayDto
             {
                 IdPartida = p.IdPartida,
                 Usuario = mapaUsuarios.ContainsKey(p.IdUsuario) ? mapaUsuarios[p.IdUsuario] : $"Usuario {p.IdUsuario}",
                 Juego = mapaJuegos.ContainsKey(p.IdJuego) ? mapaJuegos[p.IdJuego] : $"Juego {p.IdJuego}",
-                Estado = p.IdEstado == 1 ? "Activa" : p.IdEstado == 2 ? "Completada" : p.IdEstado == 3 ? "Cancelada" : $"Estado {p.IdEstado}",
+                Estado = mapaEstados.ContainsKey(p.IdEstado) ? mapaEstados[p.IdEstado] : $"Estado {p.IdEstado}",
                 Fecha = p.Fecha,
                 Apuesta = p.Apuesta,
-                Ganancia = p.Ganancia,
-                Resultado = p.Resultado ?? "Pendiente"
+                Ganancia = p.Ganancia
             }).ToList();
         }
 
         public string GenerarReporte()
         {
             IList<Partida> lista = _partidaRepo.Consultar();
+            var adminIds = new HashSet<int>(
+                _usuarioSvc.ObtenerTodos().Where(u => u.IdRol == 1).Select(u => u.IdUsuario)
+            );
+            lista = lista.Where(p => !adminIds.Contains(p.IdUsuario)).ToList();
             int total = lista.Count;
-            int ganadas = lista.Count(p => p.Resultado == "gano");
-            int perdidas = lista.Count(p => p.Resultado == "perdio");
+            int ganadas = lista.Count(p => p.IdEstado == 2);
+            int perdidas = lista.Count(p => p.IdEstado == 3);
             decimal totalApostado = lista.Sum(p => p.Apuesta);
             decimal totalGanado = lista.Sum(p => p.Ganancia);
 
@@ -90,8 +97,8 @@ namespace BLL
             IList<Partida> partidas = _partidaRepo.ObtenerPorUsuario(idUsuario);
 
             int total = partidas.Count;
-            int ganadas = partidas.Count(p => p.Resultado == "gano");
-            int perdidas = partidas.Count(p => p.Resultado == "perdio");
+            int ganadas = partidas.Count(p => p.IdEstado == 2);
+            int perdidas = partidas.Count(p => p.IdEstado == 3);
             decimal totalApostado = partidas.Sum(p => p.Apuesta);
             decimal totalGanado = partidas.Sum(p => p.Ganancia);
 
@@ -109,12 +116,12 @@ namespace BLL
             string tipoRacha = "ninguna";
             foreach (Partida p in partidas.OrderByDescending(p => p.Fecha))
             {
-                if (p.Resultado == "gano" && (tipoRacha == "ninguna" || tipoRacha == "ganando"))
+                if (p.IdEstado == 2 && (tipoRacha == "ninguna" || tipoRacha == "ganando"))
                 {
                     racha++;
                     tipoRacha = "ganando";
                 }
-                else if (p.Resultado == "perdio" && (tipoRacha == "ninguna" || tipoRacha == "perdiendo"))
+                else if (p.IdEstado == 3 && (tipoRacha == "ninguna" || tipoRacha == "perdiendo"))
                 {
                     racha++;
                     tipoRacha = "perdiendo";

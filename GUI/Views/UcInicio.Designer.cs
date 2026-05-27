@@ -189,17 +189,17 @@ namespace GUI
             this.pictureBox1.Location = new System.Drawing.Point(10, 60);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(348, 182);
+            this.pictureBox1.Size = new System.Drawing.Size(348, 217);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
             // 
             // btnMinas
             // 
+            this.btnMinas.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnMinas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
             this.btnMinas.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnMinas.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right) 
-            | System.Windows.Forms.AnchorStyles.Bottom)));
             this.btnMinas.FlatAppearance.BorderSize = 0;
             this.btnMinas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMinas.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold);
@@ -270,17 +270,17 @@ namespace GUI
             this.pictureBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox3.Location = new System.Drawing.Point(10, 60);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(348, 182);
+            this.pictureBox3.Size = new System.Drawing.Size(348, 217);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 5;
             this.pictureBox3.TabStop = false;
             // 
             // btnRuleta
             // 
+            this.btnRuleta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRuleta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.btnRuleta.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRuleta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right) 
-            | System.Windows.Forms.AnchorStyles.Bottom)));
             this.btnRuleta.FlatAppearance.BorderSize = 0;
             this.btnRuleta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRuleta.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold);
@@ -351,17 +351,17 @@ namespace GUI
             this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox2.Location = new System.Drawing.Point(10, 60);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(350, 182);
+            this.pictureBox2.Size = new System.Drawing.Size(350, 217);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 4;
             this.pictureBox2.TabStop = false;
             // 
             // btnSlot
             // 
+            this.btnSlot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSlot.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.btnSlot.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSlot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right) 
-            | System.Windows.Forms.AnchorStyles.Bottom)));
             this.btnSlot.FlatAppearance.BorderSize = 0;
             this.btnSlot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSlot.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold);

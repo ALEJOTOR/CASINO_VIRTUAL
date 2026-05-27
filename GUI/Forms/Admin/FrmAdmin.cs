@@ -11,6 +11,8 @@ namespace GUI
         private readonly Usuario _admin;
         private readonly PartidaServicio _partidaSvc = new PartidaServicio();
         private readonly TransaccionServicio _transSvc = new TransaccionServicio();
+        private ToolStripMenuItem _ultimoItemActivo;
+        private Panel _indicadorActivo;
 
         public FrmAdmin(Usuario admin)
         {
@@ -25,34 +27,69 @@ namespace GUI
 
         private void AplicarEstiloVisual()
         {
-            // Problema visual que resuelve: el panel admin comparte fondo, animacion inicial y navbar con el lobby.
             AppTheme.ApplyForm(this);
             AppTheme.ApplyNavbar(panelNavbar);
-            AppTheme.ApplyPrimaryButton(btnCerrarSesion, ColorTranslator.FromHtml("#E53E3E"));
+            AppTheme.ApplyPrimaryButton(btnCerrarSesion, Color.FromArgb(220, 50, 50));
             mainLayout.BackColor = AppTheme.BgPrincipal;
             pnlContenido.BackColor = AppTheme.BgPrincipal;
             panelNavbar.Margin = Padding.Empty;
             pnlContenido.Margin = Padding.Empty;
             mainLayout.Margin = Padding.Empty;
+            AppTheme.ApplyTitle(lblAdminNombre);
+
             menuStrip.RenderMode = ToolStripRenderMode.Professional;
             menuStrip.Renderer = new ToolStripProfessionalRenderer(new CasinoMenuColors());
-            AppTheme.ApplyTitle(lblAdminNombre);
+            menuStrip.BackColor = AppTheme.BgNavbar;
+            menuStrip.Padding = new Padding(370, 0, 0, 0);
+
             foreach (ToolStripMenuItem item in menuStrip.Items)
+                AppTheme.ApplyNavbarItem(item);
+
+            // logout button subtle border rounding
+            btnCerrarSesion.Font = AppTheme.ValorChico;
+            btnCerrarSesion.FlatAppearance.BorderSize = 0;
+            btnCerrarSesion.Text = "Salir";
+
+            // active indicator
+            _indicadorActivo = new Panel
             {
-                // Problema visual que resuelve: los enlaces administrativos tienen la misma lectura y hover que el lobby.
-                item.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-                item.ForeColor = AppTheme.TextoPrimario;
-                item.Margin = new Padding(6, 0, 6, 0);
+                Height = 3,
+                BackColor = AppTheme.Dorado,
+                Width = 0,
+                Location = new Point(0, panelNavbar.Height - 3)
+            };
+            panelNavbar.Controls.Add(_indicadorActivo);
+            _indicadorActivo.BringToFront();
+        }
+
+        private void ActivarItemMenu(ToolStripMenuItem item)
+        {
+            _ultimoItemActivo = item;
+            if (item == null) return;
+            // reset all items
+            foreach (ToolStripMenuItem i in menuStrip.Items)
+            {
+                i.ForeColor = AppTheme.TextoSecundario;
+                i.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
             }
+            item.ForeColor = AppTheme.Dorado;
+            item.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+            // move indicator
+            Point screen = menuStrip.PointToScreen(item.ContentRectangle.Location);
+            Point local = panelNavbar.PointToClient(screen);
+            _indicadorActivo.Location = new Point(local.X - 8, panelNavbar.Height - 3);
+            _indicadorActivo.Width = item.ContentRectangle.Width + 16;
+            _indicadorActivo.BackColor = AppTheme.Dorado;
+            _indicadorActivo.BringToFront();
         }
 
         private void PrepararNavegacion()
         {
-            dashboardToolStripMenuItem.Click += (s, e) => MostrarDashboard();
-            usuariosToolStripMenuItem.Click += (s, e) => MostrarUsuarios();
-            partidasToolStripMenuItem.Click += (s, e) => MostrarPartidas();
-            transaccionesToolStripMenuItem.Click += (s, e) => MostrarTransacciones();
-            reportesToolStripMenuItem.Click += (s, e) => MostrarReportes();
+            dashboardToolStripMenuItem.Click += (s, e) => { ActivarItemMenu(dashboardToolStripMenuItem); MostrarDashboard(); };
+            usuariosToolStripMenuItem.Click += (s, e) => { ActivarItemMenu(usuariosToolStripMenuItem); MostrarUsuarios(); };
+            partidasToolStripMenuItem.Click += (s, e) => { ActivarItemMenu(partidasToolStripMenuItem); MostrarPartidas(); };
+            transaccionesToolStripMenuItem.Click += (s, e) => { ActivarItemMenu(transaccionesToolStripMenuItem); MostrarTransacciones(); };
+            reportesToolStripMenuItem.Click += (s, e) => { ActivarItemMenu(reportesToolStripMenuItem); MostrarReportes(); };
         }
 
         private void MostrarVista(UserControl vista)
@@ -78,8 +115,8 @@ namespace GUI
             grid.CargarDatos(_partidaSvc.ObtenerTodasConNombres());
             MostrarVista(grid);
             grid.Configurar("Partidas - Registro completo",
-                new[] { "IdPartida", "Usuario", "Juego", "Estado", "Fecha", "Apuesta", "Ganancia", "Resultado" },
-                new[] { "Partida", "Usuario", "Juego", "Estado", "Fecha", "Apuesta", "Ganancia", "Resultado" });
+                new[] { "IdPartida", "Usuario", "Juego", "Estado", "Fecha", "Apuesta", "Ganancia" },
+                new[] { "Partida", "Usuario", "Juego", "Estado", "Fecha", "Apuesta", "Ganancia" });
             grid.FormatearColumnas();
         }
 
@@ -107,9 +144,12 @@ namespace GUI
 
         private sealed class CasinoMenuColors : ProfessionalColorTable
         {
-            public override Color MenuItemSelected => AppTheme.BgHover;
-            public override Color MenuItemBorder => AppTheme.Dorado;
+            public override Color MenuItemSelected => AppTheme.BgElevated;
+            public override Color MenuItemBorder => Color.Transparent;
             public override Color ToolStripDropDownBackground => AppTheme.BgNavbar;
+            public override Color MenuBorder => AppTheme.Borde;
+            public override Color MenuItemPressedGradientBegin => AppTheme.BgHover;
+            public override Color MenuItemPressedGradientEnd => AppTheme.BgHover;
             public override Color ImageMarginGradientBegin => AppTheme.BgNavbar;
             public override Color ImageMarginGradientMiddle => AppTheme.BgNavbar;
             public override Color ImageMarginGradientEnd => AppTheme.BgNavbar;

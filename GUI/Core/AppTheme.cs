@@ -2,27 +2,43 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace GUI
 {
     public static class AppTheme
     {
-        // Problema visual que resuelve: centraliza colores y fuentes para que toda la GUI conserve una identidad consistente.
-        public static Color BgPrincipal = ColorTranslator.FromHtml("#0D1117");
-        public static Color BgCard = ColorTranslator.FromHtml("#161B27");
-        public static Color BgHover = ColorTranslator.FromHtml("#1E2535");
-        public static Color BgNavbar = ColorTranslator.FromHtml("#0A0F1E");
-        public static Color Dorado = ColorTranslator.FromHtml("#FFD700");
-        public static Color Verde = ColorTranslator.FromHtml("#22C55E");
-        public static Color Rojo = ColorTranslator.FromHtml("#EF4444");
-        public static Color Azul = ColorTranslator.FromHtml("#3B82F6");
-        public static Color TextoPrimario = ColorTranslator.FromHtml("#F1F5F9");
-        public static Color TextoSecundario = ColorTranslator.FromHtml("#94A3B8");
-        public static Font TituloGrande = new Font("Segoe UI", 20, FontStyle.Bold);
-        public static Font Subtitulo = new Font("Segoe UI", 10, FontStyle.Regular);
-        public static Font Cuerpo = new Font("Segoe UI", 11, FontStyle.Regular);
-        public static Font Valor = new Font("Segoe UI", 13, FontStyle.Bold);
+        // ── Palette ──
+        public static Color BgPrincipal  = ColorTranslator.FromHtml("#0D1117");
+        public static Color BgCard       = ColorTranslator.FromHtml("#161B27");
+        public static Color BgHover      = ColorTranslator.FromHtml("#1E2535");
+        public static Color BgNavbar     = ColorTranslator.FromHtml("#0B1120");
+        public static Color BgElevated   = ColorTranslator.FromHtml("#1C2536");
+        public static Color BgInput      = ColorTranslator.FromHtml("#0F1729");
 
+        public static Color Dorado       = ColorTranslator.FromHtml("#FBBF24");
+        public static Color Verde        = ColorTranslator.FromHtml("#22C55E");
+        public static Color Rojo         = ColorTranslator.FromHtml("#EF4444");
+        public static Color Azul         = ColorTranslator.FromHtml("#3B82F6");
+        public static Color Violeta      = ColorTranslator.FromHtml("#8B5CF6");
+        public static Color TextoPrimario   = ColorTranslator.FromHtml("#F1F5F9");
+        public static Color TextoSecundario = ColorTranslator.FromHtml("#94A3B8");
+        public static Color TexoMuted       = ColorTranslator.FromHtml("#64748B");
+        public static Color Borde           = ColorTranslator.FromHtml("#1E293B");
+        public static Color BordeClaro      = ColorTranslator.FromHtml("#2A3A52");
+
+        // ── Typography ──
+        public static Font TituloGrande  = new Font("Segoe UI", 20, FontStyle.Bold);
+        public static Font Subtitulo     = new Font("Segoe UI", 10, FontStyle.Regular);
+        public static Font Cuerpo        = new Font("Segoe UI", 11, FontStyle.Regular);
+        public static Font Valor         = new Font("Segoe UI", 13, FontStyle.Bold);
+        public static Font ValorChico    = new Font("Segoe UI", 9, FontStyle.Bold);
+        public static Font LabelAccion   = new Font("Segoe UI", 10, FontStyle.Bold);
+
+        public const int CardRadius = 12;
+        public const int NavbarHeight = 56;
+
+        // ── Form ──
         public static void ApplyForm(Form form)
         {
             form.BackColor = BgPrincipal;
@@ -34,15 +50,32 @@ namespace GUI
         {
             root.BackColor = BgPrincipal;
             root.Font = Cuerpo;
-            ApplyTypography(root);
         }
 
-        public static void ApplyNavbar(Panel panel)
+        // ── Navbar ──
+        public static void ApplyNavbar(Panel panel, Control separator = null)
         {
             panel.BackColor = BgNavbar;
-            panel.Height = 60;
+            panel.Height = NavbarHeight;
+            // subtle bottom border drawn via paint
+            panel.Paint += (s, e) =>
+            {
+                using (Pen p = new Pen(Borde, 1))
+                    e.Graphics.DrawLine(p, 0, panel.Height - 1, panel.Width, panel.Height - 1);
+            };
         }
 
+        public static void ApplyNavbarItem(ToolStripMenuItem item)
+        {
+            item.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+            item.ForeColor = TextoSecundario;
+            item.Margin = new Padding(4, 0, 4, 0);
+            item.Padding = new Padding(8, 0, 8, 0);
+            item.MouseEnter += (s, e) => item.ForeColor = TextoPrimario;
+            item.MouseLeave += (s, e) => item.ForeColor = TextoSecundario;
+        }
+
+        // ── Labels ──
         public static void ApplyTitle(Label label)
         {
             label.Font = TituloGrande;
@@ -61,42 +94,86 @@ namespace GUI
             label.ForeColor = TextoPrimario;
         }
 
+        // ── Buttons ──
         public static void ApplyPrimaryButton(Button button, Color? color = null)
         {
-            button.BackColor = color ?? Dorado;
-            button.ForeColor = (color == null || color.Value == Dorado) ? Color.Black : Color.White;
+            Color actual = color ?? Dorado;
+            button.BackColor = actual;
+            button.ForeColor = actual == Dorado ? Color.Black : Color.White;
             button.FlatStyle = FlatStyle.Flat;
             button.FlatAppearance.BorderSize = 0;
-            button.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button.Font = LabelAccion;
             button.Cursor = Cursors.Hand;
             button.UseVisualStyleBackColor = false;
             ApplyRoundedRegion(button, 8);
             AttachButtonHover(button);
         }
 
+        public static void ApplySecondaryButton(Button button)
+        {
+            button.BackColor = BgElevated;
+            button.ForeColor = TextoPrimario;
+            button.FlatStyle = FlatStyle.Flat;
+            button.FlatAppearance.BorderSize = 1;
+            button.FlatAppearance.BorderColor = BordeClaro;
+            button.Font = LabelAccion;
+            button.Cursor = Cursors.Hand;
+            button.UseVisualStyleBackColor = false;
+            ApplyRoundedRegion(button, 8);
+            button.MouseEnter += (s, e) => button.BackColor = BgHover;
+            button.MouseLeave += (s, e) => button.BackColor = BgElevated;
+        }
+
+        public static void ApplySmallButton(Button button, Color color)
+        {
+            button.BackColor = color;
+            button.ForeColor = Color.White;
+            button.FlatStyle = FlatStyle.Flat;
+            button.FlatAppearance.BorderSize = 0;
+            button.Font = ValorChico;
+            button.Cursor = Cursors.Hand;
+            button.UseVisualStyleBackColor = false;
+            ApplyRoundedRegion(button, 6);
+        }
+
+        // ── Inputs ──
         public static void ApplyTextBox(TextBox textBox)
         {
-            textBox.BackColor = BgHover;
+            textBox.BackColor = BgInput;
             textBox.ForeColor = TextoPrimario;
             textBox.BorderStyle = BorderStyle.FixedSingle;
             textBox.Font = Cuerpo;
-            AttachTextBoxFocusBorder(textBox);
         }
 
         public static void ApplyCombo(ComboBox combo)
         {
-            combo.BackColor = BgHover;
+            combo.BackColor = BgInput;
             combo.ForeColor = TextoPrimario;
             combo.FlatStyle = FlatStyle.Flat;
             combo.Font = Cuerpo;
         }
 
-        public static void ApplyCard(Panel panel, int radius = 12)
+        // ── Cards ──
+        public static void ApplyCard(Panel panel, int radius = CardRadius)
         {
             panel.BackColor = BgCard;
             panel.Padding = new Padding(24);
-            panel.Resize += (s, e) => ApplyRoundedRegion(panel, radius);
             ApplyRoundedRegion(panel, radius);
+        }
+
+        public static void ApplyCardKPI(Panel panel, Color accent)
+        {
+            panel.BackColor = BgCard;
+            ApplyRoundedRegion(panel, CardRadius);
+            // accent top bar and subtle border via paint
+            panel.Paint += (s, e) =>
+            {
+                int barH = 3;
+                using (SolidBrush bar = new SolidBrush(accent))
+                    e.Graphics.FillRectangle(bar, 0, 0, panel.Width, barH);
+                using (Pen p = new Pen(Color.FromArgb(40, 255, 255, 255), 1))
+                    e.Graphics.DrawRectangle(p, 0, 0, panel.Width - 1, panel.Height - 1);
+            };
         }
 
         public static void ApplySaldoLabel(Label label)
@@ -108,66 +185,103 @@ namespace GUI
             label.Padding = new Padding(12, 0, 12, 0);
             label.Paint += (s, e) =>
             {
-                using (Pen pen = new Pen(Dorado, 1))
+                using (Pen pen = new Pen(BordeClaro, 1))
                     e.Graphics.DrawRectangle(pen, 0, 0, label.Width - 1, label.Height - 1);
             };
             AttachSaldoFlash(label);
         }
 
+        // ── DataGridView ──
         public static void ApplyDataGrid(DataGridView grid)
         {
             grid.BackgroundColor = BgCard;
             grid.BorderStyle = BorderStyle.None;
+            grid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            grid.GridColor = Borde;
             grid.EnableHeadersVisualStyles = false;
+            grid.RowHeadersVisible = false;
+            grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            grid.AllowUserToAddRows = false;
+            grid.AllowUserToDeleteRows = false;
+            grid.ReadOnly = true;
+
             grid.ColumnHeadersDefaultCellStyle.BackColor = BgCard;
             grid.ColumnHeadersDefaultCellStyle.ForeColor = Dorado;
-            grid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            grid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            grid.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            grid.ColumnHeadersDefaultCellStyle.Padding = new Padding(8, 0, 8, 0);
+            grid.ColumnHeadersHeight = 38;
+            grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+
             grid.DefaultCellStyle.BackColor = BgPrincipal;
             grid.DefaultCellStyle.ForeColor = TextoPrimario;
-            grid.DefaultCellStyle.SelectionBackColor = BgHover;
-            grid.DefaultCellStyle.SelectionForeColor = Color.White;
-            grid.AlternatingRowsDefaultCellStyle.BackColor = BgCard;
-            grid.GridColor = BgHover;
+            grid.DefaultCellStyle.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular);
+            grid.DefaultCellStyle.Padding = new Padding(8, 0, 8, 0);
+            grid.DefaultCellStyle.SelectionBackColor = BgElevated;
+            grid.DefaultCellStyle.SelectionForeColor = TextoPrimario;
+            grid.RowTemplate.Height = 34;
+
+            grid.AlternatingRowsDefaultCellStyle.BackColor = ColorTranslator.FromHtml("#111827");
         }
 
-        public static void ApplyTypography(Control root)
+        public static void ConfigurarColumnasDgv(DataGridView dgv, int maxFilas = 15, int maxAltura = 500)
         {
-            foreach (Control control in root.Controls)
-            {
-                if (control is Label label)
-                {
-                    string name = label.Name.ToLowerInvariant();
-                    if (name.Contains("titulo") || name.Contains("bienvenido") || name.Contains("marca"))
-                        ApplyTitle(label);
-                    else if (name.Contains("subtitulo") || name.Contains("descripcion") || name.Contains("footer"))
-                        ApplySubtitle(label);
-                    else if (name.Contains("valor") || name.Contains("saldo") || name.Contains("total") || name.Contains("premio"))
-                        label.Font = Valor;
-                    else
-                        ApplyBody(label);
-                }
-                else if (control is TextBox textBox)
-                {
-                    ApplyTextBox(textBox);
-                }
-                else if (control is ComboBox combo)
-                {
-                    ApplyCombo(combo);
-                }
-                else if (control is Button button)
-                {
-                    ApplyPrimaryButton(button, button.BackColor == Color.Empty ? Dorado : button.BackColor);
-                }
-                else if (control is DataGridView grid)
-                {
-                    ApplyDataGrid(grid);
-                }
+            dgv.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            foreach (DataGridViewColumn col in dgv.Columns)
+                col.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            foreach (DataGridViewColumn col in dgv.Columns)
+                if (col.Visible && col.Width < 80)
+                    col.MinimumWidth = Math.Max(col.Width, 80);
+            dgv.ScrollBars = ScrollBars.Both;
 
-                if (control.HasChildren)
-                    ApplyTypography(control);
-            }
+            int header = dgv.ColumnHeadersHeight;
+            int row = dgv.RowTemplate.Height;
+            int filas = Math.Min(dgv.Rows.Count, maxFilas);
+            int h = header + (row * filas) + 4;
+            if (h < 120) h = 120;
+            if (h > maxAltura) h = maxAltura;
+            dgv.Height = h;
         }
 
+        // ── Charts ──
+        public static void EstiloAreaChart(ChartArea area)
+        {
+            area.BackColor = Color.Transparent;
+            area.BorderColor = Color.Transparent;
+            area.AxisX.LabelStyle.ForeColor = TexoMuted;
+            area.AxisX.LabelStyle.Font = new Font("Segoe UI", 8F);
+            area.AxisY.LabelStyle.ForeColor = TexoMuted;
+            area.AxisY.LabelStyle.Font = new Font("Segoe UI", 8F);
+            area.AxisX.MajorGrid.LineColor = Color.FromArgb(30, 45, 70);
+            area.AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
+            area.AxisY.MajorGrid.LineColor = Color.FromArgb(30, 45, 70);
+            area.AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
+            area.AxisX.MajorTickMark.Enabled = false;
+            area.AxisY.MajorTickMark.Enabled = false;
+            area.AxisX.LineColor = BordeClaro;
+            area.AxisY.LineColor = BordeClaro;
+        }
+
+        public static void EstiloChartSerie(Series serie, Color fill, Color border, int borderWidth = 2)
+        {
+            serie.Color = Color.FromArgb(60, fill);
+            serie.BorderColor = border;
+            serie.BorderWidth = borderWidth;
+        }
+
+        public static Legend CrearLegend()
+        {
+            return new Legend
+            {
+                Docking = Docking.Bottom,
+                BackColor = Color.Transparent,
+                ForeColor = TextoSecundario,
+                Font = new Font("Segoe UI", 9F),
+                Alignment = StringAlignment.Center
+            };
+        }
+
+        // ── Effects ──
         public static void EnableFadeIn(Form form)
         {
             form.Opacity = 0;
@@ -187,12 +301,10 @@ namespace GUI
 
         public static void AttachButtonHover(Button button)
         {
-            Padding originalPadding = button.Padding;
-            Color originalColor = button.BackColor;
-            Color hoverColor = Darken(originalColor, 0.15F);
-
-            button.MouseEnter += (s, e) => AnimateButton(button, originalPadding + new Padding(2), hoverColor);
-            button.MouseLeave += (s, e) => AnimateButton(button, originalPadding, originalColor);
+            Color original = button.BackColor;
+            Color hover = Darken(original, 0.12F);
+            button.MouseEnter += (s, e) => button.BackColor = hover;
+            button.MouseLeave += (s, e) => button.BackColor = original;
         }
 
         public static void AttachSaldoFlash(Label label)
@@ -214,52 +326,12 @@ namespace GUI
             };
         }
 
+        // ── Geometry ──
         public static void ApplyRoundedRegion(Control control, int radius)
         {
             if (control.Width <= 0 || control.Height <= 0) return;
             using (GraphicsPath path = RoundedPath(new Rectangle(0, 0, control.Width, control.Height), radius))
-            {
                 control.Region = new Region(path);
-            }
-        }
-
-        private static void AttachTextBoxFocusBorder(TextBox textBox)
-        {
-            textBox.Enter += (s, e) => textBox.Parent?.Invalidate();
-            textBox.Leave += (s, e) => textBox.Parent?.Invalidate();
-            if (textBox.Parent != null)
-                textBox.Parent.Paint += (s, e) => DrawFocusedTextBoxBorder(e.Graphics, textBox);
-            textBox.ParentChanged += (s, e) =>
-            {
-                if (textBox.Parent != null)
-                    textBox.Parent.Paint += (sender, args) => DrawFocusedTextBoxBorder(args.Graphics, textBox);
-            };
-        }
-
-        private static void DrawFocusedTextBoxBorder(Graphics graphics, TextBox textBox)
-        {
-            if (!textBox.Focused) return;
-            Rectangle r = new Rectangle(textBox.Left - 1, textBox.Top - 1, textBox.Width + 1, textBox.Height + 1);
-            using (Pen pen = new Pen(Dorado, 2))
-                graphics.DrawRectangle(pen, r);
-        }
-
-        private static void AnimateButton(Button button, Padding targetPadding, Color targetColor)
-        {
-            Timer timer = new Timer { Interval = 30 };
-            int ticks = 0;
-            timer.Tick += (s, e) =>
-            {
-                ticks++;
-                button.Padding = targetPadding;
-                button.BackColor = targetColor;
-                if (ticks >= 5)
-                {
-                    timer.Stop();
-                    timer.Dispose();
-                }
-            };
-            timer.Start();
         }
 
         private static Color Darken(Color color, float amount)

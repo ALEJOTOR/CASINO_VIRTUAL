@@ -15,6 +15,5 @@ namespace ENTITY
         public DateTime Fecha { get; set; }
         public decimal Apuesta { get; set; }
         public decimal Ganancia { get; set; }
-        public string Resultado { get; set; }
     }
 }
