@@ -141,17 +141,28 @@ namespace GUI
             panelMaquina.BorderStyle = BorderStyle.None;
             panelRollos.CellBorderStyle = TableLayoutPanelCellBorderStyle.None;
             panelRollos.BackColor = Color.Transparent;
+            lblApuesta.BackColor = Color.Transparent;
+            lblReglas.BackColor = Color.Transparent;
             lblResultado.BorderStyle = BorderStyle.None;
             lblJackpot.BorderStyle = BorderStyle.None;
             lblPalanca.BorderStyle = BorderStyle.None;
             lblReglas.ForeColor = AppTheme.TextoPrimario;
             lblJackpot.ForeColor = AppTheme.Dorado;
+            lblResultado.BackColor = Color.Transparent;
+            lblJackpot.BackColor = Color.Transparent;
+            lblPalanca.BackColor = Color.Transparent;
+            lblPalanca.Text = "APUESTA";
+            lblReglas.Text = "2 iguales pagan x2  |  3 iguales pagan x8";
 
             txtApuesta.Text = "1000";
             lblJackpot.Text = "JACKPOT ROYAL";
+            panelJuego.Paint += panelJuego_Paint;
             panelJuego.Resize += (s, e) => AplicarLayout();
             panelMaquina.Paint += panelMaquina_Paint;
             panelRollos.Paint += panelRollos_Paint;
+            lblJackpot.Paint += Banner_Paint;
+            lblResultado.Paint += Banner_Paint;
+            lblPalanca.Paint += Palanca_Paint;
             lblRollo1.Paint += Rollo_Paint;
             lblRollo2.Paint += Rollo_Paint;
             lblRollo3.Paint += Rollo_Paint;
@@ -168,10 +179,10 @@ namespace GUI
             {
                 Button boton = new Button
                 {
-                    BackColor = Color.FromArgb(30, 41, 59),
+                    BackColor = Color.FromArgb(17, 34, 64),
                     Cursor = Cursors.Hand,
                     FlatStyle = FlatStyle.Flat,
-                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                    Font = new Font("Segoe UI", 9.25F, FontStyle.Bold),
                     ForeColor = Color.White,
                     Name = "btnApuesta" + i,
                     Tag = _apuestasRapidas[i],
@@ -201,11 +212,11 @@ namespace GUI
         {
             if (panelJuego.ClientSize.Width <= 0 || panelJuego.ClientSize.Height <= 0) return;
 
-            int margen = 28;
-            int ancho = Math.Min(1100, panelJuego.ClientSize.Width - margen * 2);
-            int alto = Math.Min(590, panelJuego.ClientSize.Height - margen * 2);
-            ancho = Math.Max(760, ancho);
-            alto = Math.Max(500, alto);
+            int margen = 24;
+            int ancho = Math.Min(1120, panelJuego.ClientSize.Width - margen * 2);
+            int alto = Math.Min(620, panelJuego.ClientSize.Height - margen * 2);
+            ancho = Math.Max(780, ancho);
+            alto = Math.Max(540, alto);
 
             panelMaquina.SetBounds(
                 Math.Max(20, (panelJuego.ClientSize.Width - ancho) / 2),
@@ -213,36 +224,43 @@ namespace GUI
                 Math.Min(ancho, panelJuego.ClientSize.Width - 40),
                 Math.Min(alto, panelJuego.ClientSize.Height - 36));
 
-            int inner = 42;
+            int inner = 46;
             int machineW = panelMaquina.ClientSize.Width;
             int machineH = panelMaquina.ClientSize.Height;
 
             // Problema visual que resuelve: los elementos de la maquina se distribuyen por zonas fijas y no se pisan al redimensionar.
-            lblReglas.SetBounds(inner, 28, machineW - inner * 2, 28);
-            lblJackpot.SetBounds(inner + 84, 66, machineW - (inner + 84) * 2, 58);
-            int rollosH = Math.Min(190, Math.Max(140, machineH / 3));
-            panelRollos.SetBounds(inner, 150, machineW - inner * 2, rollosH);
+            lblReglas.SetBounds(inner, 30, machineW - inner * 2, 28);
+            lblJackpot.SetBounds(inner + 110, 70, machineW - (inner + 110) * 2, 64);
+            int rollosH = Math.Min(220, Math.Max(165, machineH / 3));
+            panelRollos.SetBounds(inner + 18, 158, machineW - inner * 2 - 36, rollosH);
 
-            int controlsY = panelRollos.Bottom + 24;
-            lblApuesta.SetBounds(inner, controlsY, 160, 24);
-            txtApuesta.SetBounds(inner, controlsY + 30, 180, 34);
+            int controlsY = panelRollos.Bottom + 26;
+            int apuestaW = Math.Min(230, Math.Max(190, machineW / 5));
+            lblApuesta.SetBounds(inner, controlsY, apuestaW, 24);
+            txtApuesta.SetBounds(inner, controlsY + 30, apuestaW, 36);
 
-            int chipX = txtApuesta.Right + 24;
-            int chipW = Math.Max(74, (machineW - chipX - inner - 220) / 3);
+            int chipX = txtApuesta.Right + 22;
+            int chipW = Math.Max(82, (machineW - chipX - inner - 232) / 3);
             for (int i = 0; i < _botonesApuesta.Count; i++)
             {
                 _botonesApuesta[i].SetBounds(chipX + (i % 3) * (chipW + 8),
-                    controlsY + (i / 3) * 40, chipW, 34);
+                    controlsY + (i / 3) * 42, chipW, 36);
+                AppTheme.ApplyRoundedRegion(_botonesApuesta[i], 8);
             }
 
-            btnGirar.SetBounds(machineW - inner - 210, controlsY + 8, 210, 62);
-            int resultadoY = Math.Min(machineH - inner - 54, btnGirar.Bottom + 18);
-            lblPalanca.SetBounds(inner, resultadoY, 150, 50);
+            btnGirar.SetBounds(machineW - inner - 220, controlsY + 4, 220, 78);
+            int resultadoY = Math.Min(machineH - inner - 58, btnGirar.Bottom + 20);
+            lblPalanca.SetBounds(inner, resultadoY, 170, 54);
             lblResultado.SetBounds(lblPalanca.Right + 22, resultadoY,
-                Math.Max(240, machineW - lblPalanca.Right - inner - 22), 50);
+                Math.Max(260, machineW - lblPalanca.Right - inner - 22), 54);
+            AppTheme.ApplyRoundedRegion(btnGirar, 12);
 
+            panelJuego.Invalidate();
             panelMaquina.Invalidate();
             panelRollos.Invalidate();
+            lblJackpot.Invalidate();
+            lblResultado.Invalidate();
+            lblPalanca.Invalidate();
         }
 
         private void MostrarSimbolos(string s1, string s2, string s3)
@@ -284,6 +302,20 @@ namespace GUI
             return valor.ToString("N0");
         }
 
+        private void panelJuego_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            Rectangle area = panelJuego.ClientRectangle;
+            using (LinearGradientBrush fondo = new LinearGradientBrush(area,
+                Color.FromArgb(5, 9, 18), Color.FromArgb(12, 22, 42), 90F))
+                e.Graphics.FillRectangle(fondo, area);
+
+            using (SolidBrush glowAzul = new SolidBrush(Color.FromArgb(28, AppTheme.Azul)))
+                e.Graphics.FillEllipse(glowAzul, panelJuego.Width / 2 - 360, 20, 720, 360);
+            using (SolidBrush glowDorado = new SolidBrush(Color.FromArgb(18, AppTheme.Dorado)))
+                e.Graphics.FillEllipse(glowDorado, panelJuego.Width / 2 - 250, panelJuego.Height - 170, 500, 220);
+        }
+
         private void panelMaquina_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -291,35 +323,94 @@ namespace GUI
             Rectangle area = new Rectangle(6, 6, panelMaquina.ClientSize.Width - 13, panelMaquina.ClientSize.Height - 13);
             using (GraphicsPath path = RoundedPath(area, 18))
             using (LinearGradientBrush fondo = new LinearGradientBrush(area,
-                Color.FromArgb(16, 42, 95), Color.FromArgb(8, 14, 30), 90f))
+                Color.FromArgb(14, 39, 90), Color.FromArgb(7, 11, 26), 90f))
             {
                 e.Graphics.FillPath(fondo, path);
             }
 
             using (GraphicsPath path = RoundedPath(area, 18))
-            using (Pen borde = new Pen(AppTheme.Dorado, 5))
+            using (Pen borde = new Pen(AppTheme.Dorado, 6))
                 e.Graphics.DrawPath(borde, path);
 
-            Rectangle marquee = new Rectangle(area.X + 74, area.Y + 16, area.Width - 148, 70);
+            Rectangle marquee = new Rectangle(area.X + 84, area.Y + 18, area.Width - 168, 76);
             using (GraphicsPath path = RoundedPath(marquee, 16))
             using (LinearGradientBrush brush = new LinearGradientBrush(marquee,
-                Color.FromArgb(132, 24, 24), Color.FromArgb(48, 12, 18), 90F))
+                Color.FromArgb(118, 21, 21), Color.FromArgb(28, 11, 24), 90F))
             {
                 e.Graphics.FillPath(brush, path);
-                using (Pen pen = new Pen(AppTheme.Dorado, 3))
+                using (Pen pen = new Pen(AppTheme.Dorado, 4))
                     e.Graphics.DrawPath(pen, path);
             }
 
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < 20; i++)
             {
-                int x = area.X + 18 + i * Math.Max(1, (area.Width - 36) / 15);
-                using (SolidBrush luz = new SolidBrush(i % 2 == 0 ? AppTheme.Dorado : Color.FromArgb(59, 130, 246)))
-                    e.Graphics.FillEllipse(luz, x - 5, area.Y + 10, 10, 10);
+                int x = area.X + 20 + i * Math.Max(1, (area.Width - 40) / 19);
+                Color color = i % 2 == 0 ? AppTheme.Dorado : Color.FromArgb(59, 130, 246);
+                using (SolidBrush luz = new SolidBrush(color))
+                    e.Graphics.FillEllipse(luz, x - 5, area.Y + 12, 10, 10);
+                using (SolidBrush glow = new SolidBrush(Color.FromArgb(55, color)))
+                    e.Graphics.FillEllipse(glow, x - 9, area.Y + 8, 18, 18);
             }
+
+            Rectangle baseArea = new Rectangle(area.X + 34, area.Bottom - 112, area.Width - 68, 74);
+            using (GraphicsPath path = RoundedPath(baseArea, 14))
+            using (LinearGradientBrush baseBrush = new LinearGradientBrush(baseArea,
+                Color.FromArgb(18, 31, 55), Color.FromArgb(8, 14, 28), 90F))
+            {
+                e.Graphics.FillPath(baseBrush, path);
+                using (Pen pen = new Pen(Color.FromArgb(110, AppTheme.Dorado), 1))
+                    e.Graphics.DrawPath(pen, path);
+            }
+
+            int leverX = area.Right - 34;
+            int leverY = area.Y + area.Height / 2;
+            using (Pen stick = new Pen(Color.FromArgb(230, 180, 70), 8))
+                e.Graphics.DrawLine(stick, leverX - 2, leverY - 40, leverX + 28, leverY - 88);
+            using (SolidBrush knob = new SolidBrush(Color.FromArgb(220, 38, 38)))
+                e.Graphics.FillEllipse(knob, leverX + 12, leverY - 110, 38, 38);
+            using (Pen knobBorder = new Pen(AppTheme.Dorado, 3))
+                e.Graphics.DrawEllipse(knobBorder, leverX + 12, leverY - 110, 38, 38);
 
             using (Pen brillo = new Pen(Color.FromArgb(120, Color.White), 1))
             using (GraphicsPath path = RoundedPath(new Rectangle(18, 18, panelMaquina.ClientSize.Width - 37, panelMaquina.ClientSize.Height - 37), 14))
                 e.Graphics.DrawPath(brillo, path);
+        }
+
+        private void Banner_Paint(object sender, PaintEventArgs e)
+        {
+            Label label = (Label)sender;
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            Rectangle area = new Rectangle(0, 0, label.Width - 1, label.Height - 1);
+            using (GraphicsPath path = RoundedPath(area, 12))
+            using (LinearGradientBrush fondo = new LinearGradientBrush(area,
+                Color.FromArgb(15, 23, 42), Color.FromArgb(7, 11, 20), 90F))
+            {
+                e.Graphics.FillPath(fondo, path);
+                using (Pen pen = new Pen(Color.FromArgb(100, AppTheme.Dorado), 1))
+                    e.Graphics.DrawPath(pen, path);
+            }
+
+            TextRenderer.DrawText(e.Graphics, label.Text, label.Font, label.ClientRectangle, label.ForeColor,
+                TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
+        }
+
+        private void Palanca_Paint(object sender, PaintEventArgs e)
+        {
+            Label label = (Label)sender;
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            Rectangle area = new Rectangle(0, 0, label.Width - 1, label.Height - 1);
+            using (GraphicsPath path = RoundedPath(area, 12))
+            using (LinearGradientBrush fondo = new LinearGradientBrush(area,
+                Color.FromArgb(245, 158, 11), Color.FromArgb(234, 179, 8), 90F))
+            {
+                e.Graphics.FillPath(fondo, path);
+                using (Pen pen = new Pen(Color.FromArgb(120, 53, 15), 2))
+                    e.Graphics.DrawPath(pen, path);
+            }
+
+            TextRenderer.DrawText(e.Graphics, label.Text, new Font("Segoe UI", 12F, FontStyle.Bold),
+                label.ClientRectangle, Color.FromArgb(17, 24, 39),
+                TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
         }
 
         private void panelRollos_Paint(object sender, PaintEventArgs e)
@@ -328,11 +419,18 @@ namespace GUI
 
             Rectangle area = new Rectangle(0, 0, panelRollos.ClientSize.Width - 1, panelRollos.ClientSize.Height - 1);
             using (GraphicsPath path = RoundedPath(area, 14))
-            using (LinearGradientBrush fondo = new LinearGradientBrush(area, Color.FromArgb(12, 18, 32), Color.FromArgb(40, 47, 65), 90F))
+            using (LinearGradientBrush fondo = new LinearGradientBrush(area, Color.FromArgb(8, 13, 26), Color.FromArgb(42, 50, 68), 90F))
             {
                 e.Graphics.FillPath(fondo, path);
                 using (Pen borde = new Pen(AppTheme.Dorado, 5))
                     e.Graphics.DrawPath(borde, path);
+            }
+
+            int colW = panelRollos.ClientSize.Width / 3;
+            using (Pen divisor = new Pen(Color.FromArgb(120, AppTheme.Dorado), 3))
+            {
+                e.Graphics.DrawLine(divisor, colW, 12, colW, panelRollos.Height - 12);
+                e.Graphics.DrawLine(divisor, colW * 2, 12, colW * 2, panelRollos.Height - 12);
             }
         }
 
