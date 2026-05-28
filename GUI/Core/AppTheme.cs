@@ -181,12 +181,18 @@ namespace GUI
             label.BackColor = BgCard;
             label.ForeColor = Dorado;
             label.Font = Valor;
-            label.TextAlign = ContentAlignment.MiddleRight;
-            label.Padding = new Padding(12, 0, 12, 0);
+            label.TextAlign = ContentAlignment.MiddleCenter;
+            label.Padding = new Padding(14, 0, 14, 0);
             label.Paint += (s, e) =>
             {
-                using (Pen pen = new Pen(BordeClaro, 1))
-                    e.Graphics.DrawRectangle(pen, 0, 0, label.Width - 1, label.Height - 1);
+                // Problema visual que resuelve: el indicador de saldo deja de verse como un cuadro plano y se integra al navbar.
+                e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                Rectangle area = new Rectangle(0, 0, label.Width - 1, label.Height - 1);
+                using (GraphicsPath path = RoundedPath(area, 12))
+                using (Pen borde = new Pen(Color.FromArgb(150, Dorado), 1))
+                {
+                    e.Graphics.DrawPath(borde, path);
+                }
             };
             AttachSaldoFlash(label);
         }

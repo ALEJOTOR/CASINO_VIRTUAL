@@ -93,6 +93,7 @@ namespace GUI
             this.pnlContenido.Controls.Add(this.pnlBot, 0, 0);
             this.pnlContenido.Controls.Add(this.pnlComandos, 1, 0);
             this.pnlContenido.Controls.Add(this.pnlQr, 0, 1);
+            this.pnlContenido.SetRowSpan(this.pnlComandos, 2);
             this.pnlContenido.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlContenido.Location = new System.Drawing.Point(32, 173);
             this.pnlContenido.Margin = new System.Windows.Forms.Padding(0);
@@ -172,7 +173,7 @@ namespace GUI
             this.pnlComandos.Location = new System.Drawing.Point(580, 0);
             this.pnlComandos.Margin = new System.Windows.Forms.Padding(0, 0, 0, 16);
             this.pnlComandos.Name = "pnlComandos";
-            this.pnlComandos.Size = new System.Drawing.Size(456, 247);
+            this.pnlComandos.Size = new System.Drawing.Size(456, 455);
             this.pnlComandos.TabIndex = 1;
             // 
             // lblComandosTitulo
@@ -187,9 +188,9 @@ namespace GUI
             // lblComandos
             // 
             this.lblComandos.AutoSize = false;
-            this.lblComandos.Location = new System.Drawing.Point(26, 66);
+            this.lblComandos.Location = new System.Drawing.Point(26, 72);
             this.lblComandos.Name = "lblComandos";
-            this.lblComandos.Size = new System.Drawing.Size(390, 150);
+            this.lblComandos.Size = new System.Drawing.Size(390, 330);
             this.lblComandos.TabIndex = 1;
             this.lblComandos.Text = "/start - Menu principal\r\n/reglas - Reglas de juegos\r\n/saldo - Consulta de saldo\r\n/transacciones - Movimientos\r\n/historial - Partidas recientes\r\n/faq - Preguntas frecuentes";
             // 

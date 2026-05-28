@@ -220,7 +220,7 @@ namespace GUI
             int imageH = Math.Max(96, buttonY - imageY - 14);
 
             titulo.SetBounds(pad, 14, panel.Width - pad * 2, 34);
-            titulo.TextAlign = ContentAlignment.MiddleLeft;
+            titulo.TextAlign = ContentAlignment.MiddleCenter;
             badge.SetBounds(panel.Width - pad - 86, 20, 86, 24);
             badge.Visible = false;
             descripcion.Visible = false;

@@ -59,13 +59,14 @@ namespace GUI
 
             int margen = 16;
             int btnW = 134;
-            int saldoW = 236;
+            int saldoW = 248;
             btnCerrarSesion.Text = "Cerrar sesion";
             btnCerrarSesion.SetBounds(panelNavbar.ClientSize.Width - margen - btnW, 14, btnW, 32);
-            lblSaldo.SetBounds(btnCerrarSesion.Left - 14 - saldoW, 12, saldoW, 36);
+            lblSaldo.SetBounds(btnCerrarSesion.Left - 16 - saldoW, 10, saldoW, 40);
             _lblMarca.SetBounds(24, 0, 210, 60);
             menuStrip.Padding = new Padding(250, 10, 0, 8);
             menuStrip.Size = new Size(Math.Max(300, lblSaldo.Left - 260), 60);
+            AppTheme.ApplyRoundedRegion(lblSaldo, 12);
         }
 
         private void PrepararNavegacion()

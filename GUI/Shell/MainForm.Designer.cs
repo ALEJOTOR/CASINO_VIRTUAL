@@ -83,16 +83,16 @@
             // lblSaldo
             // 
             this.lblSaldo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblSaldo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(27)))), ((int)(((byte)(39)))));
+            this.lblSaldo.BackColor = System.Drawing.Color.Transparent;
             this.lblSaldo.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
             this.lblSaldo.ForeColor = System.Drawing.Color.Gold;
             this.lblSaldo.Location = new System.Drawing.Point(870, 12);
             this.lblSaldo.Name = "lblSaldo";
             this.lblSaldo.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
-            this.lblSaldo.Size = new System.Drawing.Size(190, 36);
+            this.lblSaldo.Size = new System.Drawing.Size(248, 40);
             this.lblSaldo.TabIndex = 2;
             this.lblSaldo.Text = "Saldo: $250.000";
-            this.lblSaldo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblSaldo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // _lblMarca
             // 
