@@ -165,6 +165,9 @@ namespace GUI
             {
                 BackColor = Color.Transparent,
                 FlowDirection = FlowDirection.LeftToRight,
+                Padding = Padding.Empty,
+                Margin = Padding.Empty,
+                AutoScroll = false,
                 WrapContents = true
             };
         }
@@ -191,7 +194,7 @@ namespace GUI
                 FlatStyle = FlatStyle.Flat,
                 Font = new Font("Segoe UI", 9.25F, FontStyle.Bold),
                 ForeColor = AppTheme.TextoPrimario,
-                Size = new Size(82, 36),
+                Size = new Size(76, 38),
                 Tag = valor,
                 Text = texto,
                 TextAlign = ContentAlignment.MiddleCenter,
@@ -200,7 +203,8 @@ namespace GUI
 
             boton.FlatAppearance.BorderColor = Color.FromArgb(44, 62, 82);
             boton.FlatAppearance.BorderSize = 1;
-            boton.Margin = new Padding(0, 0, 8, 8);
+            boton.Margin = new Padding(0, 0, 6, 6);
+            boton.Padding = Padding.Empty;
             boton.Click += click;
             return boton;
         }
@@ -250,15 +254,15 @@ namespace GUI
             int controlW = panelLateral - 70;
 
             lblApuesta.SetBounds(controlX, top + 20, controlW, 22);
-            _panelApuestasRapidas.SetBounds(controlX, top + 48, controlW, 92);
+            _panelApuestasRapidas.SetBounds(controlX, top + 48, controlW, 90);
             txtApuesta.SetBounds(controlX, top + 48, 1, 1);
 
-            lblMinas.SetBounds(controlX, top + 164, controlW, 22);
-            _panelMinasRapidas.SetBounds(controlX, top + 192, controlW, 42);
+            lblMinas.SetBounds(controlX, top + 162, controlW, 22);
+            _panelMinasRapidas.SetBounds(controlX, top + 190, controlW, 46);
             txtMinas.SetBounds(controlX, top + 182, 1, 1);
 
-            _lblCuadricula.SetBounds(controlX, top + 252, controlW, 22);
-            _panelCuadriculas.SetBounds(controlX, top + 280, controlW, 42);
+            _lblCuadricula.SetBounds(controlX, top + 250, controlW, 22);
+            _panelCuadriculas.SetBounds(controlX, top + 278, controlW, 46);
 
             btnIniciar.SetBounds(controlX, top + 354, controlW, 44);
             btnRetirar.SetBounds(controlX, top + 410, controlW, 44);
@@ -282,17 +286,35 @@ namespace GUI
         private void AjustarBotonesConfiguracion(int anchoDisponible)
         {
             // Problema visual que resuelve: los chips caben en una sola fila por seccion y el texto no queda cortado.
-            int anchoCuatro = Math.Max(72, (anchoDisponible - 24) / 4);
-            int anchoTres = Math.Max(88, (anchoDisponible - 16) / 3);
+            int anchoCuatro = Math.Max(62, (anchoDisponible - 24) / 4);
+            int anchoTres = Math.Max(82, (anchoDisponible - 18) / 3);
 
             foreach (Button boton in _botonesApuestas)
-                boton.Size = new Size(anchoTres, 36);
+            {
+                boton.Size = new Size(anchoTres, 38);
+                boton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+                boton.TextAlign = ContentAlignment.MiddleCenter;
+                boton.Padding = Padding.Empty;
+                boton.Margin = new Padding(0, 0, 6, 6);
+            }
 
             foreach (Button boton in _botonesMinas)
-                boton.Size = new Size(anchoCuatro, 36);
+            {
+                boton.Size = new Size(anchoCuatro, 38);
+                boton.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+                boton.TextAlign = ContentAlignment.MiddleCenter;
+                boton.Padding = Padding.Empty;
+                boton.Margin = new Padding(0, 0, 6, 0);
+            }
 
             foreach (Button boton in _botonesCuadricula)
-                boton.Size = new Size(anchoCuatro, 36);
+            {
+                boton.Size = new Size(anchoCuatro, 38);
+                boton.Font = new Font("Segoe UI", 9.25F, FontStyle.Bold);
+                boton.TextAlign = ContentAlignment.MiddleCenter;
+                boton.Padding = Padding.Empty;
+                boton.Margin = new Padding(0, 0, 6, 0);
+            }
         }
 
         private void ReubicarCeldas()
