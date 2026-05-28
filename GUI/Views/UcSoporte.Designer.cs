@@ -18,7 +18,7 @@ namespace GUI
             this.lblSubtitulo = new System.Windows.Forms.Label();
             this.pnlContenido = new System.Windows.Forms.TableLayoutPanel();
             this.pnlBot = new System.Windows.Forms.Panel();
-            this.lblIconoBot = new System.Windows.Forms.Label();
+            this.picFotoBot = new System.Windows.Forms.PictureBox();
             this.lblBotTitulo = new System.Windows.Forms.Label();
             this.lblBotDescripcion = new System.Windows.Forms.Label();
             this.btnAbrirBot = new System.Windows.Forms.Button();
@@ -34,6 +34,7 @@ namespace GUI
             this.pnlHero.SuspendLayout();
             this.pnlContenido.SuspendLayout();
             this.pnlBot.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picFotoBot)).BeginInit();
             this.pnlComandos.SuspendLayout();
             this.pnlQr.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picQrBot)).BeginInit();
@@ -106,7 +107,7 @@ namespace GUI
             // 
             // pnlBot
             // 
-            this.pnlBot.Controls.Add(this.lblIconoBot);
+            this.pnlBot.Controls.Add(this.picFotoBot);
             this.pnlBot.Controls.Add(this.lblBotTitulo);
             this.pnlBot.Controls.Add(this.lblBotDescripcion);
             this.pnlBot.Controls.Add(this.btnAbrirBot);
@@ -118,20 +119,19 @@ namespace GUI
             this.pnlBot.Size = new System.Drawing.Size(564, 247);
             this.pnlBot.TabIndex = 0;
             // 
-            // lblIconoBot
+            // picFotoBot
             // 
-            this.lblIconoBot.AutoSize = false;
-            this.lblIconoBot.Location = new System.Drawing.Point(28, 26);
-            this.lblIconoBot.Name = "lblIconoBot";
-            this.lblIconoBot.Size = new System.Drawing.Size(92, 92);
-            this.lblIconoBot.TabIndex = 0;
-            this.lblIconoBot.Text = "TG";
-            this.lblIconoBot.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.picFotoBot.Location = new System.Drawing.Point(24, 24);
+            this.picFotoBot.Name = "picFotoBot";
+            this.picFotoBot.Size = new System.Drawing.Size(150, 150);
+            this.picFotoBot.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picFotoBot.TabIndex = 0;
+            this.picFotoBot.TabStop = false;
             // 
             // lblBotTitulo
             // 
             this.lblBotTitulo.AutoSize = false;
-            this.lblBotTitulo.Location = new System.Drawing.Point(140, 28);
+            this.lblBotTitulo.Location = new System.Drawing.Point(196, 28);
             this.lblBotTitulo.Name = "lblBotTitulo";
             this.lblBotTitulo.Size = new System.Drawing.Size(360, 34);
             this.lblBotTitulo.TabIndex = 1;
@@ -140,7 +140,7 @@ namespace GUI
             // lblBotDescripcion
             // 
             this.lblBotDescripcion.AutoSize = false;
-            this.lblBotDescripcion.Location = new System.Drawing.Point(142, 70);
+            this.lblBotDescripcion.Location = new System.Drawing.Point(198, 70);
             this.lblBotDescripcion.Name = "lblBotDescripcion";
             this.lblBotDescripcion.Size = new System.Drawing.Size(370, 72);
             this.lblBotDescripcion.TabIndex = 2;
@@ -148,7 +148,7 @@ namespace GUI
             // 
             // btnAbrirBot
             // 
-            this.btnAbrirBot.Location = new System.Drawing.Point(142, 158);
+            this.btnAbrirBot.Location = new System.Drawing.Point(198, 158);
             this.btnAbrirBot.Name = "btnAbrirBot";
             this.btnAbrirBot.Size = new System.Drawing.Size(210, 42);
             this.btnAbrirBot.TabIndex = 3;
@@ -159,7 +159,7 @@ namespace GUI
             // lblBotUrl
             // 
             this.lblBotUrl.AutoSize = false;
-            this.lblBotUrl.Location = new System.Drawing.Point(142, 206);
+            this.lblBotUrl.Location = new System.Drawing.Point(198, 206);
             this.lblBotUrl.Name = "lblBotUrl";
             this.lblBotUrl.Size = new System.Drawing.Size(360, 22);
             this.lblBotUrl.TabIndex = 4;
@@ -244,6 +244,7 @@ namespace GUI
             this.pnlHero.ResumeLayout(false);
             this.pnlContenido.ResumeLayout(false);
             this.pnlBot.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picFotoBot)).EndInit();
             this.pnlComandos.ResumeLayout(false);
             this.pnlQr.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picQrBot)).EndInit();
@@ -256,7 +257,7 @@ namespace GUI
         private System.Windows.Forms.Label lblSubtitulo;
         private System.Windows.Forms.TableLayoutPanel pnlContenido;
         private System.Windows.Forms.Panel pnlBot;
-        private System.Windows.Forms.Label lblIconoBot;
+        private System.Windows.Forms.PictureBox picFotoBot;
         private System.Windows.Forms.Label lblBotTitulo;
         private System.Windows.Forms.Label lblBotDescripcion;
         private System.Windows.Forms.Button btnAbrirBot;

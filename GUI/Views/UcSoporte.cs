@@ -34,7 +34,7 @@ namespace GUI
 
             EstilizarTexto();
             EstilizarBoton();
-            EstilizarIcono();
+            CargarFotoBot();
             CargarQrBot();
 
             pnlHero.Paint += PnlHero_Paint;
@@ -75,22 +75,13 @@ namespace GUI
             btnAbrirBot.Text = "Abrir bot en Telegram";
         }
 
-        private void EstilizarIcono()
-        {
-            // Problema visual que resuelve: agrega un punto visual reconocible sin depender de imagenes externas.
-            lblIconoBot.Font = new Font("Segoe UI", 26F, FontStyle.Bold);
-            lblIconoBot.ForeColor = Color.White;
-            lblIconoBot.BackColor = AppTheme.Azul;
-            AppTheme.ApplyRoundedRegion(lblIconoBot, 46);
-        }
-
         private void ReaplicarBordes()
         {
             AppTheme.ApplyRoundedRegion(pnlHero, 14);
             AppTheme.ApplyRoundedRegion(pnlBot, 14);
             AppTheme.ApplyRoundedRegion(pnlComandos, 14);
             AppTheme.ApplyRoundedRegion(pnlQr, 14);
-            AppTheme.ApplyRoundedRegion(lblIconoBot, 46);
+            AppTheme.ApplyRoundedRegion(picFotoBot, 18);
             AppTheme.ApplyRoundedRegion(btnAbrirBot, 8);
         }
 
@@ -106,11 +97,13 @@ namespace GUI
             lblTitulo.SetBounds(28, 24, Math.Max(420, pnlHero.Width - 56), 44);
             lblSubtitulo.SetBounds(30, 74, Math.Max(420, pnlHero.Width - 60), 42);
 
-            lblIconoBot.SetBounds(30, 32, 94, 94);
-            lblBotTitulo.SetBounds(150, 30, Math.Max(260, pnlBot.Width - 180), 36);
-            lblBotDescripcion.SetBounds(152, 76, Math.Max(260, pnlBot.Width - 190), 70);
-            btnAbrirBot.SetBounds(152, Math.Max(154, pnlBot.Height - 88), Math.Min(240, pnlBot.Width - 190), 42);
-            lblBotUrl.SetBounds(152, btnAbrirBot.Bottom + 10, Math.Max(260, pnlBot.Width - 190), 24);
+            int fotoSize = Math.Min(172, Math.Max(128, pnlBot.Height - 72));
+            picFotoBot.SetBounds(30, (pnlBot.Height - fotoSize) / 2, fotoSize, fotoSize);
+            int textX = picFotoBot.Right + 24;
+            lblBotTitulo.SetBounds(textX, 30, Math.Max(260, pnlBot.Width - textX - 28), 38);
+            lblBotDescripcion.SetBounds(textX + 2, 78, Math.Max(260, pnlBot.Width - textX - 34), 70);
+            btnAbrirBot.SetBounds(textX + 2, Math.Max(158, pnlBot.Height - 88), Math.Min(252, pnlBot.Width - textX - 34), 42);
+            lblBotUrl.SetBounds(textX + 2, btnAbrirBot.Bottom + 10, Math.Max(260, pnlBot.Width - textX - 34), 24);
 
             lblComandosTitulo.SetBounds(28, 26, Math.Max(300, pnlComandos.Width - 56), 32);
             lblComandos.SetBounds(30, 80, Math.Max(300, pnlComandos.Width - 60), Math.Max(220, pnlComandos.Height - 110));
@@ -132,6 +125,16 @@ namespace GUI
 
             using (Image imagen = Image.FromFile(rutaQr))
                 picQrBot.Image = new Bitmap(imagen);
+        }
+
+        private void CargarFotoBot()
+        {
+            // Problema visual que resuelve: el asistente deja de ser un icono generico y usa una identidad visual propia.
+            string rutaFoto = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "foto-bot.png");
+            if (!File.Exists(rutaFoto)) return;
+
+            using (Image imagen = Image.FromFile(rutaFoto))
+                picFotoBot.Image = new Bitmap(imagen);
         }
 
         private void PnlHero_Paint(object sender, PaintEventArgs e)
@@ -163,6 +166,15 @@ namespace GUI
                 e.Graphics.DrawRectangle(borde, 0, 0, area.Width - 1, area.Height - 1);
             using (SolidBrush barra = new SolidBrush(acento))
                 e.Graphics.FillRectangle(barra, 0, 0, area.Width, 3);
+
+            if (panel == pnlBot && picFotoBot.Image != null)
+            {
+                using (Pen marco = new Pen(Color.FromArgb(170, AppTheme.Dorado), 2))
+                {
+                    Rectangle foto = new Rectangle(picFotoBot.Left - 2, picFotoBot.Top - 2, picFotoBot.Width + 4, picFotoBot.Height + 4);
+                    e.Graphics.DrawRectangle(marco, foto);
+                }
+            }
         }
 
         private void btnAbrirBot_Click(object sender, EventArgs e)
