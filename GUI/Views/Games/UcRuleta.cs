@@ -58,6 +58,9 @@ namespace GUI
             lblMesa.ForeColor = AppTheme.TextoPrimario;
             lblResultado.ForeColor = AppTheme.TextoSecundario;
             lblPremio.ForeColor = AppTheme.Dorado;
+            lblNumeroGanador.BorderStyle = BorderStyle.None;
+            lblNumeroGanador.Text = "--";
+            lblNumeroGanador.Paint += lblNumeroGanador_Paint;
 
             txtApuesta.Text = FormatearFicha(_fichaSeleccionada);
             cboTipoApuesta.Visible = false;
@@ -335,7 +338,8 @@ namespace GUI
 
             int anchoZonaJuego = panelControles.Left - margen - espacio;
             int anchoRueda = Math.Min(430, Math.Max(310, (int)(anchoZonaJuego * 0.30)));
-            panelRueda.SetBounds(margen, yContenido, anchoRueda, altoDisponible);
+            int altoRueda = Math.Min(altoDisponible, anchoRueda + 92);
+            panelRueda.SetBounds(margen, yContenido, anchoRueda, altoRueda);
 
             int xTapete = panelRueda.Right + espacio;
             int anchoTapete = panelControles.Left - espacio - xTapete;
@@ -343,7 +347,8 @@ namespace GUI
             {
                 int ajuste = 520 - anchoTapete;
                 anchoRueda = Math.Max(260, anchoRueda - ajuste);
-                panelRueda.SetBounds(margen, yContenido, anchoRueda, altoDisponible);
+                altoRueda = Math.Min(altoDisponible, anchoRueda + 92);
+                panelRueda.SetBounds(margen, yContenido, anchoRueda, altoRueda);
                 xTapete = panelRueda.Right + espacio;
                 anchoTapete = panelControles.Left - espacio - xTapete;
             }
@@ -443,10 +448,22 @@ namespace GUI
 
         private void ReubicarNumeroGanador()
         {
-            int w = Math.Min(140, Math.Max(96, panelRueda.ClientSize.Width / 3));
-            int h = Math.Min(70, Math.Max(56, panelRueda.ClientSize.Height / 7));
-            lblNumeroGanador.SetBounds((panelRueda.ClientSize.Width - w) / 2,
-                (panelRueda.ClientSize.Height - h) / 2, w, h);
+            Rectangle rueda = CalcularRectanguloRueda();
+            int w = Math.Min(150, Math.Max(110, panelRueda.ClientSize.Width / 2));
+            int h = 52;
+            int y = Math.Min(panelRueda.ClientSize.Height - h - 14, rueda.Bottom + 18);
+            lblNumeroGanador.SetBounds((panelRueda.ClientSize.Width - w) / 2, y, w, h);
+            lblNumeroGanador.BringToFront();
+        }
+
+        private Rectangle CalcularRectanguloRueda()
+        {
+            // Problema visual que resuelve: la placa de resultado deja de montarse sobre la rueda y la rueda usa solo el alto necesario.
+            int altoReservadoResultado = 82;
+            int altoDisponible = Math.Max(220, panelRueda.ClientSize.Height - altoReservadoResultado);
+            int lado = Math.Min(panelRueda.ClientSize.Width - 42, altoDisponible - 24);
+            lado = Math.Max(210, lado);
+            return new Rectangle((panelRueda.ClientSize.Width - lado) / 2, 18, lado, lado);
         }
 
         private void Ficha_Click(object sender, EventArgs e)
@@ -735,6 +752,7 @@ namespace GUI
         private void MostrarNumeroEnRueda(int numero, string color)
         {
             _numeroGanadorActual = numero;
+            // Problema visual que resuelve: el marcador de la rueda muestra solo el numero ganador, sin texto extra.
             lblNumeroGanador.Text = numero.ToString();
 
             if (color == "Rojo")
@@ -745,6 +763,24 @@ namespace GUI
                 lblNumeroGanador.BackColor = Color.FromArgb(22, 163, 74);
 
             panelRueda.Invalidate();
+        }
+
+        private void lblNumeroGanador_Paint(object sender, PaintEventArgs e)
+        {
+            Label label = (Label)sender;
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+            Rectangle area = new Rectangle(0, 0, label.Width - 1, label.Height - 1);
+            using (GraphicsPath path = RoundedPath(area, 12))
+            using (SolidBrush fondo = new SolidBrush(label.BackColor))
+            using (Pen borde = new Pen(Color.FromArgb(160, AppTheme.Dorado), 1))
+            {
+                e.Graphics.FillPath(fondo, path);
+                e.Graphics.DrawPath(borde, path);
+            }
+
+            TextRenderer.DrawText(e.Graphics, label.Text, label.Font, label.ClientRectangle,
+                label.ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
         }
 
         private void panelJuego_Paint(object sender, PaintEventArgs e)
@@ -790,9 +826,8 @@ namespace GUI
             using (Pen marco = new Pen(Color.FromArgb(110, AppTheme.Dorado), 1))
                 e.Graphics.DrawRectangle(marco, 0, 0, panelRueda.Width - 1, panelRueda.Height - 1);
 
-            int lado = Math.Min(panelRueda.ClientSize.Width, panelRueda.ClientSize.Height) - 42;
-            lado = Math.Max(220, lado);
-            Rectangle rueda = new Rectangle((panelRueda.ClientSize.Width - lado) / 2, 20, lado, lado);
+            Rectangle rueda = CalcularRectanguloRueda();
+            int lado = rueda.Width;
             using (LinearGradientBrush madera = new LinearGradientBrush(rueda,
                 Color.FromArgb(124, 62, 22), Color.FromArgb(45, 25, 13), 45F))
             {
@@ -909,6 +944,18 @@ namespace GUI
         private void ActualizarSaldo()
         {
             lblSaldo.Text = $"Saldo: ${_usuario.Saldo:N2}";
+        }
+
+        private GraphicsPath RoundedPath(Rectangle bounds, int radius)
+        {
+            int d = radius * 2;
+            GraphicsPath path = new GraphicsPath();
+            path.AddArc(bounds.X, bounds.Y, d, d, 180, 90);
+            path.AddArc(bounds.Right - d, bounds.Y, d, d, 270, 90);
+            path.AddArc(bounds.Right - d, bounds.Bottom - d, d, d, 0, 90);
+            path.AddArc(bounds.X, bounds.Bottom - d, d, d, 90, 90);
+            path.CloseFigure();
+            return path;
         }
     }
 }

@@ -10,6 +10,21 @@ namespace GUI
     public partial class FrmLogin : Form
     {
         private readonly UsuarioServicio _servicio = new UsuarioServicio();
+        private bool _modoRegistro;
+        private Label _lblIdentificacion;
+        private Label _lblNombre1;
+        private Label _lblNombre2;
+        private Label _lblApellido1;
+        private Label _lblApellido2;
+        private Label _lblCorreo;
+        private Label _lblFechaNac;
+        private TextBox _txtIdentificacion;
+        private TextBox _txtNombre1;
+        private TextBox _txtNombre2;
+        private TextBox _txtApellido1;
+        private TextBox _txtApellido2;
+        private TextBox _txtCorreo;
+        private DateTimePicker _dtpFechaNac;
 
         public FrmLogin()
         {
@@ -54,7 +69,70 @@ namespace GUI
             panelMarca.Paint += panelMarca_Paint;
             panelFormulario.Paint += panelFormulario_Paint;
             Resize += (s, e) => ReubicarLogin();
+            CrearControlesRegistro();
             ReubicarLogin();
+        }
+
+        private void CrearControlesRegistro()
+        {
+            // Problema visual que resuelve: permite crear cuenta dentro de la misma ventana sin abrir un dialogo separado.
+            _lblIdentificacion = CrearLabelRegistro("Identificacion");
+            _lblNombre1 = CrearLabelRegistro("Primer nombre");
+            _lblNombre2 = CrearLabelRegistro("Segundo nombre");
+            _lblApellido1 = CrearLabelRegistro("Primer apellido");
+            _lblApellido2 = CrearLabelRegistro("Segundo apellido");
+            _lblCorreo = CrearLabelRegistro("Correo");
+            _lblFechaNac = CrearLabelRegistro("Fecha nacimiento");
+
+            _txtIdentificacion = CrearTextBoxRegistro();
+            _txtNombre1 = CrearTextBoxRegistro();
+            _txtNombre2 = CrearTextBoxRegistro();
+            _txtApellido1 = CrearTextBoxRegistro();
+            _txtApellido2 = CrearTextBoxRegistro();
+            _txtCorreo = CrearTextBoxRegistro();
+            _dtpFechaNac = new DateTimePicker
+            {
+                Format = DateTimePickerFormat.Short,
+                Font = AppTheme.Cuerpo,
+                CalendarFont = AppTheme.Cuerpo
+            };
+
+            Control[] controles =
+            {
+                _lblIdentificacion, _txtIdentificacion,
+                _lblNombre1, _txtNombre1,
+                _lblNombre2, _txtNombre2,
+                _lblApellido1, _txtApellido1,
+                _lblApellido2, _txtApellido2,
+                _lblCorreo, _txtCorreo,
+                _lblFechaNac, _dtpFechaNac
+            };
+
+            foreach (Control control in controles)
+            {
+                control.Visible = false;
+                panelFormulario.Controls.Add(control);
+            }
+        }
+
+        private Label CrearLabelRegistro(string texto)
+        {
+            return new Label
+            {
+                Text = texto,
+                AutoSize = false,
+                Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
+                ForeColor = AppTheme.TextoPrimario,
+                BackColor = Color.Transparent
+            };
+        }
+
+        private TextBox CrearTextBoxRegistro()
+        {
+            TextBox textBox = new TextBox();
+            AppTheme.ApplyTextBox(textBox);
+            textBox.BorderStyle = BorderStyle.FixedSingle;
+            return textBox;
         }
 
         private void ReubicarLogin()
@@ -64,8 +142,8 @@ namespace GUI
             int marcaW = Math.Max(280, Math.Min(340, ClientSize.Width / 2 - 70));
             panelMarca.SetBounds(0, 0, marcaW, ClientSize.Height);
 
-            int cardW = Math.Min(390, ClientSize.Width - marcaW - 70);
-            int cardH = 348;
+            int cardW = _modoRegistro ? Math.Min(610, ClientSize.Width - marcaW - 70) : Math.Min(390, ClientSize.Width - marcaW - 70);
+            int cardH = _modoRegistro ? Math.Min(560, ClientSize.Height - 70) : 348;
             panelFormulario.SetBounds(
                 marcaW + (ClientSize.Width - marcaW - cardW) / 2,
                 (ClientSize.Height - cardH) / 2,
@@ -75,6 +153,20 @@ namespace GUI
             lblMarca.SetBounds(36, Math.Max(76, ClientSize.Height / 2 - 118), marcaW - 72, 112);
             lblMarcaDetalle.SetBounds(40, lblMarca.Bottom + 18, marcaW - 82, 92);
 
+            if (_modoRegistro)
+                ReubicarRegistro();
+            else
+                ReubicarIngreso();
+
+            AppTheme.ApplyRoundedRegion(panelFormulario, 14);
+            AppTheme.ApplyRoundedRegion(btnIngresar, 8);
+            AppTheme.ApplyRoundedRegion(btnRegistrar, 8);
+            panelMarca.Invalidate();
+            panelFormulario.Invalidate();
+        }
+
+        private void ReubicarIngreso()
+        {
             int x = 34;
             int w = panelFormulario.ClientSize.Width - x * 2;
             lblTitulo.SetBounds(x, 26, w, 42);
@@ -88,12 +180,40 @@ namespace GUI
             int btnW = (w - gap) / 2;
             btnIngresar.SetBounds(x, 284, btnW, 42);
             btnRegistrar.SetBounds(x + btnW + gap, 284, w - btnW - gap, 42);
+        }
 
-            AppTheme.ApplyRoundedRegion(panelFormulario, 14);
-            AppTheme.ApplyRoundedRegion(btnIngresar, 8);
-            AppTheme.ApplyRoundedRegion(btnRegistrar, 8);
-            panelMarca.Invalidate();
-            panelFormulario.Invalidate();
+        private void ReubicarRegistro()
+        {
+            int x = 34;
+            int w = panelFormulario.ClientSize.Width - x * 2;
+            int gap = 18;
+            int colW = (w - gap) / 2;
+
+            lblTitulo.SetBounds(x, 24, w, 42);
+            lblSubtitulo.SetBounds(x, 70, w, 34);
+
+            UbicarCampo(_lblIdentificacion, _txtIdentificacion, x, 116, colW);
+            UbicarCampo(lblUsername, txtUsername, x + colW + gap, 116, colW);
+            UbicarCampo(lblPassword, txtPassword, x, 188, colW);
+            UbicarCampo(_lblCorreo, _txtCorreo, x + colW + gap, 188, colW);
+            UbicarCampo(_lblNombre1, _txtNombre1, x, 260, colW);
+            UbicarCampo(_lblNombre2, _txtNombre2, x + colW + gap, 260, colW);
+            UbicarCampo(_lblApellido1, _txtApellido1, x, 332, colW);
+            UbicarCampo(_lblApellido2, _txtApellido2, x + colW + gap, 332, colW);
+
+            _lblFechaNac.SetBounds(x, 404, w, 22);
+            _dtpFechaNac.SetBounds(x, 430, colW, 32);
+
+            int btnY = panelFormulario.ClientSize.Height - 66;
+            int btnW = (w - gap) / 2;
+            btnIngresar.SetBounds(x, btnY, btnW, 42);
+            btnRegistrar.SetBounds(x + btnW + gap, btnY, w - btnW - gap, 42);
+        }
+
+        private void UbicarCampo(Label label, Control input, int x, int y, int w)
+        {
+            label.SetBounds(x, y, w, 22);
+            input.SetBounds(x, y + 26, w, 32);
         }
 
         private void panelMarca_Paint(object sender, PaintEventArgs e)
@@ -137,6 +257,12 @@ namespace GUI
 
         private void btnIngresar_Click(object sender, System.EventArgs e)
         {
+            if (_modoRegistro)
+            {
+                RegistrarUsuarioDesdeLogin();
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(txtUsername.Text) ||
                 string.IsNullOrWhiteSpace(txtPassword.Text))
             {
@@ -163,7 +289,139 @@ namespace GUI
 
         private void btnRegistrar_Click(object sender, System.EventArgs e)
         {
-            new FrmRegistro().ShowDialog();
+            if (_modoRegistro)
+                MostrarModoLogin();
+            else
+                MostrarModoRegistro();
+        }
+
+        private void MostrarModoRegistro()
+        {
+            // Problema visual que resuelve: el usuario cambia a registro sin perder el contexto de la pantalla de acceso.
+            _modoRegistro = true;
+            MinimumSize = new Size(996, 678);
+            ClientSize = new Size(980, 640);
+            CenterToScreen();
+
+            lblTitulo.Text = "Crear cuenta";
+            lblSubtitulo.Text = "Completa tus datos para activar tu acceso a Casino Royal.";
+            btnIngresar.Text = "Registrar cuenta";
+            btnRegistrar.Text = "Volver";
+            lblUsername.Text = "Usuario";
+            lblPassword.Text = "Contrasena";
+
+            foreach (Control control in new Control[]
+            {
+                _lblIdentificacion, _txtIdentificacion, _lblNombre1, _txtNombre1,
+                _lblNombre2, _txtNombre2, _lblApellido1, _txtApellido1,
+                _lblApellido2, _txtApellido2, _lblCorreo, _txtCorreo,
+                _lblFechaNac, _dtpFechaNac
+            })
+                control.Visible = true;
+
+            ReubicarLogin();
+        }
+
+        private void MostrarModoLogin()
+        {
+            _modoRegistro = false;
+            MinimumSize = new Size(776, 469);
+            ClientSize = new Size(760, 430);
+            CenterToScreen();
+
+            lblTitulo.Text = "Iniciar sesion";
+            lblSubtitulo.Text = "Ingresa con tus credenciales para continuar.";
+            btnIngresar.Text = "Ingresar";
+            btnRegistrar.Text = "Crear cuenta";
+            lblUsername.Text = "Usuario:";
+            lblPassword.Text = "Contrasena:";
+
+            foreach (Control control in new Control[]
+            {
+                _lblIdentificacion, _txtIdentificacion, _lblNombre1, _txtNombre1,
+                _lblNombre2, _txtNombre2, _lblApellido1, _txtApellido1,
+                _lblApellido2, _txtApellido2, _lblCorreo, _txtCorreo,
+                _lblFechaNac, _dtpFechaNac
+            })
+                control.Visible = false;
+
+            ReubicarLogin();
+        }
+
+        private void RegistrarUsuarioDesdeLogin()
+        {
+            if (string.IsNullOrWhiteSpace(_txtIdentificacion.Text) ||
+                string.IsNullOrWhiteSpace(txtUsername.Text) ||
+                string.IsNullOrWhiteSpace(txtPassword.Text) ||
+                string.IsNullOrWhiteSpace(_txtNombre1.Text) ||
+                string.IsNullOrWhiteSpace(_txtApellido1.Text) ||
+                string.IsNullOrWhiteSpace(_txtCorreo.Text))
+            {
+                MessageBox.Show("Por favor, complete todos los campos obligatorios.",
+                    "Campos incompletos",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!int.TryParse(_txtIdentificacion.Text.Trim(), out int identificacion))
+            {
+                MessageBox.Show("La identificacion debe ser numerica.",
+                    "Dato invalido",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            Usuario usuario = new Usuario
+            {
+                IdUsuario = identificacion,
+                Username = txtUsername.Text.Trim(),
+                Password = txtPassword.Text,
+                Nombre1 = _txtNombre1.Text.Trim(),
+                Nombre2 = _txtNombre2.Text.Trim(),
+                Apellido1 = _txtApellido1.Text.Trim(),
+                Apellido2 = _txtApellido2.Text.Trim(),
+                Correo = _txtCorreo.Text.Trim(),
+                FechaNacimiento = _dtpFechaNac.Value,
+                Saldo = 0,
+                IdRol = 2
+            };
+
+            if (!usuario.EsMayorDeEdad())
+            {
+                MessageBox.Show("Debes ser mayor de edad para registrarte.",
+                    "Edad insuficiente",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            string resultado = _servicio.Registrar(usuario);
+            bool ok = resultado == "Guardado correctamente.";
+            MessageBox.Show(ok ? "Usuario registrado correctamente." : resultado,
+                ok ? "Exito" : "Error",
+                MessageBoxButtons.OK,
+                ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+
+            if (ok)
+            {
+                LimpiarRegistro();
+                MostrarModoLogin();
+            }
+        }
+
+        private void LimpiarRegistro()
+        {
+            _txtIdentificacion.Clear();
+            _txtNombre1.Clear();
+            _txtNombre2.Clear();
+            _txtApellido1.Clear();
+            _txtApellido2.Clear();
+            _txtCorreo.Clear();
+            txtUsername.Clear();
+            txtPassword.Clear();
+            _dtpFechaNac.Value = DateTime.Today;
         }
     }
 }

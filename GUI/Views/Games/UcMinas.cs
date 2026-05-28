@@ -33,6 +33,8 @@ namespace GUI
         private FlowLayoutPanel _panelMultiplicadores;
         private Label _lblMultiplicadoresTitulo;
         private Label _lblCuadricula;
+        private Button _btnApuestaMenos;
+        private Button _btnApuestaMas;
 
         private Button[,] _celdas;
         private bool[,] _esMina;
@@ -65,15 +67,22 @@ namespace GUI
             AppTheme.ApplySaldoLabel(lblSaldo);
             AppTheme.ApplyPrimaryButton(btnIniciar, AppTheme.Verde);
             AppTheme.ApplyPrimaryButton(btnRetirar, AppTheme.Dorado);
-            btnIniciar.Text = "Iniciar partida";
-            btnIniciar.ForeColor = Color.FromArgb(7, 18, 13);
+            // Problema funcional que resuelve: el boton principal refleja siempre el estado real de la ronda.
+            ActualizarBotonAccionMinas();
+            btnIniciar.SizeChanged += (s, e) => AppTheme.ApplyRoundedRegion(btnIniciar, 10);
+            btnIniciar.MouseEnter += (s, e) =>
+            {
+                if (_activa) btnIniciar.BackColor = Color.FromArgb(245, 158, 11);
+            };
+            btnIniciar.MouseLeave += (s, e) => ActualizarBotonAccionMinas();
             btnRetirar.Text = "Cobrar ganancias";
             btnRetirar.ForeColor = Color.FromArgb(15, 23, 42);
+            btnRetirar.Visible = false;
             panelTablero.BackColor = Color.FromArgb(9, 35, 52);
             panelTablero.BorderStyle = BorderStyle.None;
 
             txtApuesta.Text = "1000";
-            txtApuesta.Visible = false;
+            txtApuesta.Visible = true;
             txtMinas.Visible = false;
             lblEstado.AutoSize = false;
             lblMultiplicador.AutoSize = false;
@@ -122,22 +131,19 @@ namespace GUI
             Controls.Add(_panelCuadriculas);
             Controls.Add(_panelMultiplicadores);
 
-            // Problema visual que resuelve: la apuesta se selecciona con fichas y no con un cuadro de texto.
-            AgregarBotonApuesta("500", 500);
-            AgregarBotonApuesta("1K", 1000);
-            AgregarBotonApuesta("2.5K", 2500);
-            AgregarBotonApuesta("5K", 5000);
-            AgregarBotonApuesta("10K", 10000);
-            AgregarBotonApuesta("25K", 25000);
+            // Problema funcional que resuelve: la apuesta se edita como en un casino online, con campo unico y controles +/-.
+            _btnApuestaMenos = CrearBotonOpcion("-", -1, BotonAjustarApuesta_Click);
+            _btnApuestaMas = CrearBotonOpcion("+", 1, BotonAjustarApuesta_Click);
+            _panelApuestasRapidas.Controls.Add(_btnApuestaMenos);
+            _panelApuestasRapidas.Controls.Add(txtApuesta);
+            _panelApuestasRapidas.Controls.Add(_btnApuestaMas);
 
-            foreach (int minas in new[] { 1, 3, 5, 7 })
+            foreach (int minas in ObtenerMinasRecomendadas())
                 _botonesMinas.Add(CrearBotonOpcion($"{minas}", minas, BotonMinas_Click));
+            _botonesMinas.Add(CrearBotonOpcion("Personal", 0, BotonMinas_Click));
 
             foreach (int tamano in new[] { 3, 5, 7, 9 })
                 _botonesCuadricula.Add(CrearBotonOpcion($"{tamano}x{tamano}", tamano, BotonCuadricula_Click));
-
-            foreach (Button boton in _botonesApuestas)
-                _panelApuestasRapidas.Controls.Add(boton);
 
             foreach (Button boton in _botonesMinas)
                 _panelMinasRapidas.Controls.Add(boton);
@@ -145,7 +151,6 @@ namespace GUI
             foreach (Button boton in _botonesCuadricula)
                 _panelCuadriculas.Controls.Add(boton);
 
-            MarcarBotonActivo(_botonesApuestas, "1K");
             MarcarBotonActivo(_botonesMinas, "5");
             MarcarBotonActivo(_botonesCuadricula, "5x5");
             ActualizarBotonesMinasPermitidos();
@@ -255,17 +260,17 @@ namespace GUI
 
             lblApuesta.SetBounds(controlX, top + 20, controlW, 22);
             _panelApuestasRapidas.SetBounds(controlX, top + 48, controlW, 90);
-            txtApuesta.SetBounds(controlX, top + 48, 1, 1);
 
             lblMinas.SetBounds(controlX, top + 162, controlW, 22);
-            _panelMinasRapidas.SetBounds(controlX, top + 190, controlW, 46);
+            _panelMinasRapidas.SetBounds(controlX, top + 190, controlW, 50);
             txtMinas.SetBounds(controlX, top + 182, 1, 1);
 
             _lblCuadricula.SetBounds(controlX, top + 250, controlW, 22);
             _panelCuadriculas.SetBounds(controlX, top + 278, controlW, 46);
 
-            btnIniciar.SetBounds(controlX, top + 354, controlW, 44);
-            btnRetirar.SetBounds(controlX, top + 410, controlW, 44);
+            btnIniciar.SetBounds(controlX, top + 354, controlW, 52);
+            AppTheme.ApplyRoundedRegion(btnIniciar, 10);
+            btnRetirar.SetBounds(controlX, top + 410, controlW, 1);
 
             lblMultiplicador.SetBounds(controlX, top + 482, controlW, 32);
             lblEstado.SetBounds(controlX, top + 524, controlW, 82);
@@ -289,19 +294,22 @@ namespace GUI
             int anchoCuatro = Math.Max(62, (anchoDisponible - 24) / 4);
             int anchoTres = Math.Max(82, (anchoDisponible - 18) / 3);
 
-            foreach (Button boton in _botonesApuestas)
+            if (_btnApuestaMenos != null && _btnApuestaMas != null)
             {
-                boton.Size = new Size(anchoTres, 38);
-                boton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-                boton.TextAlign = ContentAlignment.MiddleCenter;
-                boton.Padding = Padding.Empty;
-                boton.Margin = new Padding(0, 0, 6, 6);
+                // Problema visual que resuelve: la apuesta queda en una sola linea editable, sin una parrilla de fichas que confundia la accion principal.
+                _btnApuestaMenos.Size = new Size(48, 42);
+                _btnApuestaMas.Size = new Size(48, 42);
+                txtApuesta.Size = new Size(Math.Max(140, anchoDisponible - 116), 42);
+                txtApuesta.Height = 42;
+                txtApuesta.Margin = new Padding(0, 0, 6, 0);
+                txtApuesta.TextAlign = HorizontalAlignment.Center;
+                txtApuesta.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             }
 
             foreach (Button boton in _botonesMinas)
             {
-                boton.Size = new Size(anchoCuatro, 38);
-                boton.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+                boton.Size = new Size(Math.Max(66, (anchoDisponible - 30) / 5), 38);
+                boton.Font = new Font("Segoe UI", boton.Text == "Personal" ? 8.25F : 10F, FontStyle.Bold);
                 boton.TextAlign = ContentAlignment.MiddleCenter;
                 boton.Padding = Padding.Empty;
                 boton.Margin = new Padding(0, 0, 6, 0);
@@ -352,10 +360,33 @@ namespace GUI
         private int MinasMinimasPorCuadricula()
         {
             // Problema funcional que resuelve: cada tamano de tablero exige una dificultad minima coherente con sus casillas.
-            if (_total <= 9) return 1;
-            if (_total <= 25) return 3;
-            if (_total <= 49) return 5;
-            return 7;
+            return 1;
+        }
+
+        private int[] ObtenerMinasRecomendadas()
+        {
+            // Problema funcional que resuelve: los cuatro accesos rapidos cambian segun el tamano de cuadricula.
+            if (_total <= 9) return new[] { 1, 2, 3, 5 };
+            if (_total <= 25) return new[] { 1, 3, 5, 7 };
+            if (_total <= 49) return new[] { 3, 5, 7, 10 };
+            return new[] { 1, 3, 5, 10 };
+        }
+
+        private void ReconstruirBotonesMinas()
+        {
+            _panelMinasRapidas.Controls.Clear();
+            _botonesMinas.Clear();
+
+            foreach (int minas in ObtenerMinasRecomendadas())
+                _botonesMinas.Add(CrearBotonOpcion($"{minas}", minas, BotonMinas_Click));
+
+            _botonesMinas.Add(CrearBotonOpcion("Personal", 0, BotonMinas_Click));
+
+            foreach (Button boton in _botonesMinas)
+                _panelMinasRapidas.Controls.Add(boton);
+
+            MarcarBotonMinasDesdeTexto();
+            ActualizarBotonesMinasPermitidos();
         }
 
         private void AjustarMinasAlTamano()
@@ -375,6 +406,11 @@ namespace GUI
 
         private void btnIniciar_Click(object sender, EventArgs e)
         {
+            if (_activa)
+            {
+                CobrarPartidaActiva();
+                return;
+            }
             // Validación 1: apuesta es un número válido y mayor a 0
             if (!decimal.TryParse(txtApuesta.Text, out _apuesta) || _apuesta <= 0)
             {
@@ -438,8 +474,9 @@ namespace GUI
             txtApuesta.Enabled = false;
             txtMinas.Enabled = false;
             HabilitarOpciones(false);
-            btnIniciar.Enabled = false;
-            btnRetirar.Enabled = true;
+            // Problema funcional que resuelve: un solo boton controla la ronda, como en Mines real: primero apuesta y luego cobra.
+            ActualizarBotonAccionMinas();
+            btnRetirar.Enabled = false;
 
             ColocarMinas();
             HabilitarCeldas(true);
@@ -504,6 +541,7 @@ namespace GUI
                 decimal proyectado = Math.Round(_apuesta * _multiplicador, 2);
                 lblEstado.Text = $"Ganancia potencial: ${proyectado:N2}";
                 lblEstado.ForeColor = Color.FromArgb(34, 197, 94);
+                ActualizarBotonAccionMinas();
 
                 // Destapó todas las celdas seguras — gana automáticamente
                 if (_destapadas >= _total - _nMinas)
@@ -514,6 +552,11 @@ namespace GUI
         // ── Retirar ───────────────────────────────────────────────
 
         private void btnRetirar_Click(object sender, EventArgs e)
+        {
+            CobrarPartidaActiva();
+        }
+
+        private void CobrarPartidaActiva()
         {
             if (!_activa) return;
 
@@ -625,11 +668,40 @@ namespace GUI
         private void RestablecerControles()
         {
             btnIniciar.Enabled = true;
+            ActualizarBotonAccionMinas();
             btnRetirar.Enabled = false;
             txtApuesta.Enabled = true;
             txtMinas.Enabled = true;
             HabilitarOpciones(true);
             ActualizarBarraMultiplicadores();
+        }
+
+        private void ActualizarBotonAccionMinas()
+        {
+            if (btnIniciar == null) return;
+
+            if (_activa)
+            {
+                decimal proyectado = _destapadas > 0 ? Math.Round(_apuesta * _multiplicador, 2) : 0m;
+                btnIniciar.Text = _destapadas > 0 ? $"Cobrar ${proyectado:N2}" : "Cobrar";
+                btnIniciar.BackColor = AppTheme.Dorado;
+                btnIniciar.ForeColor = Color.FromArgb(15, 23, 42);
+                btnIniciar.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+                btnIniciar.TextAlign = ContentAlignment.MiddleCenter;
+                btnIniciar.FlatAppearance.BorderColor = Color.FromArgb(253, 224, 71);
+                btnIniciar.FlatAppearance.MouseOverBackColor = Color.FromArgb(245, 158, 11);
+                AppTheme.ApplyRoundedRegion(btnIniciar, 10);
+                return;
+            }
+
+            btnIniciar.Text = "Apostar";
+            btnIniciar.BackColor = AppTheme.Verde;
+            btnIniciar.ForeColor = Color.FromArgb(7, 18, 13);
+            btnIniciar.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            btnIniciar.TextAlign = ContentAlignment.MiddleCenter;
+            btnIniciar.FlatAppearance.BorderColor = Color.FromArgb(134, 239, 172);
+            btnIniciar.FlatAppearance.MouseOverBackColor = Color.FromArgb(22, 163, 74);
+            AppTheme.ApplyRoundedRegion(btnIniciar, 10);
         }
 
         private void ActualizarLblSaldo()
@@ -653,12 +725,32 @@ namespace GUI
             MarcarBotonActivo(_botonesApuestas, boton.Text);
         }
 
+        private void BotonAjustarApuesta_Click(object sender, EventArgs e)
+        {
+            if (_activa) return;
+
+            Button boton = (Button)sender;
+            int direccion = (int)boton.Tag;
+            if (!decimal.TryParse(txtApuesta.Text, out decimal valor))
+                valor = 1000m;
+
+            decimal paso = valor < 5000m ? 500m : 1000m;
+            valor = Math.Max(500m, valor + direccion * paso);
+            txtApuesta.Text = valor.ToString("0");
+        }
+
         private void BotonMinas_Click(object sender, EventArgs e)
         {
             if (_activa) return;
 
             Button boton = (Button)sender;
             int minas = (int)boton.Tag;
+            if (minas == 0)
+            {
+                minas = PedirMinasPersonalizadas();
+                if (minas == 0) return;
+            }
+
             if (minas > 0 && minas < MinasMinimasPorCuadricula())
             {
                 // Problema funcional que resuelve: impide elegir chips de minas por debajo del minimo de la cuadricula.
@@ -670,8 +762,66 @@ namespace GUI
             }
 
             txtMinas.Text = Math.Min(minas, _total - 1).ToString();
-            MarcarBotonActivo(_botonesMinas, boton.Text);
+            MarcarBotonMinasDesdeTexto();
             ActualizarBarraMultiplicadores();
+        }
+
+        private int PedirMinasPersonalizadas()
+        {
+            using (Form dialogo = new Form())
+            using (Label etiqueta = new Label())
+            using (TextBox input = new TextBox())
+            using (Button aceptar = new Button())
+            using (Button cancelar = new Button())
+            {
+                // Problema funcional que resuelve: el quinto boton permite ingresar minas personalizadas sin dejar un campo visible permanente.
+                dialogo.Text = "Minas personalizadas";
+                dialogo.StartPosition = FormStartPosition.CenterParent;
+                dialogo.FormBorderStyle = FormBorderStyle.FixedDialog;
+                dialogo.MaximizeBox = false;
+                dialogo.MinimizeBox = false;
+                dialogo.ClientSize = new Size(320, 150);
+                dialogo.BackColor = AppTheme.BgCard;
+
+                etiqueta.Text = $"Cantidad de minas (1 a {_total - 1})";
+                etiqueta.ForeColor = AppTheme.TextoPrimario;
+                etiqueta.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+                etiqueta.SetBounds(18, 18, 280, 24);
+
+                input.BackColor = AppTheme.BgInput;
+                input.ForeColor = AppTheme.TextoPrimario;
+                input.BorderStyle = BorderStyle.FixedSingle;
+                input.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+                input.Text = txtMinas.Text;
+                input.SetBounds(18, 52, 280, 32);
+
+                aceptar.Text = "Aceptar";
+                aceptar.SetBounds(68, 104, 104, 34);
+                cancelar.Text = "Cancelar";
+                cancelar.SetBounds(184, 104, 104, 34);
+                AppTheme.ApplyPrimaryButton(aceptar, AppTheme.Verde);
+                AppTheme.ApplySecondaryButton(cancelar);
+                aceptar.DialogResult = DialogResult.OK;
+                cancelar.DialogResult = DialogResult.Cancel;
+
+                dialogo.Controls.Add(etiqueta);
+                dialogo.Controls.Add(input);
+                dialogo.Controls.Add(aceptar);
+                dialogo.Controls.Add(cancelar);
+                dialogo.AcceptButton = aceptar;
+                dialogo.CancelButton = cancelar;
+
+                if (dialogo.ShowDialog(this) != DialogResult.OK)
+                    return 0;
+
+                if (!int.TryParse(input.Text, out int minas) || minas < 1 || minas >= _total)
+                {
+                    MostrarError($"El numero de minas debe estar entre 1 y {_total - 1}.");
+                    return 0;
+                }
+
+                return minas;
+            }
         }
 
         private void BotonCuadricula_Click(object sender, EventArgs e)
@@ -685,6 +835,7 @@ namespace GUI
             _total = tamano * tamano;
 
             // Problema funcional que resuelve: al cambiar el tamano, la cantidad de minas se corrige automaticamente.
+            ReconstruirBotonesMinas();
             AjustarMinasAlTamano();
             MarcarBotonActivo(_botonesCuadricula, boton.Text);
             CrearTablero();
@@ -707,11 +858,35 @@ namespace GUI
 
         private void MarcarBotonMinasDesdeTexto()
         {
-            MarcarBotonActivo(_botonesMinas, txtMinas.Text);
+            bool coincideRapido = false;
+            foreach (Button boton in _botonesMinas)
+            {
+                bool activo = boton.Tag is int valor && valor > 0 && valor.ToString() == txtMinas.Text;
+                if (activo) coincideRapido = true;
+                boton.BackColor = activo ? AppTheme.Verde : Color.FromArgb(18, 27, 42);
+                boton.ForeColor = activo ? Color.FromArgb(7, 18, 13) : AppTheme.TextoPrimario;
+                boton.FlatAppearance.BorderColor = activo ? Color.FromArgb(134, 239, 172) : Color.FromArgb(44, 62, 82);
+                boton.FlatAppearance.BorderSize = activo ? 2 : 1;
+            }
+
+            if (!coincideRapido)
+            {
+                Button personal = _botonesMinas.Find(b => b.Tag is int valor && valor == 0);
+                if (personal != null)
+                {
+                    personal.BackColor = AppTheme.Verde;
+                    personal.ForeColor = Color.FromArgb(7, 18, 13);
+                    personal.FlatAppearance.BorderColor = Color.FromArgb(134, 239, 172);
+                    personal.FlatAppearance.BorderSize = 2;
+                }
+            }
         }
 
         private void HabilitarOpciones(bool habilitar)
         {
+            if (_btnApuestaMenos != null) _btnApuestaMenos.Enabled = habilitar;
+            if (_btnApuestaMas != null) _btnApuestaMas.Enabled = habilitar;
+
             foreach (Button boton in _botonesApuestas)
                 boton.Enabled = habilitar;
 
@@ -725,6 +900,7 @@ namespace GUI
         private bool EsBotonMinasPermitido(Button boton)
         {
             if (!(boton.Tag is int minas)) return true;
+            if (minas == 0) return true;
             return minas >= MinasMinimasPorCuadricula();
         }
 
@@ -805,7 +981,8 @@ namespace GUI
 
             if (probabilidad <= 0m) return 0m;
 
-            return Math.Round(0.99m / probabilidad, 2, MidpointRounding.AwayFromZero);
+            // Problema funcional que resuelve: los multiplicadores reflejan el margen de casino de Mines real; con poco riesgo pueden iniciar por debajo de x1.
+            return Math.Round(0.96m / probabilidad, 2, MidpointRounding.AwayFromZero);
         }
 
         private void panelTablero_Paint(object sender, PaintEventArgs e)
