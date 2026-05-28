@@ -113,6 +113,12 @@
     <Compile Include="Views\UcBilletera.Designer.cs">
       <DependentUpon>UcBilletera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\UcSoporte.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UcSoporte.Designer.cs">
+      <DependentUpon>UcSoporte.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\UcPerfil.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -194,6 +200,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\minas.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\qr-bot.jpeg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\ruleta.png">

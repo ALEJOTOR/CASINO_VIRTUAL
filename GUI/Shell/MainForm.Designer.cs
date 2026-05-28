@@ -26,6 +26,7 @@
             this.inicioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.historialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.billeteraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.soporteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlContenido = new System.Windows.Forms.Panel();
             this.mainLayout.SuspendLayout();
             this.panelNavbar.SuspendLayout();
@@ -113,7 +114,8 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.inicioToolStripMenuItem,
             this.historialToolStripMenuItem,
-            this.billeteraToolStripMenuItem});
+            this.billeteraToolStripMenuItem,
+            this.soporteToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(250, 10, 0, 8);
@@ -143,6 +145,14 @@
             this.billeteraToolStripMenuItem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.billeteraToolStripMenuItem.Size = new System.Drawing.Size(79, 42);
             this.billeteraToolStripMenuItem.Text = "Billetera";
+            // 
+            // soporteToolStripMenuItem
+            // 
+            this.soporteToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.soporteToolStripMenuItem.Name = "soporteToolStripMenuItem";
+            this.soporteToolStripMenuItem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.soporteToolStripMenuItem.Size = new System.Drawing.Size(75, 42);
+            this.soporteToolStripMenuItem.Text = "Soporte";
             // 
             // pnlContenido
             // 
@@ -182,5 +192,6 @@
         private System.Windows.Forms.ToolStripMenuItem inicioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem historialToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem billeteraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem soporteToolStripMenuItem;
     }
 }

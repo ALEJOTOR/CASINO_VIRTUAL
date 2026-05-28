@@ -73,6 +73,7 @@ namespace GUI
             inicioToolStripMenuItem.Click += (s, e) => MostrarInicio();
             historialToolStripMenuItem.Click += (s, e) => MostrarHistorial();
             billeteraToolStripMenuItem.Click += (s, e) => MostrarBilletera();
+            soporteToolStripMenuItem.Click += (s, e) => MostrarSoporte();
         }
 
         private void ActualizarSaldoNavbar()
@@ -102,6 +103,11 @@ namespace GUI
             UcBilletera vista = new UcBilletera(_usuario);
             vista.SaldoActualizado += (s, e) => ActualizarSaldoNavbar();
             MostrarVista(vista);
+        }
+
+        private void MostrarSoporte()
+        {
+            MostrarVista(new UcSoporte());
         }
 
         private void AbrirJuego(UserControl juego)
