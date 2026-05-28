@@ -60,32 +60,39 @@ namespace DAL
 
         public string Actualizar(Usuario u)
         {
-            EjecutarComando(@"UPDATE usuarios SET
-                                username         = :username,
-                                password         = :password,
-                                nombre_1         = :nombre1,
-                                nombre_2         = :nombre2,
-                                apellido_1       = :apellido1,
-                                apellido_2       = :apellido2,
-                                correo           = :correo,
-                                fecha_nacimiento = TO_DATE(:fecha_nac, 'YYYY-MM-DD'),
-                                id_rol           = :id_rol,
-                                id_estado        = (SELECT id_estado FROM estado_usuario WHERE nombre = :estado)
-                            WHERE id_usuario = :id", new[]
-            {
-                (":username",  (object)u.Username),
-                (":password",  (object)u.Password),
-                (":nombre1",   (object)u.Nombre1),
-                (":nombre2",   (object)u.Nombre2   ?? DBNull.Value),
-                (":apellido1", (object)u.Apellido1),
-                (":apellido2", (object)u.Apellido2 ?? DBNull.Value),
-                (":correo",    (object)u.Correo),
-                (":fecha_nac", (object)u.FechaNacimiento.ToString("yyyy-MM-dd")),
-                (":id_rol",    (object)u.IdRol),
-                (":estado",    (object)(u.Estado ?? "activo")),
-                (":id",        (object)u.IdUsuario)
-            });
-            return "Guardado correctamente.";
+            return EjecutarSP("pr_actualizar_usuario", "p_resultado",
+                ("p_id_usuario", u.IdUsuario),
+                ("p_username", u.Username),
+                ("p_password", u.Password),
+                ("p_nombre_1", u.Nombre1),
+                ("p_nombre_2", (object)u.Nombre2 ?? DBNull.Value),
+                ("p_apellido_1", u.Apellido1),
+                ("p_apellido_2", (object)u.Apellido2 ?? DBNull.Value),
+                ("p_correo", u.Correo),
+                ("p_fecha_nac", u.FechaNacimiento),
+                ("p_id_rol", u.IdRol),
+                ("p_estado", (object)(u.Estado ?? "activo")));
+        }
+
+        public string CambiarEstado(int idUsuario, string nuevoEstado)
+        {
+            return EjecutarSP("pr_cambiar_estado", "p_resultado",
+                ("p_id_usuario", idUsuario),
+                ("p_nuevo_estado", nuevoEstado));
+        }
+
+        public decimal ObtenerTotalDepositado(int idUsuario)
+        {
+            return EjecutarScalar<decimal>(
+                "SELECT PKG_USUARIOS.fn_total_depositado(:p_id) FROM dual",
+                new[] { (":p_id", (object)idUsuario) });
+        }
+
+        public decimal ObtenerGananciaNeta(int idUsuario)
+        {
+            return EjecutarScalar<decimal>(
+                "SELECT PKG_USUARIOS.fn_calcular_ganancia_neta(:p_id) FROM dual",
+                new[] { (":p_id", (object)idUsuario) });
         }
 
         public string Eliminar(int idUsuario)

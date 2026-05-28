@@ -143,10 +143,7 @@ namespace BLL
 
         public string CambiarEstado(int idUsuario, string nuevoEstado)
         {
-            Usuario u = ObtenerPorId(idUsuario);
-            if (u == null) return "Usuario no encontrado.";
-            u.Estado = nuevoEstado;
-            return Actualizar(u);
+            return _repositorio.CambiarEstado(idUsuario, nuevoEstado);
         }
 
         public string CambiarPassword(int idUsuario, string nuevaPassword)
@@ -167,26 +164,6 @@ namespace BLL
             if (existente == null) return "Usuario no encontrado.";
 
             return _repositorio.Eliminar(idUsuario);
-        }
-
-        // ── Reportes ──────────────────────────────────────────────
-
-        public string GenerarReporte()
-        {
-            IList<Usuario> lista = _repositorio.Consultar().Where(u => u.IdRol != 1).ToList();
-            int activos = lista.Count(u => u.Estado == "activo");
-            int inactivos = lista.Count(u => u.Estado == "inactivo");
-            int suspendidos = lista.Count(u => u.Estado == "suspendido");
-            decimal totalSaldos = lista.Sum(u => u.Saldo);
-
-            return $"REPORTE DE USUARIOS\n" +
-                   $"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm}\n" +
-                   $"─────────────────────────────\n" +
-                   $"Total usuarios:    {lista.Count}\n" +
-                   $"Activos:           {activos}\n" +
-                   $"Inactivos:         {inactivos}\n" +
-                   $"Suspendidos:       {suspendidos}\n" +
-                   $"Total saldos:      ${totalSaldos:N2}\n";
         }
 
         // ── Inicialización ────────────────────────────────────────

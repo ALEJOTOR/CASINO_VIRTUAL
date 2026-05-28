@@ -41,7 +41,8 @@ namespace GUI
             {
                 Label[] targets = { lblTotalUsuariosValor, lblPartidasHoyValor, lblIngresosHoyValor, lblGananciaCasaHoyValor };
                 foreach (var t in targets) t.Text = "--";
-                MessageBox.Show($"Error al cargar datos: {ex.Message}", "Dashboard",
+                MessageBox.Show($"{ex.GetType().Name}: {ex.Message}\n\n{ex.StackTrace}",
+                    "Dashboard - Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
@@ -148,7 +149,11 @@ namespace GUI
                     dgvTopJugadores.Columns["Ganancia"].DefaultCellStyle.Format = "N2";
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.GetType().Name} en CargarTopJugadores: {ex.Message}\n\n{ex.StackTrace}",
+                    "Dashboard - Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

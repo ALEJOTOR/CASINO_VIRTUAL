@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminRepositorio.cs" />
     <Compile Include="ConexionOracle.cs" />
     <Compile Include="EstadoPartidaRepositorio.cs" />
     <Compile Include="EstadoUsuarioRepositorio.cs" />
