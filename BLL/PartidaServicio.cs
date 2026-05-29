@@ -12,17 +12,26 @@ namespace BLL
         private readonly EstadoPartidaRepositorio _estadoRepo = new EstadoPartidaRepositorio();
         private readonly UsuarioServicio _usuarioSvc = new UsuarioServicio();
         private readonly JuegoServicio _juegoSvc = new JuegoServicio();
+        private readonly LogServicio _logSvc = new LogServicio();
 
-        public string RegistrarPartida(Partida p)
+        public (string mensaje, int idPartida) RegistrarPartida(Partida p)
         {
-            if (p.Apuesta <= 0) return "La apuesta debe ser mayor a 0.";
+            if (p.Apuesta <= 0) return ("La apuesta debe ser mayor a 0.", 0);
 
             Usuario usuario = _usuarioSvc.ObtenerPorId(p.IdUsuario);
-            if (usuario == null) return "Usuario no encontrado.";
-            if (usuario.Saldo < p.Apuesta) return "Saldo insuficiente.";
+            if (usuario == null) return ("Usuario no encontrado.", 0);
+            if (usuario.Saldo < p.Apuesta) return ("Saldo insuficiente.", 0);
 
             p.Fecha = DateTime.Now;
-            return _partidaRepo.RegistrarConMovimientos(p);
+            var (mensaje, idPartida) = _partidaRepo.RegistrarConMovimientos(p);
+
+            if (p.Apuesta > 5000)
+            {
+                _logSvc.Registrar("apuesta_alta", "WARN", "JUEGOS",
+                    $"Apuesta de ${p.Apuesta:N2} en juego {p.IdJuego}", p.IdUsuario);
+            }
+
+            return (mensaje, idPartida);
         }
 
         public IList<Partida> ObtenerTodas()

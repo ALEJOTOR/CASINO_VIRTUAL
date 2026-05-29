@@ -14,6 +14,7 @@ namespace BLL
         private readonly EstadoUsuarioRepositorio _estadoRepo = new EstadoUsuarioRepositorio();
         private readonly RolRepositorio _rolRepositorio = new RolRepositorio();
         private readonly TransaccionRepositorio _transaccionRepositorio = new TransaccionRepositorio();
+        private readonly LogServicio _logSvc = new LogServicio();
 
         public IList<EstadoUsuario> ObtenerEstados()
         {
@@ -45,8 +46,12 @@ namespace BLL
             Usuario u = _repositorio.ObtenerPorUsername(username);
 
             if (u != null && u.Password == hash && u.Estado == "activo")
+            {
+                _logSvc.Registrar("login", "INFO", "AUTH", $"Login exitoso: {username}", u.IdUsuario);
                 return u;
+            }
 
+            _logSvc.Registrar("login_fallido", "WARN", "AUTH", $"Intento fallido para: {username}");
             return null;
         }
 
@@ -74,7 +79,17 @@ namespace BLL
             u.FechaRegistro = DateTime.Now;
             u.Saldo = 0;
 
-            return _repositorio.Guardar(u);
+            string resultado = _repositorio.Guardar(u);
+
+            if (resultado == "Guardado correctamente.")
+            {
+                _logSvc.Registrar("registro_usuario", "INFO", "USUARIOS", $"Nuevo usuario: {u.Username}", u.IdUsuario);
+
+                try { new BonoServicio().AplicarBonoBienvenida(u.IdUsuario); }
+                catch { /* no bloquear registro si falla el bono */ }
+            }
+
+            return resultado;
         }
 
         // ── Modificación ──────────────────────────────────────────
@@ -143,7 +158,15 @@ namespace BLL
 
         public string CambiarEstado(int idUsuario, string nuevoEstado)
         {
-            return _repositorio.CambiarEstado(idUsuario, nuevoEstado);
+            string resultado = _repositorio.CambiarEstado(idUsuario, nuevoEstado);
+
+            if (resultado == "Guardado correctamente." && nuevoEstado == "suspendido")
+            {
+                _logSvc.Registrar("bloqueo_usuario", "WARN", "USUARIOS",
+                    $"Usuario {idUsuario} suspendido");
+            }
+
+            return resultado;
         }
 
         public string CambiarPassword(int idUsuario, string nuevaPassword)

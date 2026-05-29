@@ -83,13 +83,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminRepositorio.cs" />
+    <Compile Include="ApuestaRepositorio.cs" />
+    <Compile Include="BonoRepositorio.cs" />
     <Compile Include="ConexionOracle.cs" />
+    <Compile Include="DatosBancariosRepositorio.cs" />
+    <Compile Include="DepositoRepositorio.cs" />
     <Compile Include="EstadoPartidaRepositorio.cs" />
     <Compile Include="EstadoUsuarioRepositorio.cs" />
     <Compile Include="JuegoRepositorio.cs" />
+    <Compile Include="LogRepositorio.cs" />
+    <Compile Include="MetodoPagoRepositorio.cs" />
     <Compile Include="OracleBase.cs" />
     <Compile Include="PartidaRepositorio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RetiroRepositorio.cs" />
     <Compile Include="RolRepositorio.cs" />
     <Compile Include="TransaccionRepositorio.cs" />
     <Compile Include="UsuarioRepositorio.cs" />

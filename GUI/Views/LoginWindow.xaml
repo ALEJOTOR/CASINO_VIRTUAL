@@ -1,0 +1,198 @@
+<Window x:Class="GUI.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:GUI.ViewModels"
+        xmlns:conv="clr-namespace:GUI.Converters"
+        Title="Casino Royal - Iniciar sesión"
+        Width="900" Height="580"
+        MinWidth="776" MinHeight="469"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="CanResizeWithGrip"
+        Background="{StaticResource BgPrincipalBrush}">
+    <Window.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <conv:StringNotEmptyToVisibilityConverter x:Key="StrNotEmptyVis" />
+    </Window.Resources>
+    <Window.DataContext>
+        <vm:LoginViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="260" MaxWidth="360" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Panel - Brand -->
+        <Border Grid.Column="0" Background="{StaticResource BgNavbarBrush}">
+            <Grid Margin="30,40,30,40" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Text="CASINO"
+                           FontFamily="Georgia"
+                           FontSize="32"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource DoradoBrush}"
+                           TextWrapping="Wrap" />
+                <TextBlock Grid.Row="0"
+                           Text="ROYAL"
+                           FontFamily="Georgia"
+                           FontSize="32"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource DoradoBrush}"
+                           Margin="0,34,0,0"
+                           TextWrapping="Wrap" />
+
+                <TextBlock Grid.Row="1"
+                           Text="Experiencia premium de casino online. Juega Minas, Ruleta y Tragamonedas con la mejor plataforma."
+                           Foreground="{StaticResource TextoSecundarioBrush}"
+                           FontSize="11"
+                           TextWrapping="Wrap"
+                           Margin="0,24,0,0" />
+            </Grid>
+        </Border>
+
+        <!-- Right Panel - Login/Register Card -->
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+            <Border Background="{StaticResource BgCardBrush}"
+                    CornerRadius="14"
+                    BorderBrush="{StaticResource DoradoBrush}"
+                    BorderThickness="1"
+                    Margin="40,40,40,40"
+                    Padding="34,26,34,26"
+                    MaxWidth="500"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center">
+                <StackPanel>
+                    <!-- Title -->
+                    <TextBlock Text="{Binding Titulo}"
+                               Style="{StaticResource TitleStyle}"
+                               FontSize="22" />
+
+                    <TextBlock Text="{Binding Subtitulo}"
+                               Style="{StaticResource SubtitleStyle}"
+                               Margin="0,6,0,20" />
+
+                    <!-- Error Message -->
+                    <TextBlock Text="{Binding ErrorMessage}"
+                               Foreground="{StaticResource RojoBrush}"
+                               FontSize="12"
+                               Visibility="{Binding ErrorMessage, Converter={StaticResource StrNotEmptyVis}}"
+                               Margin="0,0,0,8" />
+
+                    <!-- Login Fields (visible in both modes) -->
+                    <TextBlock Text="Usuario:"
+                               Foreground="{StaticResource TextoPrimarioBrush}"
+                               FontWeight="Bold"
+                               FontSize="13"
+                               Margin="0,0,0,4" />
+                    <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,12" />
+
+                    <TextBlock Text="Contraseña:"
+                               Foreground="{StaticResource TextoPrimarioBrush}"
+                               FontWeight="Bold"
+                               FontSize="13"
+                               Margin="0,0,0,4" />
+                    <PasswordBox x:Name="pwBox"
+                                 PasswordChanged="OnPasswordChanged"
+                                 Margin="0,0,0,12" />
+
+                    <!-- Registration Fields (visible only in Registro mode) -->
+                    <StackPanel Visibility="{Binding IsRegistro, Converter={StaticResource BoolToVis}}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="12" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Left Column -->
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Identificación:" Foreground="{StaticResource TextoPrimarioBrush}" FontWeight="Bold" FontSize="13" Margin="0,0,0,4" />
+                                <TextBox Text="{Binding Identificacion, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" />
+                            </StackPanel>
+
+                            <!-- Right Column -->
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Correo:" Foreground="{StaticResource TextoPrimarioBrush}" FontWeight="Bold" FontSize="13" Margin="0,0,0,4" />
+                                <TextBox Text="{Binding Correo, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="12" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Primer nombre:" Foreground="{StaticResource TextoPrimarioBrush}" FontWeight="Bold" FontSize="13" Margin="0,0,0,4" />
+                                <TextBox Text="{Binding Nombre1, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Segundo nombre:" Foreground="{StaticResource TextoPrimarioBrush}" FontWeight="Bold" FontSize="13" Margin="0,0,0,4" />
+                                <TextBox Text="{Binding Nombre2, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="12" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Primer apellido:" Foreground="{StaticResource TextoPrimarioBrush}" FontWeight="Bold" FontSize="13" Margin="0,0,0,4" />
+                                <TextBox Text="{Binding Apellido1, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Segundo apellido:" Foreground="{StaticResource TextoPrimarioBrush}" FontWeight="Bold" FontSize="13" Margin="0,0,0,4" />
+                                <TextBox Text="{Binding Apellido2, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" />
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock Text="Fecha de nacimiento:" Foreground="{StaticResource TextoPrimarioBrush}" FontWeight="Bold" FontSize="13" Margin="0,0,0,4" />
+                        <DatePicker SelectedDate="{Binding FechaNacimiento}"
+                                    Background="{StaticResource BgInputBrush}"
+                                    Foreground="{StaticResource TextoPrimarioBrush}"
+                                    Margin="0,0,0,12" />
+                    </StackPanel>
+
+                    <!-- Buttons -->
+                    <Grid Margin="0,8,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0"
+                                Content="{Binding BotonPrincipalTexto}"
+                                Command="{Binding LoginCommand}"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Height="42" />
+
+                        <Button Grid.Column="2"
+                                Content="{Binding BotonSecundarioTexto}"
+                                Command="{Binding CambiarModoCommand}"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Background="{StaticResource BgHoverBrush}"
+                                Foreground="{StaticResource TextoPrimarioBrush}"
+                                Height="42" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+    </Grid>
+</Window>

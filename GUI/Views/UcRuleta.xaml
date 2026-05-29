@@ -1,0 +1,374 @@
+<UserControl x:Class="GUI.Views.UcRuleta"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:GUI.Converters"
+             Background="#0A101C">
+    <UserControl.Resources>
+        <conv:InvertBoolConverter x:Key="InvertBool" />
+        <conv:StringToBrushConverter x:Key="StringToBrushConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="78" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#070C18">
+            <Grid>
+                <TextBlock Text="RULETA ROYAL"
+                           FontFamily="Georgia"
+                           FontSize="25" FontWeight="Bold"
+                           Foreground="Gold"
+                           Margin="24,0,0,0"
+                           VerticalAlignment="Center" />
+                <TextBlock Text="{Binding SaldoTexto}"
+                           FontSize="13" FontWeight="Bold"
+                           Foreground="#4ADE80"
+                           Background="#121E34"
+                           Padding="12,0"
+                           Height="40"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Margin="0,0,24,0"
+                           LineHeight="40" />
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="24,16,24,24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.28*" />
+                    <ColumnDefinition Width="0.44*" />
+                    <ColumnDefinition Width="0.28*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0"
+                        Background="#2A140A"
+                        CornerRadius="8"
+                        BorderBrush="#6B3E16"
+                        BorderThickness="1"
+                        Margin="0,0,16,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Viewbox Grid.Row="0" Stretch="Uniform" Margin="20">
+                            <Grid Width="200" Height="200">
+                                <Ellipse Stroke="#FBBF24" StrokeThickness="8" Fill="#2D190D" />
+                                <Ellipse Stroke="#4B240E" StrokeThickness="4"
+                                         Margin="12" Fill="#1A0E07" />
+                                <Ellipse Stroke="#FBBF24" StrokeThickness="2"
+                                         StrokeDashArray="4,2" Margin="24" Fill="Transparent" />
+                                <Border Width="70" Height="70"
+                                        Background="{Binding NumeroGanadorColor, Converter={StaticResource StringToBrushConverter}}"
+                                        CornerRadius="12"
+                                        BorderBrush="#FBBF24"
+                                        BorderThickness="1"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                    <!-- Animación de rotación -->
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Girando}" Value="True">
+                                                    <DataTrigger.EnterActions>
+                                                        <BeginStoryboard x:Name="SpinStoryboard">
+                                                            <Storyboard RepeatBehavior="Forever">
+                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                                                 From="0" To="360" Duration="0:0:0.8" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.EnterActions>
+                                                    <DataTrigger.ExitActions>
+                                                        <StopStoryboard BeginStoryboardName="SpinStoryboard" />
+                                                    </DataTrigger.ExitActions>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <Border.RenderTransform>
+                                        <RotateTransform CenterX="35" CenterY="35" />
+                                    </Border.RenderTransform>
+                                    
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        
+                                        <TextBlock Grid.Row="0"
+                                                   Text="{Binding NumeroGanadorTexto}"
+                                                   FontSize="26" FontWeight="Bold"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" />
+                                        
+                                        <TextBlock Grid.Row="1"
+                                                   Text="{Binding NumeroGanadorNombreColor}"
+                                                   FontSize="8" FontWeight="Bold"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" />
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Viewbox>
+
+                        <TextBlock Grid.Row="1"
+                                   Text="{Binding PremioTexto}"
+                                   Foreground="{Binding ResultadoColor, Converter={StaticResource StringToBrushConverter}}"
+                                   FontSize="24" FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,16" />
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="1"
+                        Background="#076C40"
+                        CornerRadius="8"
+                        BorderBrush="#FBBF24"
+                        BorderThickness="2"
+                        Margin="0,0,16,0"
+                        Padding="12">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0"
+                                   Text="Mesa europea | 0 a 36"
+                                   Foreground="White"
+                                   FontSize="16" FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,8" />
+
+                        <ItemsControl Grid.Row="1"
+                                      ItemsSource="{Binding ZonasApuesta}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" MinWidth="50" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                    </Grid>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemContainerStyle>
+                                <Style TargetType="ContentPresenter">
+                                    <Setter Property="Grid.Row" Value="{Binding Fila}" />
+                                    <Setter Property="Grid.Column" Value="{Binding Columna}" />
+                                    <Setter Property="Grid.RowSpan" Value="{Binding RowSpan}" />
+                                    <Setter Property="Grid.ColumnSpan" Value="{Binding ColSpan}" />
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="{Binding ColorFondo}"
+                                            BorderBrush="#FFFFFF"
+                                            BorderThickness="0.5"
+                                            Cursor="Hand"
+                                            Margin="0">
+                                        <Border.InputBindings>
+                                            <MouseBinding MouseAction="LeftClick"
+                                                          Command="{Binding DataContext.ApostarEnZonaCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                          CommandParameter="{Binding Key}" />
+                                        </Border.InputBindings>
+                                        <Grid>
+                                            <!-- Texto base (número o tipo) -->
+                                            <TextBlock Text="{Binding Texto}"
+                                                       Foreground="{Binding ColorTexto}"
+                                                       FontSize="11" FontWeight="Bold"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center" />
+                                            
+                                            <!-- Fichas visuales superpuestas en el CENTRO -->
+                                            <ItemsControl ItemsSource="{Binding FichasColocadas}"
+                                                          HorizontalAlignment="Center"
+                                                          VerticalAlignment="Center">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <!-- Chip Casino mejorado - TAMAÑO GRANDE -->
+                                                        <Grid Width="40" Height="40" Margin="2,0">
+                                                            <!-- Borde dorado exterior -->
+                                                            <Ellipse Fill="{Binding ColorHex, Converter={StaticResource StringToBrushConverter}}"
+                                                                     Stroke="Gold" StrokeThickness="3" />
+                                                            <!-- Patrón interno (líneas radiales) -->
+                                                            <TextBlock Text="$"
+                                                                       Foreground="White" FontWeight="Bold"
+                                                                       FontSize="16"
+                                                                       HorizontalAlignment="Center"
+                                                                       VerticalAlignment="Center"
+                                                                       Opacity="0.8" />
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="2"
+                        Background="#161B27"
+                        CornerRadius="8"
+                        BorderBrush="#FBBF24"
+                        BorderThickness="1"
+                        Padding="16,20">
+                    <StackPanel>
+                        <TextBlock Text="Ficha seleccionada"
+                                   Foreground="#F1F5F9"
+                                   FontSize="10" FontWeight="Bold"
+                                   Margin="0,0,0,4" />
+                        <TextBox Text="{Binding FichaTexto, Mode=OneWay}"
+                                 FontSize="16" FontWeight="Bold"
+                                 TextAlignment="Center"
+                                 IsReadOnly="True"
+                                 Height="56"
+                                 Margin="0,0,0,12" />
+
+                        <TextBlock Text="Fichas disponibles"
+                                   Foreground="#F1F5F9"
+                                   FontSize="10" FontWeight="Bold"
+                                   Margin="0,0,0,6" />
+                        <ItemsControl ItemsSource="{Binding Fichas}"
+                                      Margin="0,0,0,16">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Content="{Binding Texto}"
+                                            Width="60" Height="34"
+                                            FontSize="8" FontWeight="Bold"
+                                            Foreground="White"
+                                            Cursor="Hand"
+                                            Margin="0,0,6,6"
+                                            Command="{Binding DataContext.SeleccionarFichaCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                            CommandParameter="{Binding Valor}">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Background" Value="{Binding ColorHex}" />
+                                                <Setter Property="BorderBrush" Value="Gold" />
+                                                <Setter Property="BorderThickness" Value="0" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Seleccionada}" Value="True">
+                                                        <Setter Property="BorderThickness" Value="2" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <TextBlock Text="{Binding TotalApostadoTexto}"
+                                   Foreground="#FBBF24"
+                                   FontSize="11" FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,12" />
+
+                        <Button Content="GIRAR RULETA"
+                                Command="{Binding GirarCommand}"
+                                IsEnabled="{Binding Girando, Converter={StaticResource InvertBool}}"
+                                Height="44"
+                                FontSize="14" FontWeight="Bold"
+                                Background="#DC2626"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Cursor="Hand"
+                                Margin="0,0,0,8" />
+
+                        <Button Content="Limpiar mesa"
+                                Command="{Binding LimpiarCommand}"
+                                Height="28"
+                                FontSize="9" FontWeight="Bold"
+                                Background="#334155"
+                                Foreground="#F1F5F9"
+                                BorderThickness="0"
+                                Cursor="Hand"
+                                Margin="0,0,0,16" />
+
+                        <TextBlock Text="Saldo:"
+                                   Foreground="#F1F5F9"
+                                   FontSize="10" FontWeight="Bold" />
+                        <TextBlock Text="{Binding SaldoTexto}"
+                                   Foreground="#FBBF24"
+                                   FontSize="14" FontWeight="Bold" />
+
+                        <!-- Resultado de la última jugada -->
+                        <Border Background="#0F172A"
+                                CornerRadius="6"
+                                BorderBrush="{Binding ResultadoColor, Converter={StaticResource StringToBrushConverter}}"
+                                BorderThickness="2"
+                                Padding="10,8"
+                                Margin="0,10,0,0">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HistorialTexto}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </Style>
+                            </Border.Style>
+                            <StackPanel>
+                                <TextBlock Text="{Binding PremioTexto}"
+                                           Foreground="{Binding ResultadoColor, Converter={StaticResource StringToBrushConverter}}"
+                                           FontSize="15" FontWeight="Bold"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,0,0,4" />
+                                <TextBlock Text="{Binding HistorialTexto}"
+                                           Foreground="#CBD5E1"
+                                           FontSize="10"
+                                           TextWrapping="Wrap"
+                                           TextAlignment="Center"
+                                           LineHeight="16" />
+                            </StackPanel>
+                        </Border>
+                     </StackPanel>
+                 </Border>
+             </Grid>
+         </Grid>
+     </Grid>
+ </UserControl>

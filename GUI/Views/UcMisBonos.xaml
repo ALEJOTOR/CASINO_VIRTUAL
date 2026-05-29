@@ -1,0 +1,280 @@
+<UserControl x:Class="GUI.Views.UcMisBonos"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource BgPrincipalBrush}">
+    <ScrollViewer>
+        <StackPanel Margin="24">
+            <!-- Título y subtítulo -->
+            <TextBlock Text="Mis Bonos"
+                       Style="{StaticResource TitleStyle}" />
+            <TextBlock Text="Bonos disponibles y aplicados a tu cuenta"
+                       Style="{StaticResource SubtitleStyle}"
+                       Margin="0,4,0,20" />
+
+            <!-- ════════════════════════════════════════════ -->
+            <!-- BONOS DISPONIBLES -->
+            <!-- ════════════════════════════════════════════ -->
+            <TextBlock Text="Bonos disponibles"
+                       Foreground="{StaticResource DoradoBrush}"
+                       FontSize="16" FontWeight="Bold"
+                       Margin="0,0,0,12" />
+
+            <ItemsControl ItemsSource="{Binding BonosDisponibles}"
+                          Margin="0,0,0,24">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Cada card de bono disponible mejorada -->
+                        <Border CornerRadius="10"
+                                Padding="0"
+                                Margin="0,0,0,8">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="{StaticResource BgCardBrush}" />
+                                    <Setter Property="BorderThickness" Value="0" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource BgHoverBrush}" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <!-- Acento izquierdo -->
+                                    <ColumnDefinition Width="*" />
+                                    <!-- Contenido -->
+                                    <ColumnDefinition Width="Auto" />
+                                    <!-- Valor -->
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Borde izquierdo de acento -->
+                                <Border Grid.Column="0" Width="4" CornerRadius="4,0,0,4"
+                                        Background="{StaticResource DoradoBrush}" />
+
+                                <!-- Contenido central -->
+                                <StackPanel Grid.Column="1" Margin="20,16" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Nombre}"
+                                               Foreground="{StaticResource TextoPrimarioBrush}"
+                                               FontWeight="Bold"
+                                               FontSize="14" />
+                                    <TextBlock Text="{Binding Descripcion}"
+                                               Foreground="{StaticResource TextoSecundarioBrush}"
+                                               FontSize="12"
+                                               TextWrapping="Wrap"
+                                               Margin="0,4,0,0" />
+                                </StackPanel>
+
+                                <!-- Monto a la derecha -->
+                                <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="0,0,20,0">
+                                    <TextBlock Text="{Binding Valor, StringFormat='${0:N0}'}"
+                                               Foreground="{StaticResource VerdeBrush}"
+                                               FontSize="20"
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Right" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- ════════════════════════════════════════════ -->
+            <!-- HISTORIAL DE BONOS APLICADOS -->
+            <!-- ════════════════════════════════════════════ -->
+            <TextBlock Text="Historial de bonos aplicados"
+                       Foreground="{StaticResource DoradoBrush}"
+                       FontSize="16" FontWeight="Bold"
+                       Margin="0,0,0,12" />
+
+            <!-- Contenedor principal de la tabla -->
+            <Border Background="{StaticResource BgCardBrush}"
+                    CornerRadius="12"
+                    Padding="0"
+                    Margin="0,0,0,8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <!-- Header -->
+                        <RowDefinition Height="*" />
+                        <!-- Items -->
+                        <RowDefinition Height="Auto" />
+                        <!-- Empty state -->
+                    </Grid.RowDefinitions>
+
+                    <!-- ════ Header (Encabezados de columnas) ════ -->
+                    <Border Grid.Row="0"
+                            Background="{StaticResource BgElevatedBrush}"
+                            CornerRadius="12,12,0,0"
+                            Padding="16,12">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <!-- Nombre del bono -->
+                                <ColumnDefinition Width="*" />
+                                <!-- Monto -->
+                                <ColumnDefinition Width="*" />
+                                <!-- Fecha -->
+                                <ColumnDefinition Width="*" />
+                                <!-- Estado -->
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0"
+                                       Text="BONO"
+                                       Foreground="{StaticResource TextoMutedBrush}"
+                                       FontSize="11"
+                                       FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="1"
+                                       Text="MONTO"
+                                       Foreground="{StaticResource TextoMutedBrush}"
+                                       FontSize="11"
+                                       FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="2"
+                                       Text="FECHA"
+                                       Foreground="{StaticResource TextoMutedBrush}"
+                                       FontSize="11"
+                                       FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="3"
+                                       Text="ESTADO"
+                                       Foreground="{StaticResource TextoMutedBrush}"
+                                       FontSize="11"
+                                       FontWeight="SemiBold" />
+                        </Grid>
+                    </Border>
+
+                    <!-- ════ Lista de items (ScrollViewer + ItemsControl) ════ -->
+                    <ScrollViewer Grid.Row="1"
+                                  MaxHeight="320"
+                                  VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding HistorialBonos}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Padding="16,12"
+                                            BorderThickness="0,0,0,1"
+                                            BorderBrush="{StaticResource BordeBrush}">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Background" Value="Transparent" />
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background"
+                                                                Value="{StaticResource BgHoverBrush}" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Nombre del Bono -->
+                                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding NombreBono}"
+                                                           Foreground="{StaticResource TextoPrimarioBrush}"
+                                                           FontWeight="SemiBold"
+                                                           FontSize="13" />
+                                                <TextBlock Text="{Binding Descripcion}"
+                                                           Foreground="{StaticResource TextoSecundarioBrush}"
+                                                           FontSize="11"
+                                                           Margin="0,2,0,0" />
+                                            </StackPanel>
+
+                                            <!-- Monto (siempre verde — es dinero recibido) -->
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{Binding MontoAplicado, StringFormat='${0:N2}'}"
+                                                       Foreground="{StaticResource VerdeBrush}"
+                                                       FontWeight="Bold"
+                                                       FontSize="13"
+                                                       VerticalAlignment="Center" />
+
+                                            <!-- Fecha de Aplicación -->
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{Binding FechaAplicado, StringFormat='{}{0:dd/MM/yyyy}'}"
+                                                       Foreground="{StaticResource TextoSecundarioBrush}"
+                                                       FontSize="12"
+                                                       VerticalAlignment="Center" />
+
+                                            <!-- Estado como badge -->
+                                            <Border Grid.Column="3"
+                                                    CornerRadius="4"
+                                                    Padding="8,3"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Center">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <!-- Por defecto, asumir "Activo" = Verde -->
+                                                        <Setter Property="Background"
+                                                                Value="{StaticResource VerdeBrush}" />
+                                                        <!-- Si el estado es "Utilizado", mostrar en dorado -->
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Estado}"
+                                                                         Value="Utilizado">
+                                                                <Setter Property="Background"
+                                                                        Value="{StaticResource DoradoBrush}" />
+                                                            </DataTrigger>
+                                                            <!-- Si el estado es "Expirado", mostrar en rojo -->
+                                                            <DataTrigger Binding="{Binding Estado}"
+                                                                         Value="Expirado">
+                                                                <Setter Property="Background"
+                                                                        Value="{StaticResource RojoBrush}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                                <TextBlock Text="{Binding Estado}"
+                                                           Foreground="Black"
+                                                           FontSize="11"
+                                                           FontWeight="SemiBold" />
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                    <!-- ════ Estado Vacío ════ -->
+                    <Grid Grid.Row="2" Margin="0,32,0,32">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HistorialBonos.Count}"
+                                                 Value="0">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="🎁"
+                                       FontSize="40"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock Text="Sin historial de bonos"
+                                       Margin="0,8,0,4"
+                                       Foreground="{StaticResource TextoSecundarioBrush}"
+                                       FontSize="14"
+                                       FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock Text="Los bonos que actives aparecerán aquí"
+                                       Foreground="{StaticResource TextoMutedBrush}"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

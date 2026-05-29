@@ -1,0 +1,8 @@
+--------------------------------------------------------
+--  Ref Constraints for Table USUARIOS
+--------------------------------------------------------
+
+  ALTER TABLE "SEBAS_CASINO"."USUARIOS" ADD CONSTRAINT "FK_USUARIOS_ROL" FOREIGN KEY ("ID_ROL")
+	  REFERENCES "SEBAS_CASINO"."ROLES" ("ID_ROL") ENABLE;
+  ALTER TABLE "SEBAS_CASINO"."USUARIOS" ADD CONSTRAINT "FK_USUARIOS_ESTADO" FOREIGN KEY ("ID_ESTADO")
+	  REFERENCES "SEBAS_CASINO"."ESTADO_USUARIO" ("ID_ESTADO") ENABLE;

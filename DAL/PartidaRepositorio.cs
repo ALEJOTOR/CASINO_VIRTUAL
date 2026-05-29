@@ -93,14 +93,36 @@ namespace DAL
             return "Guardado correctamente.";
         }
 
-        public string RegistrarConMovimientos(Partida p)
+        public (string mensaje, int idPartida) RegistrarConMovimientos(Partida p)
         {
-            return EjecutarSP("PKG_PARTIDAS.pr_registrar_partida", "p_msg",
-                ("p_id_usuario", p.IdUsuario),
-                ("p_id_juego", p.IdJuego),
-                ("p_id_estado", p.IdEstado),
-                ("p_apuesta", p.Apuesta),
-                ("p_ganancia", p.Ganancia));
+            using (OracleConnection con = ConexionOracle.Abrir())
+            using (OracleCommand cmd = new OracleCommand("PKG_PARTIDAS.pr_registrar_partida", con))
+            {
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.BindByName = true;
+
+                cmd.Parameters.Add(new OracleParameter("p_id_usuario", OracleDbType.Int32)
+                    { Value = p.IdUsuario, Direction = System.Data.ParameterDirection.Input });
+                cmd.Parameters.Add(new OracleParameter("p_id_juego", OracleDbType.Int32)
+                    { Value = p.IdJuego, Direction = System.Data.ParameterDirection.Input });
+                cmd.Parameters.Add(new OracleParameter("p_id_estado", OracleDbType.Int32)
+                    { Value = p.IdEstado, Direction = System.Data.ParameterDirection.Input });
+                cmd.Parameters.Add(new OracleParameter("p_apuesta", OracleDbType.Decimal)
+                    { Value = p.Apuesta, Direction = System.Data.ParameterDirection.Input });
+                cmd.Parameters.Add(new OracleParameter("p_ganancia", OracleDbType.Decimal)
+                    { Value = p.Ganancia, Direction = System.Data.ParameterDirection.Input });
+                cmd.Parameters.Add(new OracleParameter("p_id_partida", OracleDbType.Int32)
+                    { Direction = System.Data.ParameterDirection.Output });
+                cmd.Parameters.Add(new OracleParameter("p_msg", OracleDbType.Varchar2, 200)
+                    { Direction = System.Data.ParameterDirection.Output });
+
+                cmd.ExecuteNonQuery();
+
+                int idPartida = Convert.ToInt32(cmd.Parameters["p_id_partida"].Value?.ToString() ?? "0");
+                string mensaje = cmd.Parameters["p_msg"].Value?.ToString() ?? string.Empty;
+
+                return (mensaje, idPartida);
+            }
         }
 
         private Partida Mapear(OracleDataReader r)

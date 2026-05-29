@@ -42,20 +42,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apuesta.cs" />
+    <Compile Include="ApuestaDisplayDto.cs" />
+    <Compile Include="BancoWompi.cs" />
+    <Compile Include="DatosBancarios.cs" />
+    <Compile Include="WompiTransaccion.cs" />
+    <Compile Include="Bono.cs" />
+    <Compile Include="Deposito.cs" />
     <Compile Include="EstadoPartida.cs" />
     <Compile Include="EstadoUsuario.cs" />
     <Compile Include="EstadisticasUsuario.cs" />
     <Compile Include="HistorialPartida.cs" />
     <Compile Include="Juego.cs" />
+    <Compile Include="LogEvento.cs" />
+    <Compile Include="MetodoPago.cs" />
     <Compile Include="MovimientoResumen.cs" />
     <Compile Include="Partida.cs" />
     <Compile Include="PartidaDisplayDto.cs" />
     <Compile Include="TransaccionDisplayDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResumenAdmin.cs" />
+    <Compile Include="Retiro.cs" />
     <Compile Include="Rol.cs" />
     <Compile Include="Transaccion.cs" />
     <Compile Include="Usuario.cs" />
+    <Compile Include="UsuarioBono.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

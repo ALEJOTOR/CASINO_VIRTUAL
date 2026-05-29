@@ -1,230 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{40D1B90A-AB6B-4F41-A80D-C614A2794FD4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>GUI</RootNamespace>
     <AssemblyName>GUI</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Forms.DataVisualization" />
-    <Reference Include="System.Xml" />
+    <ProjectReference Include="..\BLL\BLL.csproj" />
+    <ProjectReference Include="..\ENTITY\ENTITY.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\Admin\FrmAdmin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Core\CasinoTheme.cs" />
-    <Compile Include="Core\AppTheme.cs" />
-    <Compile Include="Core\ControlFactory.cs" />
-    <Compile Include="Core\IVistaJuego.cs" />
-    <Compile Include="Forms\Admin\FrmAdmin.Designer.cs">
-      <DependentUpon>FrmAdmin.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Admin\FrmEditarUsuario.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Admin\FrmEditarUsuario.Designer.cs">
-      <DependentUpon>FrmEditarUsuario.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Auth\FrmLogin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Auth\FrmLogin.Designer.cs">
-      <DependentUpon>FrmLogin.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Auth\FrmRegistro.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Auth\FrmRegistro.Designer.cs">
-      <DependentUpon>FrmRegistro.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Games\UcMinas.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\Games\UcMinas.Designer.cs">
-      <DependentUpon>UcMinas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Games\UcRuleta.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\Games\UcRuleta.Designer.cs">
-      <DependentUpon>UcRuleta.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Games\UcTragamonedas.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\Games\UcTragamonedas.Designer.cs">
-      <DependentUpon>UcTragamonedas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UcInicio.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\UcInicio.Designer.cs">
-      <DependentUpon>UcInicio.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UcHistorial.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\UcHistorial.Designer.cs">
-      <DependentUpon>UcHistorial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UcBilletera.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\UcBilletera.Designer.cs">
-      <DependentUpon>UcBilletera.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UcSoporte.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\UcSoporte.Designer.cs">
-      <DependentUpon>UcSoporte.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UcPerfil.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\UcPerfil.Designer.cs">
-      <DependentUpon>UcPerfil.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UcDashboardAdmin.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\UcDashboardAdmin.Designer.cs">
-      <DependentUpon>UcDashboardAdmin.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UcGestionUsuarios.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\UcGestionUsuarios.Designer.cs">
-      <DependentUpon>UcGestionUsuarios.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UcAdminGrid.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\UcAdminGrid.Designer.cs">
-      <DependentUpon>UcAdminGrid.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UcAdminReportes.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\UcAdminReportes.Designer.cs">
-      <DependentUpon>UcAdminReportes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Shell\MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Shell\MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\Auth\FrmLogin.resx">
-      <DependentUpon>FrmLogin.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Auth\FrmRegistro.resx">
-      <DependentUpon>FrmRegistro.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Shell\MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Views\UcBilletera.resx">
-      <DependentUpon>UcBilletera.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\UcDashboardAdmin.resx">
-      <DependentUpon>UcDashboardAdmin.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\UcInicio.resx">
-      <DependentUpon>UcInicio.cs</DependentUpon>
-    </EmbeddedResource>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="GUI_STRUCTURE.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\minas.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Assets\Sounds\spin.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\foto-bot.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Assets\Sounds\win.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\qr-bot.jpeg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Assets\Sounds\lose.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\ruleta.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\tragamonedas.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Assets\Sounds\jackpot.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BLL\BLL.csproj">
-      <Project>{0905b4d5-574f-4e87-b370-40a7df43158b}</Project>
-      <Name>BLL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ENTITY\ENTITY.csproj">
-      <Project>{14050b6f-d548-430e-8809-23657bf0144c}</Project>
-      <Name>ENTITY</Name>
-    </ProjectReference>
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="23.26.200" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

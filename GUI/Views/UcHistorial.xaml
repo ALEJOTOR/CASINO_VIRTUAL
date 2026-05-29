@@ -1,0 +1,441 @@
+<UserControl x:Class="GUI.Views.UcHistorial"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:GUI.Converters"
+             Background="{StaticResource BgPrincipalBrush}">
+    <UserControl.Resources>
+        <conv:TipoToColorConverter x:Key="TipoToColorConverter" />
+        <conv:TipoToIconConverter x:Key="TipoToIconConverter" />
+        <conv:TipoToDisplayConverter x:Key="TipoToDisplayConverter" />
+        <conv:MontoToColorConverter x:Key="MontoToColorConverter" />
+        <conv:MontoToStateConverter x:Key="MontoToStateConverter" />
+        <conv:CountToVisibilityConverter x:Key="CountToVisibilityConverter" />
+        <conv:ActiveFilterConverter x:Key="ActiveFilterConverter" />
+        <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <conv:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+        <conv:FechaToStringConverter x:Key="FechaToStringConverter" />
+    </UserControl.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <!-- Cabecera + Filtros -->
+            <RowDefinition Height="Auto" />
+            <!-- Filtros de fecha -->
+            <RowDefinition Height="Auto" />
+            <!-- Stats cards -->
+            <RowDefinition Height="*" />
+            <!-- Lista de movimientos — toma espacio restante -->
+            <RowDefinition Height="Auto" />
+            <!-- Paginación -->
+        </Grid.RowDefinitions>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- ROW 0: Cabecera + Filtros de categoría -->
+        <!-- ════════════════════════════════════════════ -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Historial de movimientos"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource TextoPrimarioBrush}" />
+                <TextBlock Text="{Binding TotalRegistros, StringFormat='{}{0} transacciones'}"
+                           FontSize="12"
+                           Foreground="{StaticResource TextoSecundarioBrush}"
+                           Margin="0,4,0,0" />
+            </StackPanel>
+
+            <!-- Botones de filtro por categoría -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
+                <!-- Todos -->
+                <Button Content="Todos"
+                        Command="{Binding FiltrarTodosCommand}"
+                        Cursor="Hand"
+                        Height="36"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Margin="0,0,8,0">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="{StaticResource BgHoverBrush}" />
+                            <Setter Property="BorderBrush" Value="{StaticResource BordeBrush}" />
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Setter Property="Padding" Value="16,0" />
+                            <Setter Property="Foreground" Value="{StaticResource TextoPrimarioBrush}" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="6"
+                                                Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Categoria}" Value="Todos">
+                                    <Setter Property="Background" Value="{StaticResource DoradoBrush}" />
+                                    <Setter Property="Foreground" Value="#0D1117" />
+                                    <Setter Property="BorderBrush" Value="{StaticResource DoradoBrush}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- Apuestas -->
+                <Button Content="Apuestas"
+                        Command="{Binding FiltrarApuestasCommand}"
+                        Cursor="Hand"
+                        Height="36"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Margin="0,0,8,0">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="{StaticResource BgHoverBrush}" />
+                            <Setter Property="BorderBrush" Value="{StaticResource BordeBrush}" />
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Setter Property="Padding" Value="16,0" />
+                            <Setter Property="Foreground" Value="{StaticResource TextoPrimarioBrush}" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="6"
+                                                Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Categoria}" Value="Apuestas">
+                                    <Setter Property="Background" Value="{StaticResource DoradoBrush}" />
+                                    <Setter Property="Foreground" Value="#0D1117" />
+                                    <Setter Property="BorderBrush" Value="{StaticResource DoradoBrush}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- Billetera (Depósitos) -->
+                <Button Content="Billetera"
+                        Command="{Binding FiltrarDepositosCommand}"
+                        Cursor="Hand"
+                        Height="36"
+                        FontSize="12"
+                        FontWeight="Bold">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="{StaticResource BgHoverBrush}" />
+                            <Setter Property="BorderBrush" Value="{StaticResource BordeBrush}" />
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Setter Property="Padding" Value="16,0" />
+                            <Setter Property="Foreground" Value="{StaticResource TextoPrimarioBrush}" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="6"
+                                                Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Categoria}" Value="Depositos">
+                                    <Setter Property="Background" Value="{StaticResource DoradoBrush}" />
+                                    <Setter Property="Foreground" Value="#0D1117" />
+                                    <Setter Property="BorderBrush" Value="{StaticResource DoradoBrush}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- ROW 1: Filtros de fecha -->
+        <!-- ════════════════════════════════════════════ -->
+        <Border Grid.Row="1"
+                Background="{StaticResource BgElevatedBrush}"
+                CornerRadius="8"
+                Padding="12,8"
+                Margin="0,12,0,12">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Desde:"
+                           Foreground="{StaticResource TextoSecundarioBrush}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,8,0"
+                           FontSize="12" />
+                <DatePicker SelectedDate="{Binding FechaDesde, UpdateSourceTrigger=PropertyChanged}"
+                            Width="140"
+                            Margin="0,0,16,0"
+                            Background="{StaticResource BgInputBrush}"
+                            Foreground="{StaticResource TextoPrimarioBrush}" />
+
+                <TextBlock Text="Hasta:"
+                           Foreground="{StaticResource TextoSecundarioBrush}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,8,0"
+                           FontSize="12" />
+                <DatePicker SelectedDate="{Binding FechaHasta, UpdateSourceTrigger=PropertyChanged}"
+                            Width="140"
+                            Margin="0,0,16,0"
+                            Background="{StaticResource BgInputBrush}"
+                            Foreground="{StaticResource TextoPrimarioBrush}" />
+
+                <Button Content="🔍 Filtrar"
+                        Command="{Binding AplicarFiltroFechaCommand}"
+                        Padding="12,6"
+                        Margin="0,0,8,0"
+                        Cursor="Hand"
+                        FontSize="11"
+                        FontWeight="Bold" />
+
+                <Button Content="✕ Limpiar"
+                        Command="{Binding LimpiarFiltroFechaCommand}"
+                        Padding="12,6"
+                        Cursor="Hand"
+                        FontSize="11"
+                        FontWeight="Bold"
+                        Background="{StaticResource BgHoverBrush}"
+                        Foreground="{StaticResource TextoPrimarioBrush}" />
+            </StackPanel>
+        </Border>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- ROW 2: Stats Cards (estadísticas) -->
+        <!-- ════════════════════════════════════════════ -->
+        <Grid Grid.Row="2" Margin="0,0,0,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Total Neto -->
+            <Border Grid.Column="0"
+                    Background="{StaticResource BgElevatedBrush}"
+                    CornerRadius="8"
+                    Padding="16,12"
+                    Margin="0,0,8,0">
+                <StackPanel>
+                    <TextBlock Text="TOTAL NETO"
+                               FontSize="11"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource TextoSecundarioBrush}" />
+                    <TextBlock Text="{Binding TotalNeto, StringFormat='${0:N2}'}"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="{Binding TotalNeto, Converter={StaticResource MontoToColorConverter}}"
+                               Margin="0,4,0,0" />
+                </StackPanel>
+            </Border>
+
+            <!-- Ingresos (página) -->
+            <Border Grid.Column="1"
+                    Background="{StaticResource BgElevatedBrush}"
+                    CornerRadius="8"
+                    Padding="16,12"
+                    Margin="0,0,8,0">
+                <StackPanel>
+                    <TextBlock Text="INGRESOS (en página)"
+                               FontSize="11"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource TextoSecundarioBrush}" />
+                    <TextBlock Text="{Binding TotalGanado, StringFormat='${0:N2}'}"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource VerdeBrush}"
+                               Margin="0,4,0,0" />
+                </StackPanel>
+            </Border>
+
+            <!-- Egresos (página) -->
+            <Border Grid.Column="2"
+                    Background="{StaticResource BgElevatedBrush}"
+                    CornerRadius="8"
+                    Padding="16,12">
+                <StackPanel>
+                    <TextBlock Text="EGRESOS (en página)"
+                               FontSize="11"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource TextoSecundarioBrush}" />
+                    <TextBlock Text="{Binding TotalNegativo, StringFormat='${0:N2}'}"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource RojoBrush}"
+                               Margin="0,4,0,0" />
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- ROW 3: Lista de movimientos (CRÍTICO: Grid + ScrollViewer) -->
+        <!-- ════════════════════════════════════════════ -->
+        <Grid Grid.Row="3">
+            <!-- ScrollViewer contiene el ItemsControl (NO al revés) -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          Visibility="{Binding IsLoading, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                <ItemsControl ItemsSource="{Binding Movimientos}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel VirtualizationMode="Recycling" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border x:Name="ItemBorder"
+                                    Background="{StaticResource BgElevatedBrush}"
+                                    CornerRadius="8"
+                                    Padding="12,10"
+                                    Margin="0,0,0,8"
+                                    Cursor="Hand"
+                                    MouseEnter="OnItemMouseEnter"
+                                    MouseLeave="OnItemMouseLeave"
+                                    MouseLeftButtonUp="OnItemMouseLeftButtonUp">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="48" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Ícono circular -->
+                                    <Border Grid.Column="0"
+                                            Width="48"
+                                            Height="48"
+                                            CornerRadius="24"
+                                            Background="{Binding Tipo, Converter={StaticResource TipoToColorConverter}}"
+                                            VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Tipo, Converter={StaticResource TipoToIconConverter}}"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="24"
+                                                   Foreground="White"
+                                                   FontWeight="Bold" />
+                                    </Border>
+
+                                    <!-- Contenido central -->
+                                    <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
+                                            <TextBlock Text="{Binding Titulo}"
+                                                       FontWeight="Bold"
+                                                       FontSize="13"
+                                                       Foreground="{StaticResource TextoPrimarioBrush}"
+                                                       VerticalAlignment="Center" />
+                                            <Border Background="{Binding Tipo, Converter={StaticResource TipoToColorConverter}}"
+                                                    CornerRadius="4"
+                                                    Padding="8,2"
+                                                    Margin="8,0,0,0"
+                                                    VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Tipo, Converter={StaticResource TipoToDisplayConverter}}"
+                                                           FontSize="9"
+                                                           FontWeight="Bold"
+                                                           Foreground="White" />
+                                            </Border>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding Fecha, Converter={StaticResource FechaToStringConverter}}"
+                                                   FontSize="11"
+                                                   Foreground="{StaticResource TextoSecundarioBrush}" />
+                                    </StackPanel>
+
+                                    <!-- Monto -->
+                                    <TextBlock Grid.Column="2"
+                                               Text="{Binding Monto, StringFormat='${0:N2}'}"
+                                               FontWeight="Bold"
+                                               FontSize="14"
+                                               Foreground="{Binding Monto, Converter={StaticResource MontoToColorConverter}}"
+                                               VerticalAlignment="Center" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!-- Indicador de carga (spinner) -->
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <TextBlock Text="⏳"
+                           FontSize="48"
+                           HorizontalAlignment="Center" />
+                <TextBlock Text="Cargando movimientos..."
+                           Foreground="{StaticResource TextoSecundarioBrush}"
+                           HorizontalAlignment="Center"
+                           Margin="0,8,0,0"
+                           FontSize="12" />
+            </StackPanel>
+
+            <!-- Estado vacío -->
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Visibility="{Binding Movimientos.Count, Converter={StaticResource CountToVisibilityConverter}}"
+                        Opacity="0.6">
+                <TextBlock Text="📭"
+                           FontSize="48"
+                           HorizontalAlignment="Center" />
+                <TextBlock Text="No hay movimientos para mostrar"
+                           Foreground="{StaticResource TextoSecundarioBrush}"
+                           HorizontalAlignment="Center"
+                           Margin="0,8,0,0"
+                           FontSize="12" />
+            </StackPanel>
+        </Grid>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- ROW 4: Controles de paginación -->
+        <!-- ════════════════════════════════════════════ -->
+        <Border Grid.Row="4"
+                Padding="0,12,0,0">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <Button Content="◀ Anterior"
+                        Command="{Binding PaginaAnteriorCommand}"
+                        Padding="12,6"
+                        Margin="0,0,8,0"
+                        Cursor="Hand"
+                        FontSize="11"
+                        FontWeight="Bold"
+                        Background="{StaticResource BgHoverBrush}"
+                        Foreground="{StaticResource TextoPrimarioBrush}" />
+
+                <TextBlock Text="{Binding InfoPagina}"
+                           VerticalAlignment="Center"
+                           Margin="8,0"
+                           Foreground="{StaticResource TextoSecundarioBrush}"
+                           FontSize="13"
+                           FontWeight="Bold" />
+
+                <Button Content="Siguiente ▶"
+                        Command="{Binding PaginaSiguienteCommand}"
+                        Padding="12,6"
+                        Margin="8,0,0,0"
+                        Cursor="Hand"
+                        FontSize="11"
+                        FontWeight="Bold"
+                        Background="{StaticResource BgHoverBrush}"
+                        Foreground="{StaticResource TextoPrimarioBrush}" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

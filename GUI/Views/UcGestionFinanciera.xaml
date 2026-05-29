@@ -1,0 +1,18 @@
+<UserControl x:Class="GUI.Views.UcGestionFinanciera"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource BgPrincipalBrush}">
+    <ScrollViewer>
+        <StackPanel Margin="24">
+            <TextBlock Text="{Binding Titulo}"
+                       Style="{StaticResource TitleStyle}" />
+            <TextBlock Text="Gestión financiera del sistema"
+                       Style="{StaticResource SubtitleStyle}"
+                       Margin="0,4,0,24" />
+
+            <TextBlock Text="Sección de gestión financiera en construcción."
+                       Foreground="{StaticResource TextoSecundarioBrush}"
+                       FontSize="14" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,294 @@
+<UserControl x:Class="GUI.Views.UcBilletera"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:GUI.Converters"
+             Background="{StaticResource BgPrincipalBrush}">
+    <UserControl.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <conv:BooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" Invert="True" />
+        <conv:CountToVisibilityConverter x:Key="CountToVisibilityConverter" />
+        <conv:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+        <conv:NullToVisibilityConverter x:Key="NullToVisibilityInvertedConverter" Invert="True" />
+        <conv:InvertBoolConverter x:Key="InvertBoolConverter" />
+    </UserControl.Resources>
+    <ScrollViewer>
+        <StackPanel Margin="24">
+            <TextBlock Text="Billetera"
+                       Style="{StaticResource TitleStyle}" />
+            <TextBlock Text="Administra tus depósitos, retiros y saldo disponible."
+                       Style="{StaticResource SubtitleStyle}"
+                       Margin="0,4,0,20" />
+
+            <!-- Saldo Card -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Text="{Binding SaldoTexto}"
+                               Foreground="{StaticResource DoradoBrush}"
+                               FontSize="24" FontWeight="Bold" />
+                </StackPanel>
+            </Border>
+
+            <!-- Deposit & Withdraw -->
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Deposit Card -->
+                <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Depositar saldo"
+                                   Foreground="{StaticResource DoradoBrush}"
+                                   FontSize="16" FontWeight="Bold"
+                                   Margin="0,0,0,4" />
+                        <TextBlock Text="Via Wompi. Paga con tu banco o Nequi."
+                                   Foreground="{StaticResource TextoSecundarioBrush}"
+                                   FontSize="11"
+                                   Margin="0,0,0,12" />
+
+                        <TextBlock Text="Monto a depositar"
+                                   Foreground="{StaticResource TextoPrimarioBrush}"
+                                   FontSize="12" FontWeight="Bold"
+                                   Margin="0,0,0,4" />
+                        <TextBox Text="{Binding MontoDeposito, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,0,0,10" />
+
+                        <Button Content="Depositar ahora"
+                                Command="{Binding DepositarCommand}"
+                                Style="{StaticResource SuccessButtonStyle}"
+                                Height="36" />
+
+                        <TextBlock Text="{Binding StatusDeposito}"
+                                   Foreground="{StaticResource TextoSecundarioBrush}"
+                                   FontSize="11"
+                                   Margin="0,6,0,0"
+                                   TextWrapping="Wrap" />
+                        <Button Content="Verificar pago manualmente"
+                                Command="{Binding VerificarPagoCommand}"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Height="32" Margin="0,6,0,0"
+                                Visibility="{Binding HayDepositoPendiente, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Withdraw Card -->
+                <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Retirar saldo"
+                                   Foreground="{StaticResource DoradoBrush}"
+                                   FontSize="16" FontWeight="Bold"
+                                   Margin="0,0,0,4" />
+                        <TextBlock Text="Solicita un retiro a tu cuenta bancaria."
+                                   Foreground="{StaticResource TextoSecundarioBrush}"
+                                   FontSize="11"
+                                   Margin="0,0,0,12" />
+
+                        <TextBlock Text="Monto a retirar"
+                                   Foreground="{StaticResource TextoPrimarioBrush}"
+                                   FontSize="12" FontWeight="Bold"
+                                   Margin="0,0,0,4" />
+                        <TextBox Text="{Binding MontoRetiro, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,0,0,10" />
+
+                        <Button Content="Solicitar retiro"
+                                Command="{Binding RetirarCommand}"
+                                Style="{StaticResource DangerButtonStyle}"
+                                Height="36" />
+
+                        <TextBlock Text="{Binding StatusRetiro}"
+                                   Foreground="{StaticResource TextoSecundarioBrush}"
+                                   FontSize="11"
+                                   Margin="0,6,0,0"
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Métodos de Pago Section -->
+            <TextBlock Text="Métodos de Pago"
+                       Style="{StaticResource SectionTitleStyle}"
+                       Margin="0,0,0,12" />
+
+            <!-- Método Actual -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
+                <StackPanel>
+                    <TextBlock Text="Método de pago activo"
+                               Foreground="{StaticResource DoradoBrush}"
+                               FontSize="13" FontWeight="Bold"
+                               Margin="0,0,0,8" />
+
+                    <StackPanel Visibility="{Binding DatosActuales, Converter={StaticResource NullToVisibilityConverter}}">
+                        <TextBlock Text="{Binding DatosActuales.BancoNombre}"
+                                   Foreground="{StaticResource TextoPrimarioBrush}"
+                                   FontSize="12" FontWeight="Bold" />
+                        <TextBlock Text="{Binding DatosActuales.NumeroCuenta}"
+                                   Foreground="{StaticResource TextoSecundarioBrush}"
+                                   FontSize="11" Margin="0,2,0,0" />
+                        <TextBlock Text="{Binding DatosActuales.NombreTitular}"
+                                   Foreground="{StaticResource TextoSecundarioBrush}"
+                                   FontSize="11" Margin="0,2,0,0" />
+                    </StackPanel>
+
+                    <TextBlock Text="📭 Sin método de pago registrado"
+                               Foreground="{StaticResource TextoMutedBrush}"
+                               FontSize="11" FontStyle="Italic"
+                               Visibility="{Binding DatosActuales, Converter={StaticResource NullToVisibilityInvertedConverter}}" />
+                </StackPanel>
+            </Border>
+
+            <!-- Métodos Guardados List -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
+                <StackPanel>
+                    <TextBlock Text="Mis cuentas bancarias"
+                               Foreground="{StaticResource DoradoBrush}"
+                               FontSize="13" FontWeight="Bold"
+                               Margin="0,0,0,8" />
+
+                    <ItemsControl ItemsSource="{Binding DatosGuardados}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{StaticResource BgElevatedBrush}"
+                                        Padding="12" Margin="0,0,0,8"
+                                        CornerRadius="4">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="{Binding BancoNombre}"
+                                                       Foreground="{StaticResource TextoPrimarioBrush}"
+                                                       FontSize="12" FontWeight="Bold" />
+                                            <TextBlock Text="{Binding NumeroCuenta}"
+                                                       Foreground="{StaticResource TextoSecundarioBrush}"
+                                                       FontSize="10" Margin="0,2,0,0" />
+                                            <TextBlock Text="{Binding NombreTitular}"
+                                                       Foreground="{StaticResource TextoSecundarioBrush}"
+                                                       FontSize="10" Margin="0,2,0,0" />
+                                        </StackPanel>
+
+                                        <TextBlock Grid.Column="1"
+                                                   Text="✓ Activo"
+                                                   Foreground="{StaticResource VerdeBrush}"
+                                                   FontSize="10" FontWeight="Bold"
+                                                   VerticalAlignment="Center"
+                                                   Visibility="{Binding Activo, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <TextBlock Text="📭 Sin cuentas registradas"
+                               Foreground="{StaticResource TextoMutedBrush}"
+                               FontSize="11" FontStyle="Italic"
+                               Visibility="{Binding DatosGuardados.Count, Converter={StaticResource CountToVisibilityConverter}}" />
+
+                    <Button Content="+ Agregar nuevo método de pago"
+                            Command="{Binding AbrirRegistroDatosCommand}"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            Height="36" Margin="0,8,0,0" />
+                </StackPanel>
+            </Border>
+
+            <!-- Formulario Registro Datos Bancarios -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,16"
+                    Visibility="{Binding MostrarRegistroDatosBancarios, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <StackPanel>
+                    <TextBlock Text="Registrar nuevo método de pago"
+                               Foreground="{StaticResource DoradoBrush}"
+                               FontSize="14" FontWeight="Bold"
+                               Margin="0,0,0,12" />
+
+                    <!-- Banco -->
+                    <TextBlock Text="Banco"
+                               Foreground="{StaticResource TextoPrimarioBrush}"
+                               FontSize="12" FontWeight="Bold"
+                               Margin="0,0,0,4" />
+                    <ComboBox ItemsSource="{Binding Bancos}"
+                              SelectedItem="{Binding BancoSeleccionado}"
+                              DisplayMemberPath="Nombre"
+                              IsEnabled="{Binding IsLoadingBancos, Converter={StaticResource InvertBoolConverter}}"
+                              Margin="0,0,0,12"
+                              Height="36" />
+
+                    <!-- Tipo Documento -->
+                    <TextBlock Text="Tipo de documento"
+                               Foreground="{StaticResource TextoPrimarioBrush}"
+                               FontSize="12" FontWeight="Bold"
+                               Margin="0,0,0,4" />
+                    <ComboBox SelectedItem="{Binding TipoDocSeleccionado}" Margin="0,0,0,12" Height="36">
+                        <ComboBoxItem>CC</ComboBoxItem>
+                        <ComboBoxItem>CE</ComboBoxItem>
+                        <ComboBoxItem>NIT</ComboBoxItem>
+                        <ComboBoxItem>TI</ComboBoxItem>
+                    </ComboBox>
+
+                    <!-- Número Documento -->
+                    <TextBlock Text="Número de documento"
+                               Foreground="{StaticResource TextoPrimarioBrush}"
+                               FontSize="12" FontWeight="Bold"
+                               Margin="0,0,0,4" />
+                    <TextBox Text="{Binding NumeroDoc, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,12" />
+
+                    <!-- Nombre Titular -->
+                    <TextBlock Text="Nombre del titular"
+                               Foreground="{StaticResource TextoPrimarioBrush}"
+                               FontSize="12" FontWeight="Bold"
+                               Margin="0,0,0,4" />
+                    <TextBox Text="{Binding NombreTitular, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,12" />
+
+                    <!-- Tipo Cuenta -->
+                    <TextBlock Text="Tipo de cuenta"
+                               Foreground="{StaticResource TextoPrimarioBrush}"
+                               FontSize="12" FontWeight="Bold"
+                               Margin="0,0,0,4" />
+                    <ComboBox SelectedItem="{Binding TipoCuentaSeleccionada}" Margin="0,0,0,12" Height="36">
+                        <ComboBoxItem>CORRIENTE</ComboBoxItem>
+                        <ComboBoxItem>AHORROS</ComboBoxItem>
+                    </ComboBox>
+
+                    <!-- Número Cuenta -->
+                    <TextBlock Text="Número de cuenta"
+                               Foreground="{StaticResource TextoPrimarioBrush}"
+                               FontSize="12" FontWeight="Bold"
+                               Margin="0,0,0,4" />
+                    <TextBox Text="{Binding NumeroCuenta, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,12" />
+
+                    <!-- Botones -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0"
+                                Content="Guardar"
+                                Command="{Binding GuardarDatosCommand}"
+                                Style="{StaticResource SuccessButtonStyle}"
+                                Height="36" />
+
+                        <Button Grid.Column="2"
+                                Content="Cancelar"
+                                Command="{Binding CancelarRegistroCommand}"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Height="36" />
+                    </Grid>
+
+                    <!-- Status Mensaje -->
+                    <TextBlock Text="{Binding StatusRegistro}"
+                               Foreground="{StaticResource TextoSecundarioBrush}"
+                               FontSize="11" Margin="0,8,0,0"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,60 @@
+<UserControl x:Class="GUI.Views.UcDashboardAdmin"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource BgPrincipalBrush}">
+    <ScrollViewer>
+        <StackPanel Margin="24">
+            <TextBlock Text="{Binding Titulo}"
+                       Style="{StaticResource TitleStyle}" />
+            <TextBlock Text="{Binding Subtitulo}"
+                       Style="{StaticResource SubtitleStyle}"
+                       Margin="0,4,0,24" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Card 1 -->
+                <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Usuarios Registrados"
+                                   Foreground="{StaticResource TextoSecundarioBrush}"
+                                   FontSize="12" />
+                        <TextBlock Text="--"
+                                   Foreground="{StaticResource DoradoBrush}"
+                                   FontSize="28" FontWeight="Bold" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Card 2 -->
+                <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Partidas Hoy"
+                                   Foreground="{StaticResource TextoSecundarioBrush}"
+                                   FontSize="12" />
+                        <TextBlock Text="--"
+                                   Foreground="{StaticResource VerdeBrush}"
+                                   FontSize="28" FontWeight="Bold" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Card 3 -->
+                <Border Grid.Column="4" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Ingresos Totales"
+                                   Foreground="{StaticResource TextoSecundarioBrush}"
+                                   FontSize="12" />
+                        <TextBlock Text="--"
+                                   Foreground="{StaticResource DoradoBrush}"
+                                   FontSize="28" FontWeight="Bold" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

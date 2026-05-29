@@ -101,5 +101,46 @@ namespace DAL
                 return pOut.Value?.ToString() ?? string.Empty;
             }
         }
+
+        protected (string resultado, int valorSalida) EjecutarSPConSalidaInt(
+            string nombreProcedimiento,
+            string nombreParametroResultado,
+            string nombreParametroIntSalida,
+            params (string nombre, object valor)[] parametrosEntrada)
+        {
+            using (OracleConnection con = ConexionOracle.Abrir())
+            using (OracleCommand cmd = new OracleCommand(nombreProcedimiento, con))
+            {
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.BindByName = true;
+
+                foreach (var (nombre, valor) in parametrosEntrada)
+                    cmd.Parameters.Add(new OracleParameter(nombre, valor ?? DBNull.Value));
+
+                var pResultado = new OracleParameter(nombreParametroResultado, OracleDbType.Varchar2, 200)
+                {
+                    Direction = System.Data.ParameterDirection.Output
+                };
+                cmd.Parameters.Add(pResultado);
+
+                var pIntSalida = new OracleParameter(nombreParametroIntSalida, OracleDbType.Int32)
+                {
+                    Direction = System.Data.ParameterDirection.Output
+                };
+                cmd.Parameters.Add(pIntSalida);
+
+                cmd.ExecuteNonQuery();
+
+                string resultado = pResultado.Value?.ToString() ?? string.Empty;
+                int valorInt = 0;
+                if (pIntSalida.Value != null && pIntSalida.Value != DBNull.Value)
+                {
+                    var od = (Oracle.ManagedDataAccess.Types.OracleDecimal)pIntSalida.Value;
+                    valorInt = (int)od.Value;
+                }
+
+                return (resultado, valorInt);
+            }
+        }
     }
 }

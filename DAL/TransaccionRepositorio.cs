@@ -42,6 +42,90 @@ namespace DAL
             return lista;
         }
 
+        /// <summary>
+        /// Obtiene transacciones paginadas de un usuario con filtros opcionales.
+        /// </summary>
+        /// <param name="idUsuario">ID del usuario</param>
+        /// <param name="pageNumber">Número de página (1-based)</param>
+        /// <param name="pageSize">Cantidad de registros por página</param>
+        /// <param name="categoria">Filtro de tipo: null=todos, "deposito", "retiro"</param>
+        /// <param name="fechaDesde">Filtro de fecha desde (inclusive)</param>
+        /// <param name="fechaHasta">Filtro de fecha hasta (inclusive)</param>
+        /// <returns>Tupla (lista de transacciones, total de registros que cumplen filtro)</returns>
+        public (IList<Transaccion> items, int totalCount) ObtenerPaginado(
+            int idUsuario, int pageNumber, int pageSize,
+            string categoria = null, DateTime? fechaDesde = null, DateTime? fechaHasta = null)
+        {
+            // Parámetros para filtros (usados en COUNT y PAGED)
+            var filterParameters = new List<(string, object)>
+            {
+                (":idUsuario", (object)idUsuario)
+            };
+
+            // Parámetros de paginación (solo en PAGED)
+            var allParameters = new List<(string, object)>
+            {
+                (":idUsuario", (object)idUsuario),
+                (":offset", (object)((pageNumber - 1) * pageSize)),
+                (":pageSize", (object)pageSize)
+            };
+
+            // Construcción dinámica del WHERE
+            string whereClause = "WHERE id_usuario = :idUsuario";
+            
+            if (!string.IsNullOrEmpty(categoria))
+            {
+                if (categoria.ToLower() == "deposito" || categoria.ToLower() == "depositos")
+                {
+                    whereClause += " AND tipo IN ('deposito', 'retiro')";
+                }
+                else if (categoria.ToLower() == "apuesta" || categoria.ToLower() == "apuestas")
+                {
+                    whereClause += " AND tipo IN ('ganancia', 'perdida')";
+                }
+            }
+
+            if (fechaDesde.HasValue)
+            {
+                whereClause += " AND fecha >= :fechaDesde";
+                filterParameters.Add((":fechaDesde", (object)fechaDesde.Value));
+                allParameters.Add((":fechaDesde", (object)fechaDesde.Value));
+            }
+
+            if (fechaHasta.HasValue)
+            {
+                whereClause += " AND fecha <= :fechaHasta";
+                filterParameters.Add((":fechaHasta", (object)fechaHasta.Value));
+                allParameters.Add((":fechaHasta", (object)fechaHasta.Value));
+            }
+
+            // Query para obtener el total (solo parámetros de filtro)
+            string sqlCount = string.Format("SELECT COUNT(*) FROM transacciones {0}", whereClause);
+            int totalCount = 0;
+            using (OracleDataReader reader = EjecutarConsulta(sqlCount, filterParameters.ToArray()))
+            {
+                if (reader.Read())
+                    totalCount = reader.GetInt32(0);
+            }
+
+            // Query para obtener la página (Oracle: OFFSET/FETCH con todos los parámetros)
+            string sqlPaged = string.Format(@"SELECT id_transaccion, id_usuario, tipo, monto, fecha, descripcion
+                                FROM transacciones
+                                {0}
+                                ORDER BY fecha DESC
+                                OFFSET :offset ROWS
+                                FETCH NEXT :pageSize ROWS ONLY", whereClause);
+
+            IList<Transaccion> items = new List<Transaccion>();
+            using (OracleDataReader reader = EjecutarConsulta(sqlPaged, allParameters.ToArray()))
+            {
+                while (reader.Read())
+                    items.Add(Mapear(reader));
+            }
+
+            return (items, totalCount);
+        }
+
         public override string Guardar(Transaccion t)
         {
             EjecutarComando(@"INSERT INTO transacciones (

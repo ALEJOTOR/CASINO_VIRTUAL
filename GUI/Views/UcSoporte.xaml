@@ -1,0 +1,118 @@
+<UserControl x:Class="GUI.Views.UcSoporte"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource BgPrincipalBrush}">
+    <ScrollViewer>
+        <StackPanel Margin="28,24">
+            <!-- Hero Section -->
+            <Border Background="{StaticResource BgCardBrush}"
+                    CornerRadius="14"
+                    BorderBrush="{StaticResource BordeBrush}"
+                    BorderThickness="1"
+                    Padding="28,20"
+                    Margin="0,0,0,24">
+                <StackPanel>
+                    <TextBlock Text="Soporte"
+                               Style="{StaticResource TitleStyle}" />
+                    <TextBlock Text="Asistencia y ayuda disponible 24/7"
+                               Style="{StaticResource SubtitleStyle}"
+                               Margin="0,8,0,0" />
+                </StackPanel>
+            </Border>
+
+            <!-- Bot Section -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0"
+                            Width="140" Height="140"
+                            CornerRadius="18"
+                            Background="{StaticResource BgElevatedBrush}"
+                            Margin="0,0,20,0">
+                        <TextBlock Text="🤖"
+                                   FontSize="64"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                    </Border>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="Asistente Virtual"
+                                   Foreground="{StaticResource DoradoBrush}"
+                                   FontSize="18" FontWeight="Bold" />
+                        <TextBlock Text="Resuelve tus dudas al instante con nuestro bot de Telegram."
+                                   Foreground="{StaticResource TextoSecundarioBrush}"
+                                   FontSize="13"
+                                   TextWrapping="Wrap"
+                                   Margin="0,8,0,12" />
+                        <Button Content="Abrir bot en Telegram"
+                                Command="{Binding AbrirBotCommand}"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Background="{StaticResource AzulBrush}"
+                                Height="40"
+                                Width="220"
+                                HorizontalAlignment="Left" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Commands Section -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Comandos disponibles"
+                                   Foreground="{StaticResource DoradoBrush}"
+                                   FontSize="14" FontWeight="Bold"
+                                   Margin="0,0,0,12" />
+                        <TextBlock Text="/start - Iniciar conversación&#x0a;/saldo - Consultar saldo&#x0a;/jugar - Jugar ahora&#x0a;/soporte - Contactar soporte&#x0a;/bonos - Ver bonos disponibles&#x0a;/historial - Últimos movimientos"
+                                   Foreground="{StaticResource TextoPrimarioBrush}"
+                                   FontSize="13"
+                                   LineHeight="22" />
+                    </StackPanel>
+                </Border>
+
+                <!-- QR Section -->
+                <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock Text="Escanea el código QR"
+                                       Foreground="{StaticResource DoradoBrush}"
+                                       FontSize="14" FontWeight="Bold" />
+                            <TextBlock Text="Abre el bot desde tu celular escaneando el código QR con Telegram."
+                                       Foreground="{StaticResource TextoSecundarioBrush}"
+                                       FontSize="12"
+                                       TextWrapping="Wrap"
+                                       Margin="0,8,0,0" />
+                        </StackPanel>
+
+                        <Border Grid.Column="1"
+                                Width="120" Height="120"
+                                CornerRadius="8"
+                                Background="{StaticResource BgElevatedBrush}"
+                                Margin="12,0,0,0">
+                            <TextBlock Text="QR"
+                                       FontSize="16"
+                                       Foreground="{StaticResource TextoSecundarioBrush}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

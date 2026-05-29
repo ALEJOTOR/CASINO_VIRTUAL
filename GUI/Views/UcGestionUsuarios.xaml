@@ -1,0 +1,61 @@
+<UserControl x:Class="GUI.Views.UcGestionUsuarios"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource BgPrincipalBrush}">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Gestión de Usuarios"
+                       Style="{StaticResource TitleStyle}" />
+
+            <Button Grid.Column="1" Content="Refrescar"
+                    Command="{Binding RefrescarCommand}"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Background="{StaticResource BgHoverBrush}"
+                    Foreground="{StaticResource TextoPrimarioBrush}"
+                    Height="34" FontSize="12"
+                    VerticalAlignment="Center" />
+        </Grid>
+
+        <TextBlock Grid.Row="1" Text="Administra los usuarios del sistema"
+                   Style="{StaticResource SubtitleStyle}"
+                   Margin="0,4,0,16" />
+
+        <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding Usuarios}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding IdUsuario}" Width="60" />
+                <DataGridTextColumn Header="Usuario" Binding="{Binding Username}" Width="*" />
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre1}" Width="*" />
+                <DataGridTextColumn Header="Apellido" Binding="{Binding Apellido1}" Width="*" />
+                <DataGridTextColumn Header="Correo" Binding="{Binding Correo}" Width="*" />
+                <DataGridTextColumn Header="Saldo" Binding="{Binding Saldo, StringFormat='${0:N2}'}" Width="100" />
+                <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="80" />
+                <DataGridTemplateColumn Header="Acción" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Editar"
+                                    Command="{Binding DataContext.EditarUsuarioCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                    CommandParameter="{Binding}"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    FontSize="11" Height="28" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
