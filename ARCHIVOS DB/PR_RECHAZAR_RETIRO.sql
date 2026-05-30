@@ -23,7 +23,13 @@ BEGIN
         motivo_rechazo      = p_motivo
     WHERE id_retiro = p_id_retiro;
 
-    UPDATE usuarios SET saldo = saldo + v_monto WHERE id_usuario = v_id_usuario;
+    -- NOTA: NO hacemos UPDATE directo a usuarios.saldo
+    -- Creamos una transacciÃ³n de "deposito" que compense el retiro anterior
+    -- El trigger resta el retiro y suma este deposito, neto = 0 para este retiro
+
+    INSERT INTO transacciones (id_transaccion, id_usuario, tipo, monto, fecha, descripcion)
+    VALUES (seq_transacciones.NEXTVAL, v_id_usuario, 'deposito', v_monto,
+            SYSTIMESTAMP, 'Retiro rechazado. Retiro ID: ' || p_id_retiro || '. Motivo: ' || NVL(p_motivo, 'N/A'));
 
     COMMIT;
     p_resultado := 'Guardado correctamente.';
@@ -31,5 +37,7 @@ EXCEPTION
     WHEN NO_DATA_FOUND THEN ROLLBACK; p_resultado := 'Retiro no encontrado.';
     WHEN OTHERS THEN ROLLBACK; p_resultado := 'Error: ' || SQLERRM;
 END pr_rechazar_retiro;
+
+
 
 /

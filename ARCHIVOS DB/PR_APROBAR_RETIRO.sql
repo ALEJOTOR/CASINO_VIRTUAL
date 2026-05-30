@@ -5,7 +5,7 @@ set define off;
 
   CREATE OR REPLACE EDITIONABLE PROCEDURE "SEBAS_CASINO"."PR_APROBAR_RETIRO" (
     p_id_retiro        IN  NUMBER,
-    p_id_admin         IN  NUMBER,
+    p_id_admin         IN  NUMBER DEFAULT NULL,   -- NULL = aprobación automática por Wompi Payouts
     p_referencia_wompi IN  VARCHAR2 DEFAULT NULL,
     p_resultado        OUT VARCHAR2
 ) AS
@@ -19,7 +19,7 @@ BEGIN
     UPDATE retiros SET
         estado              = 'aprobado',
         fecha_procesamiento = SYSTIMESTAMP,
-        id_admin_revisor    = p_id_admin,
+        id_admin_revisor    = p_id_admin,       -- NULL para aprobación automática
         referencia_wompi    = p_referencia_wompi
     WHERE id_retiro = p_id_retiro;
 

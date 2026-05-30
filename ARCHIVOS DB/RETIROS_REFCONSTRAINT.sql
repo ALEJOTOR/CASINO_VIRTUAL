@@ -1,0 +1,8 @@
+--------------------------------------------------------
+--  Ref Constraints for Table RETIROS
+--------------------------------------------------------
+
+  ALTER TABLE "SEBAS_CASINO"."RETIROS" ADD CONSTRAINT "FK_RET_USR" FOREIGN KEY ("ID_USUARIO")
+	  REFERENCES "SEBAS_CASINO"."USUARIOS" ("ID_USUARIO") ENABLE;
+  ALTER TABLE "SEBAS_CASINO"."RETIROS" ADD CONSTRAINT "FK_RET_MET" FOREIGN KEY ("ID_METODO")
+	  REFERENCES "SEBAS_CASINO"."METODOS_PAGO" ("ID_METODO") ENABLE;

@@ -80,7 +80,7 @@
                                    Foreground="{StaticResource DoradoBrush}"
                                    FontSize="16" FontWeight="Bold"
                                    Margin="0,0,0,4" />
-                        <TextBlock Text="Solicita un retiro a tu cuenta bancaria."
+                        <TextBlock Text="Transferencia automática a tu cuenta bancaria."
                                    Foreground="{StaticResource TextoSecundarioBrush}"
                                    FontSize="11"
                                    Margin="0,0,0,12" />
@@ -90,18 +90,31 @@
                                    FontSize="12" FontWeight="Bold"
                                    Margin="0,0,0,4" />
                         <TextBox Text="{Binding MontoRetiro, UpdateSourceTrigger=PropertyChanged}"
-                                 Margin="0,0,0,10" />
+                                 Margin="0,0,0,10"
+                                 IsEnabled="{Binding DatosActuales, Converter={StaticResource NullToVisibilityInvertedConverter}}" />
 
                         <Button Content="Solicitar retiro"
                                 Command="{Binding RetirarCommand}"
                                 Style="{StaticResource DangerButtonStyle}"
-                                Height="36" />
+                                Height="36"
+                                IsEnabled="{Binding DatosActuales, Converter={StaticResource NullToVisibilityInvertedConverter}}" />
 
                         <TextBlock Text="{Binding StatusRetiro}"
                                    Foreground="{StaticResource TextoSecundarioBrush}"
                                    FontSize="11"
                                    Margin="0,6,0,0"
                                    TextWrapping="Wrap" />
+                        
+                        <Border Background="{StaticResource BgElevatedBrush}"
+                                Padding="8"
+                                CornerRadius="4"
+                                Margin="0,8,0,0"
+                                Visibility="{Binding DatosActuales, Converter={StaticResource NullToVisibilityInvertedConverter}}">
+                            <TextBlock Text="⚠️ Debes registrar un método de pago antes de retirar."
+                                       Foreground="{StaticResource TextoMutedBrush}"
+                                       FontSize="10"
+                                       TextWrapping="Wrap" />
+                        </Border>
                     </StackPanel>
                 </Border>
             </Grid>

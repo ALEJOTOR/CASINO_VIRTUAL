@@ -10,6 +10,7 @@
         p_id_estado  IN  NUMBER,
         p_apuesta    IN  NUMBER,
         p_ganancia   IN  NUMBER,
+        p_id_partida OUT NUMBER,
         p_msg        OUT VARCHAR2
     );
 

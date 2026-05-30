@@ -15,6 +15,7 @@ namespace BLL
         private readonly UsuarioServicio _usuarioSvc = new UsuarioServicio();
         private readonly LogServicio _logSvc = new LogServicio();
 
+        [Obsolete("Usar GestionFinancieraServicio.ConfirmarDeposito() para depósitos Wompi. Este método es legacy y no debe usarse en nuevos flujos.", false)]
         public string RealizarDeposito(int idUsuario, decimal monto)
         {
             if (monto <= 0) return "El monto debe ser mayor a 0.";

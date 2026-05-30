@@ -20,7 +20,7 @@ BEGIN
         RETURN;
     END IF;
 
-    -- NOTA: el trigger trg_actualizar_saldo actualiza el saldo al insertar en transacciones
+    -- El trigger trg_actualizar_saldo actualiza el saldo (-)
     INSERT INTO transacciones (id_transaccion, id_usuario, tipo, monto, fecha, descripcion)
     VALUES (seq_transacciones.NEXTVAL, p_id_usuario, 'retiro', p_monto, CURRENT_TIMESTAMP,
             'Retiro de saldo');
@@ -34,6 +34,6 @@ EXCEPTION
     WHEN OTHERS THEN
         ROLLBACK;
         p_resultado := 'Error al realizar retiro: ' || SQLERRM;
-END pr_realizar_retiro;
+END PR_REALIZAR_RETIRO;
 
 /

@@ -28,7 +28,7 @@ BEGIN
         referencia_wompi    = p_referencia_wompi
     WHERE id_deposito = p_id_deposito;
 
-    -- NOTA: el trigger trg_actualizar_saldo actualiza el saldo al insertar en transacciones
+    -- El trigger trg_actualizar_saldo actualiza el saldo (+)
     INSERT INTO transacciones (id_transaccion, id_usuario, tipo, monto, fecha, descripcion)
     VALUES (seq_transacciones.NEXTVAL, v_id_usuario, 'deposito', v_monto,
             SYSTIMESTAMP, 'Deposito aprobado. Ref Wompi: ' || NVL(p_referencia_wompi, 'N/A'));
@@ -38,6 +38,6 @@ BEGIN
 EXCEPTION
     WHEN NO_DATA_FOUND THEN ROLLBACK; p_resultado := 'Deposito no encontrado.';
     WHEN OTHERS THEN ROLLBACK; p_resultado := 'Error al confirmar deposito: ' || SQLERRM;
-END pr_confirmar_deposito;
+END PR_CONFIRMAR_DEPOSITO;
 
 /

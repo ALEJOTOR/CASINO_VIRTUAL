@@ -31,7 +31,7 @@ BEGIN
         SYSTIMESTAMP, 'aplicado', p_descripcion
     );
 
-    -- NOTA: el trigger trg_actualizar_saldo maneja el saldo (tipo 'bono')
+    -- El trigger trg_actualizar_saldo actualiza el saldo (+)
     INSERT INTO transacciones (id_transaccion, id_usuario, tipo, monto, fecha, descripcion)
     VALUES (seq_transacciones.NEXTVAL, p_id_usuario, 'bono', p_monto,
             SYSTIMESTAMP, NVL(p_descripcion, 'Bono aplicado'));
@@ -42,6 +42,6 @@ EXCEPTION
     WHEN OTHERS THEN
         ROLLBACK;
         p_resultado := 'Error al aplicar bono: ' || SQLERRM;
-END pr_aplicar_bono;
+END PR_APLICAR_BONO;
 
 /

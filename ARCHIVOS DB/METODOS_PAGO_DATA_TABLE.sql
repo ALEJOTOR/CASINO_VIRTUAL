@@ -1,0 +1,5 @@
+REM INSERTING into SEBAS_CASINO.METODOS_PAGO
+SET DEFINE OFF;
+Insert into SEBAS_CASINO.METODOS_PAGO (ID_METODO,TIPO,DESCRIPCION,ACTIVO) values ('1','PSE','Pago por PSE','1');
+Insert into SEBAS_CASINO.METODOS_PAGO (ID_METODO,TIPO,DESCRIPCION,ACTIVO) values ('2','Tarjeta','Tarjeta debito/credito','1');
+Insert into SEBAS_CASINO.METODOS_PAGO (ID_METODO,TIPO,DESCRIPCION,ACTIVO) values ('3','Efectivo','Consignacion en efectivo','1');

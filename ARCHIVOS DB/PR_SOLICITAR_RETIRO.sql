@@ -20,7 +20,8 @@ BEGIN
         RETURN;
     END IF;
 
-    UPDATE usuarios SET saldo = saldo - p_monto WHERE id_usuario = p_id_usuario;
+    -- NOTA: NO hacemos UPDATE directo a usuarios.saldo
+    -- La transacciÃ³n se inserta abajo y el trigger actualiza el saldo
 
     INSERT INTO retiros (
         id_retiro, id_usuario, id_metodo, monto, estado, fecha_solicitud
@@ -28,6 +29,11 @@ BEGIN
         seq_retiros.NEXTVAL, p_id_usuario, p_id_metodo, p_monto,
         'pendiente', SYSTIMESTAMP
     ) RETURNING id_retiro INTO p_id_retiro;
+
+    -- Insertar transacciÃ³n de retiro (el trigger resta saldo automÃ¡ticamente)
+    INSERT INTO transacciones (id_transaccion, id_usuario, tipo, monto, fecha, descripcion)
+    VALUES (seq_transacciones.NEXTVAL, p_id_usuario, 'retiro', p_monto,
+            SYSTIMESTAMP, 'Retiro solicitado. Retiro ID: ' || p_id_retiro);
 
     COMMIT;
     p_resultado := 'Guardado correctamente.';
@@ -37,5 +43,7 @@ EXCEPTION
         p_id_retiro := -1;
         p_resultado := 'Error al solicitar retiro: ' || SQLERRM;
 END pr_solicitar_retiro;
+
+
 
 /

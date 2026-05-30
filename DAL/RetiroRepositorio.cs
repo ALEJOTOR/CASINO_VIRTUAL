@@ -56,11 +56,15 @@ namespace DAL
             return (resultado, idRetiro);
         }
 
-        public string Aprobar(int idRetiro, int idAdmin, string refWompi)
+        /// <summary>
+        /// Aprueba un retiro. 
+        /// Si idAdmin es null, indica aprobación automática por Wompi Payouts.
+        /// </summary>
+        public string Aprobar(int idRetiro, int? idAdmin, string refWompi)
         {
             return EjecutarSP("PKG_USUARIOS.pr_aprobar_retiro", "p_resultado",
                 ("p_id_retiro", idRetiro),
-                ("p_id_admin", idAdmin),
+                ("p_id_admin", (object)idAdmin ?? (object)DBNull.Value),
                 ("p_referencia_wompi", (object)refWompi ?? (object)DBNull.Value));
         }
 

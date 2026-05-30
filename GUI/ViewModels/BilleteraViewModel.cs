@@ -33,6 +33,7 @@ public class BilleteraViewModel : ViewModelBase
     private int _depositoPendienteId;
     private string? _referenciaPendiente;
     private bool _hayDepositoPendiente;
+    private bool _confirmacionEnProceso;
 
     public string SaldoTexto { get => _saldoTexto; set => SetProperty(ref _saldoTexto, value); }
     public decimal MontoDeposito { get => _montoDeposito; set => SetProperty(ref _montoDeposito, value); }
@@ -72,7 +73,7 @@ public class BilleteraViewModel : ViewModelBase
         _mainVM = mainVM;
 
         DepositarCommand = new RelayCommand(_ => Depositar());
-        RetirarCommand = new RelayCommand(_ => Retirar());
+        RetirarCommand = new RelayCommand(async _ => await Task.Run(() => RetirarConWompiAsync()));
         AbrirRegistroDatosCommand = new RelayCommand(_ => AbrirRegistroDatos());
         GuardarDatosCommand = new RelayCommand(_ => GuardarDatos());
         CancelarRegistroCommand = new RelayCommand(_ => CancelarRegistro());
@@ -300,25 +301,46 @@ public class BilleteraViewModel : ViewModelBase
 
                 if (estado == "APPROVED")
                 {
-                    string resultado = _svc.ConfirmarDeposito(idDeposito, data.Id);
-                    if (resultado.Contains("correctamente"))
+                    // Guarda crítica: evitar doble confirmación
+                    if (_confirmacionEnProceso)
                     {
-                        StatusDeposito = $"Pago confirmado. Transacción #{data.Id}";
+                        StatusDeposito = "Confirmación ya en proceso, espere...";
+                        return;
                     }
-                    else
-                    {
-                        StatusDeposito = $"Pago recibido pero error al confirmar: {resultado}";
-                    }
+                    _confirmacionEnProceso = true;
+
+                    // Guardar datos locales ANTES de limpiar el estado
+                    int idDepositoLocal = _depositoPendienteId;
+                    
+                    // Limpiar estado pendiente INMEDIATAMENTE para evitar re-entrada
                     MontoDeposito = 0;
                     _depositoPendienteId = 0;
                     _referenciaPendiente = null;
                     HayDepositoPendiente = false;
-                    // Refrescar saldo local
-                    Usuario u = _usuarioSvc.ObtenerPorId(_usuario.IdUsuario);
-                    if (u != null) _usuario.Saldo = u.Saldo;
-                    SaldoTexto = $"Saldo: ${_usuario.Saldo:N2}";
-                    _mainVM.ActualizarSaldo();
-                    SaldoActualizado?.Invoke(this, EventArgs.Empty);
+
+                    try
+                    {
+                        string resultado = _svc.ConfirmarDeposito(idDepositoLocal, data.Id);
+                        if (resultado.Contains("correctamente"))
+                        {
+                            StatusDeposito = $"Pago confirmado. Transacción #{data.Id}";
+                        }
+                        else
+                        {
+                            StatusDeposito = $"Pago recibido pero error al confirmar: {resultado}";
+                        }
+
+                        // Refrescar saldo local
+                        Usuario u = _usuarioSvc.ObtenerPorId(_usuario.IdUsuario);
+                        if (u != null) _usuario.Saldo = u.Saldo;
+                        SaldoTexto = $"Saldo: ${_usuario.Saldo:N2}";
+                        _mainVM.ActualizarSaldo();
+                        SaldoActualizado?.Invoke(this, EventArgs.Empty);
+                    }
+                    finally
+                    {
+                        _confirmacionEnProceso = false;
+                    }
                     return;
                 }
 
@@ -352,11 +374,17 @@ public class BilleteraViewModel : ViewModelBase
             return;
         }
 
+        if (_confirmacionEnProceso)
+        {
+            StatusDeposito = "Verificación ya en proceso, espere...";
+            return;
+        }
+
         StatusDeposito = "Verificando pago manualmente...";
         await PollWompiAsync(_referenciaPendiente, _depositoPendienteId);
     }
 
-    private void Retirar()
+    private async void RetirarConWompiAsync()
     {
         if (MontoRetiro <= 0)
         {
@@ -370,21 +398,35 @@ public class BilleteraViewModel : ViewModelBase
             return;
         }
 
+        StatusRetiro = "Procesando retiro con Wompi...";
+
         try
         {
-            var (msg, id) = _svc.SolicitarRetiro(_usuario.IdUsuario, MontoRetiro, null);
-            bool ok = msg.Contains("correctamente");
-            StatusRetiro = ok ? "Retiro solicitado correctamente." : $"Error: {msg}";
+            var (ok, mensaje, idRetiro) = await _svc.SolicitarRetiroConWompiAsync(
+                _usuario.IdUsuario, MontoRetiro, null);
+
             if (ok)
             {
+                StatusRetiro = mensaje;
                 MontoRetiro = 0;
+
+                // Actualizar saldo en UI refrescando desde BD
+                Usuario u = _usuarioSvc.ObtenerPorId(_usuario.IdUsuario);
+                if (u != null) 
+                    _usuario.Saldo = u.Saldo;
+                
+                SaldoTexto = $"Saldo: ${_usuario.Saldo:N2}";
                 _mainVM.ActualizarSaldo();
                 SaldoActualizado?.Invoke(this, EventArgs.Empty);
+            }
+            else
+            {
+                StatusRetiro = $"Error: {mensaje}";
             }
         }
         catch (System.Exception ex)
         {
-            StatusRetiro = $"Error: {ex.Message}";
+            StatusRetiro = $"Error inesperado: {ex.Message}";
         }
     }
 }

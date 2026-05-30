@@ -74,7 +74,7 @@ namespace BLL
             return (resultado, idRetiro);
         }
 
-        public string AprobarRetiro(int idRetiro, int idAdmin, string refWompi)
+        public string AprobarRetiro(int idRetiro, int? idAdmin, string refWompi)
         {
             return _retiroRepo.Aprobar(idRetiro, idAdmin, refWompi);
         }
@@ -82,6 +82,93 @@ namespace BLL
         public string RechazarRetiro(int idRetiro, string motivo)
         {
             return _retiroRepo.Rechazar(idRetiro, motivo);
+        }
+
+        /// <summary>
+        /// Solicita un retiro con procesamiento AUTOMÁTICO a través de Wompi Payouts.
+        /// Flujo:
+        /// 1. Valida monto y usuario
+        /// 2. Verifica saldo disponible
+        /// 3. Obtiene datos bancarios del usuario
+        /// 4. Llama a Wompi Payouts API (si Wompi acepta, saldo se descuenta aquí)
+        /// 5. Registra el retiro en BD y lo aprueba automáticamente
+        /// 6. No requiere intervención de administrador
+        /// </summary>
+        public async Task<(bool ok, string mensaje, int idRetiro)> SolicitarRetiroConWompiAsync(
+            int idUsuario, decimal monto, int? idMetodo)
+        {
+            if (monto <= 0)
+                return (false, "El monto debe ser mayor a 0.", 0);
+
+            // Obtener usuario
+            Usuario u = _usuarioSvc.ObtenerPorId(idUsuario);
+            if (u == null)
+                return (false, "Usuario no encontrado.", 0);
+
+            // Validación previa: verifica saldo antes de tocar Wompi
+            if (u.Saldo < monto)
+                return (false, "Saldo insuficiente para procesar este retiro.", 0);
+
+            // Obtener datos bancarios registrados
+            DatosBancarios datosBancarios = _datosBancariosRepo.ObtenerActivoPorUsuario(idUsuario);
+            if (datosBancarios == null)
+                return (false, "Debes registrar un método de pago antes de retirar.", 0);
+
+            // Generar referencia única
+            string referencia = $"RETIRO-{idUsuario}-{DateTime.Now:yyyyMMddHHmmss}";
+
+            try
+            {
+                // Llamar a Wompi Payouts ANTES de tocar la BD
+                // Si Wompi rechaza, aquí se retorna el error y la BD no se modifica
+                var (okWompi, payoutId, errorWompi) = await _wompiSvc.CrearPagoTerceroAsync(
+                    monto, datosBancarios, referencia, u.Correo);
+
+                if (!okWompi)
+                {
+                    _logSvc.Registrar("retiro", "ERROR", "WOMPI",
+                        $"Payout rechazado para usuario {idUsuario}: {errorWompi}", idUsuario);
+                    return (false, $"Wompi rechazó el pago: {errorWompi}", 0);
+                }
+
+                // Wompi aceptó. Ahora registrar en BD:
+                // 1. Insertar retiro (ejecuta PR_SOLICITAR_RETIRO que inserta en transacciones + descuenta saldo vía trigger)
+                var (resultadoSolicitud, idRetiro) = _retiroRepo.Solicitar(idUsuario, monto, idMetodo);
+
+                if (resultadoSolicitud != "Guardado correctamente.")
+                {
+                    _logSvc.Registrar("retiro", "ERROR", "BD",
+                        $"Error insertar retiro en BD: {resultadoSolicitud}. Payout ya fue enviado: {payoutId}", idUsuario);
+                    // Nota: en producción, habría que considerar una tabla de errores para reconciliación
+                    return (false, 
+                        $"Error interno al registrar retiro (pago ya fue enviado a Wompi). Contacte soporte con ID: {payoutId}", 
+                        0);
+                }
+
+                // 2. Aprobar inmediatamente (idAdmin = null indica aprobación automática)
+                string resultadoAprobacion = _retiroRepo.Aprobar(idRetiro, null, payoutId);
+
+                if (!resultadoAprobacion.Contains("correctamente"))
+                {
+                    _logSvc.Registrar("retiro", "ERROR", "BD",
+                        $"Error aprobar retiro en BD: {resultadoAprobacion}. Payout: {payoutId}", idUsuario);
+                    return (false, $"Error al procesar retiro: {resultadoAprobacion}", 0);
+                }
+
+                _logSvc.Registrar("retiro", "INFO", "WOMPI",
+                    $"Retiro ${monto:N2} procesado exitosamente. Payout Wompi: {payoutId}", idUsuario);
+
+                return (true, 
+                    $"Retiro procesado exitosamente. Tu dinero será transferido a tu cuenta bancaria. " +
+                    $"ID de pago: {payoutId}", 
+                    idRetiro);
+            }
+            catch (Exception ex)
+            {
+                _logSvc.Registrar("retiro", "ERROR", "EXCEPTION",
+                    $"Excepción en SolicitarRetiroConWompiAsync: {ex.Message}", idUsuario);
+                return (false, $"Error inesperado: {ex.Message}", 0);
+            }
         }
 
         public IList<Deposito> ObtenerDepositosPendientes()

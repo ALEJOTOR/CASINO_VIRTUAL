@@ -10,6 +10,7 @@
         p_id_estado  IN  NUMBER,
         p_apuesta    IN  NUMBER,
         p_ganancia   IN  NUMBER,
+        p_id_partida OUT NUMBER,
         p_msg        OUT VARCHAR2
     ) IS
     BEGIN
@@ -46,7 +47,7 @@
             seq_partidas.NEXTVAL, p_id_usuario, p_id_juego,
             p_id_estado, CURRENT_TIMESTAMP, p_apuesta,
             NVL(p_ganancia, 0)
-        );
+        ) RETURNING id_partida INTO p_id_partida;
 
         COMMIT;
         p_msg := 'Guardado correctamente.';

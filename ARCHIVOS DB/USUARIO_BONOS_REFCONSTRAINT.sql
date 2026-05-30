@@ -1,0 +1,8 @@
+--------------------------------------------------------
+--  Ref Constraints for Table USUARIO_BONOS
+--------------------------------------------------------
+
+  ALTER TABLE "SEBAS_CASINO"."USUARIO_BONOS" ADD CONSTRAINT "FK_UB_USR" FOREIGN KEY ("ID_USUARIO")
+	  REFERENCES "SEBAS_CASINO"."USUARIOS" ("ID_USUARIO") ENABLE;
+  ALTER TABLE "SEBAS_CASINO"."USUARIO_BONOS" ADD CONSTRAINT "FK_UB_BON" FOREIGN KEY ("ID_BONO")
+	  REFERENCES "SEBAS_CASINO"."BONOS" ("ID_BONO") ENABLE;

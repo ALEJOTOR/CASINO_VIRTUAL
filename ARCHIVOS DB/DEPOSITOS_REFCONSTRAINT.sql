@@ -1,0 +1,8 @@
+--------------------------------------------------------
+--  Ref Constraints for Table DEPOSITOS
+--------------------------------------------------------
+
+  ALTER TABLE "SEBAS_CASINO"."DEPOSITOS" ADD CONSTRAINT "FK_DEP_USR" FOREIGN KEY ("ID_USUARIO")
+	  REFERENCES "SEBAS_CASINO"."USUARIOS" ("ID_USUARIO") ENABLE;
+  ALTER TABLE "SEBAS_CASINO"."DEPOSITOS" ADD CONSTRAINT "FK_DEP_MET" FOREIGN KEY ("ID_METODO")
+	  REFERENCES "SEBAS_CASINO"."METODOS_PAGO" ("ID_METODO") ENABLE;

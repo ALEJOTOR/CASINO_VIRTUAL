@@ -47,6 +47,7 @@
     <Compile Include="BancoWompi.cs" />
     <Compile Include="DatosBancarios.cs" />
     <Compile Include="WompiTransaccion.cs" />
+    <Compile Include="WompiPayoutTransaccion.cs" />
     <Compile Include="Bono.cs" />
     <Compile Include="Deposito.cs" />
     <Compile Include="EstadoPartida.cs" />
