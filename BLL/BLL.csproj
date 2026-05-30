@@ -63,6 +63,7 @@
     <Compile Include="Wompi\IWompiSignatureService.cs" />
     <Compile Include="Wompi\WompiSignatureService.cs" />
     <Compile Include="TransaccionServicio.cs" />
+    <Compile Include="TelegramVinculoServicio.cs" />
     <Compile Include="UsuarioServicio.cs" />
   </ItemGroup>
   <ItemGroup>

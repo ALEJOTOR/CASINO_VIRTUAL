@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="BLL/BLL.csproj" Id="0905b4d5-574f-4e87-b370-40a7df43158b" />
+  <Project Path="BotApi/BotApi.csproj" Id="b6a45f2e-c914-4c34-8582-0e40b1df3f0d" />
   <Project Path="DAL/DAL.csproj" Id="67b9fd79-84ac-4287-a062-0663c4c2195f" />
   <Project Path="ENTITY/ENTITY.csproj" Id="14050b6f-d548-430e-8809-23657bf0144c" />
   <Project Path="GUI/GUI.csproj" Id="40d1b90a-ab6b-4f41-a80d-c614a2794fd4" />

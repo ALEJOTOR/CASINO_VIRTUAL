@@ -46,7 +46,7 @@ public class MainViewModel : ViewModelBase
             if (tipo == typeof(HistorialViewModel)) return new HistorialViewModel(usuario);
             if (tipo == typeof(BilleteraViewModel)) return new BilleteraViewModel(usuario, this);
             if (tipo == typeof(MisBonosViewModel)) return new MisBonosViewModel(usuario);
-            if (tipo == typeof(SoporteViewModel)) return new SoporteViewModel();
+            if (tipo == typeof(SoporteViewModel)) return new SoporteViewModel(usuario);
             if (tipo == typeof(PerfilViewModel)) return new PerfilViewModel(usuario);
             if (tipo == typeof(MinasViewModel))
             {

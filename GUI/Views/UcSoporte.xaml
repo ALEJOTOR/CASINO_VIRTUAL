@@ -59,6 +59,67 @@
                 </Grid>
             </Border>
 
+            <!-- Telegram Link Section -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="Vinculación con Telegram"
+                                   Foreground="{StaticResource DoradoBrush}"
+                                   FontSize="18"
+                                   FontWeight="Bold" />
+                        <TextBlock Text="{Binding EstadoTelegram}"
+                                   Foreground="{StaticResource TextoSecundarioBrush}"
+                                   FontSize="13"
+                                   TextWrapping="Wrap"
+                                   Margin="0,8,0,14" />
+
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Actualizar"
+                                    Command="{Binding RefrescarVinculoCommand}"
+                                    Style="{StaticResource SecondaryButtonStyle}"
+                                    Height="38"
+                                    Width="130"
+                                    Margin="0,0,10,0" />
+                            <Button Content="Confirmar vínculo"
+                                    Command="{Binding ConfirmarVinculoCommand}"
+                                    IsEnabled="{Binding HayCodigoPendiente}"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    Background="{StaticResource VerdeBrush}"
+                                    Height="38"
+                                    Width="170" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Border Grid.Column="1"
+                            Width="190"
+                            MinHeight="110"
+                            CornerRadius="14"
+                            BorderBrush="{StaticResource DoradoBrush}"
+                            BorderThickness="1"
+                            Background="{StaticResource BgElevatedBrush}"
+                            Padding="16"
+                            Margin="18,0,0,0">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Código"
+                                       Foreground="{StaticResource TextoSecundarioBrush}"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock Text="{Binding CodigoPendiente}"
+                                       Foreground="{StaticResource DoradoBrush}"
+                                       FontSize="28"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,8,0,0" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
             <!-- Commands Section -->
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -104,11 +165,9 @@
                                 CornerRadius="8"
                                 Background="{StaticResource BgElevatedBrush}"
                                 Margin="12,0,0,0">
-                            <TextBlock Text="QR"
-                                       FontSize="16"
-                                       Foreground="{StaticResource TextoSecundarioBrush}"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" />
+                            <Image Source="/Assets/qr-bot.jpeg"
+                                   Stretch="UniformToFill"
+                                   Margin="6" />
                         </Border>
                     </Grid>
                 </Border>

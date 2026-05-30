@@ -66,6 +66,7 @@
     <Compile Include="Retiro.cs" />
     <Compile Include="Rol.cs" />
     <Compile Include="Transaccion.cs" />
+    <Compile Include="TelegramVinculo.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="UsuarioBono.cs" />
   </ItemGroup>
