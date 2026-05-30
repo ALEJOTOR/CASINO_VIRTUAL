@@ -439,7 +439,7 @@ public class MinasViewModel : ViewModelBase
             return;
         }
 
-        var (resultado, _) = _servicio.RegistrarPartida(p);
+        var (resultado, _, bonusExtra) = _servicio.RegistrarPartida(p);
         if (resultado != "Guardado correctamente.")
         {
             MessageBox.Show($"Error al registrar partida: {resultado}", "Error",
@@ -447,6 +447,10 @@ public class MinasViewModel : ViewModelBase
             RestablecerControles();
             return;
         }
+
+        if (bonusExtra > 0)
+            MessageBox.Show($"¡Bono activo! Ganaste ${bonusExtra:N2} extra.", "¡Bono Aplicado!",
+                MessageBoxButton.OK, MessageBoxImage.Information);
 
         Usuario? actualizado = _usuarioSvc.ObtenerPorId(_usuario.IdUsuario);
         if (actualizado != null) _usuario.Saldo = actualizado.Saldo;

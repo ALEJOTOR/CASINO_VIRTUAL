@@ -7,10 +7,6 @@
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         Background="{StaticResource BgPrincipalBrush}">
-    <Window.DataContext>
-        <vm:EditarUsuarioViewModel />
-    </Window.DataContext>
-
     <Border Background="{StaticResource BgCardBrush}"
             CornerRadius="10"
             BorderBrush="{StaticResource BordeBrush}"

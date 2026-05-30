@@ -39,5 +39,15 @@ namespace BLL
         {
             return _logRepo.ObtenerFiltrados(nivel, tipo, desde, hasta);
         }
+
+        public IList<LogEvento> ObtenerFiltradosDB(
+            string nivel, string tipo,
+            DateTime desde, DateTime hasta,
+            int pagina, int porPagina,
+            out int totalRegistros)
+        {
+            return _logRepo.ObtenerConFiltrosYPaginacion(
+                nivel, tipo, desde, hasta, pagina, porPagina, out totalRegistros);
+        }
     }
 }

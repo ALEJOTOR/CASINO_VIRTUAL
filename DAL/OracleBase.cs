@@ -15,6 +15,8 @@ namespace DAL
             using (OracleConnection con = ConexionOracle.Abrir())
             using (OracleCommand cmd = new OracleCommand(sql, con))
             {
+                cmd.BindByName = true;
+
                 if (parametros != null)
                     foreach (var (nombre, valor) in parametros)
                         cmd.Parameters.Add(new OracleParameter(nombre, valor ?? DBNull.Value));
@@ -27,6 +29,7 @@ namespace DAL
         {
             OracleConnection con = ConexionOracle.Abrir();
             OracleCommand cmd = new OracleCommand(sql, con);
+            cmd.BindByName = true;
 
             if (parametros != null)
                 foreach (var (nombre, valor) in parametros)
@@ -40,6 +43,8 @@ namespace DAL
             using (OracleConnection con = ConexionOracle.Abrir())
             using (OracleCommand cmd = new OracleCommand(sql, con))
             {
+                cmd.BindByName = true;
+
                 if (parametros != null)
                     foreach (var (nombre, valor) in parametros)
                         cmd.Parameters.Add(new OracleParameter(nombre, valor ?? DBNull.Value));

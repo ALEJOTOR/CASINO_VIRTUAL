@@ -1,5 +1,6 @@
 using DAL;
 using ENTITY;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,6 +10,7 @@ namespace BLL
     {
         private readonly BonoRepositorio _bonoRepo = new BonoRepositorio();
         private readonly UsuarioServicio _usuarioSvc = new UsuarioServicio();
+        private readonly LogServicio _logSvc = new LogServicio();
 
         public IList<Bono> ObtenerBonosActivos()
         {
@@ -18,6 +20,34 @@ namespace BLL
         public IList<Bono> ObtenerTodos()
         {
             return _bonoRepo.Consultar();
+        }
+
+        public string CrearBono(Bono bono)
+        {
+            if (string.IsNullOrWhiteSpace(bono.Nombre))
+                return "El nombre del bono es obligatorio.";
+            if (bono.Valor <= 0)
+                return "El valor del bono debe ser mayor a 0.";
+
+            return _bonoRepo.Guardar(bono);
+        }
+
+        public string ActualizarBono(Bono bono)
+        {
+            if (bono.IdBono <= 0)
+                return "Bono no válido.";
+
+            return _bonoRepo.Actualizar(bono);
+        }
+
+        public string DesactivarBono(int idBono)
+        {
+            return _bonoRepo.Desactivar(idBono);
+        }
+
+        public string RevocarBono(int idUsuarioBono, string motivo)
+        {
+            return _bonoRepo.RevocarBono(idUsuarioBono, motivo);
         }
 
         public string AplicarBonoManual(int idUsuario, int idBono, decimal monto, string descripcion)
@@ -34,6 +64,16 @@ namespace BLL
                 return "El bono no existe o no esta activo.";
 
             return _bonoRepo.AplicarBono(idUsuario, idBono, monto, descripcion);
+        }
+
+        public string AplicarBonoConFecha(int idUsuario, int idBono, decimal monto, DateTime? fechaExpiracion, string descripcion)
+        {
+            string resultado = AplicarBonoManual(idUsuario, idBono, monto, descripcion);
+            if (resultado.Contains("correctamente") && fechaExpiracion.HasValue)
+            {
+                _bonoRepo.ActualizarFechaExpiracion(idUsuario, idBono, fechaExpiracion.Value);
+            }
+            return resultado;
         }
 
         public string AplicarBonoBienvenida(int idUsuario)
@@ -54,6 +94,11 @@ namespace BLL
         public IList<UsuarioBono> ObtenerTodosParaAdmin()
         {
             return _bonoRepo.ObtenerTodosLosBonosAplicados();
+        }
+
+        public (int total, int activos, decimal montoTotal, int usuarios) ObtenerResumen()
+        {
+            return _bonoRepo.ObtenerResumen();
         }
     }
 }

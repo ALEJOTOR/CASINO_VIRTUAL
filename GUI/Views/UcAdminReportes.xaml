@@ -1,18 +1,72 @@
 <UserControl x:Class="GUI.Views.UcAdminReportes"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:GUI.Converters"
              Background="{StaticResource BgPrincipalBrush}">
-    <ScrollViewer>
-        <StackPanel Margin="24">
-            <TextBlock Text="{Binding Titulo}"
-                       Style="{StaticResource TitleStyle}" />
-            <TextBlock Text="{Binding Subtitulo}"
-                       Style="{StaticResource SubtitleStyle}"
-                       Margin="0,4,0,24" />
+    <UserControl.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <TextBlock Text="Sección de reportes en construcción."
-                       Foreground="{StaticResource TextoSecundarioBrush}"
-                       FontSize="14" />
+        <StackPanel Grid.Row="0" Margin="0,0,0,12">
+            <TextBlock Text="Reportes del Sistema" Style="{StaticResource TitleStyle}" />
+            <TextBlock Text="Genera reportes detallados del sistema"
+                       Style="{StaticResource SubtitleStyle}" />
         </StackPanel>
-    </ScrollViewer>
+
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Margin="0,0,0,12">
+            <StackPanel>
+                <TextBlock Text="Configuración del Reporte" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,8" />
+                <WrapPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,16,0">
+                        <TextBlock Text="Tipo:" VerticalAlignment="Center" Margin="0,0,4,0" />
+                        <ComboBox ItemsSource="{Binding TiposReporte}"
+                                  SelectedItem="{Binding TipoReporteSeleccionado}"
+                                  Width="140" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,16,0"
+                                Visibility="{Binding RequiereFecha, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <TextBlock Text="Desde:" VerticalAlignment="Center" Margin="0,0,4,0" />
+                        <DatePicker SelectedDate="{Binding FechaDesde, Mode=TwoWay}" Width="120" Margin="0,0,8,0" />
+                        <TextBlock Text="Hasta:" VerticalAlignment="Center" Margin="0,0,4,0" />
+                        <DatePicker SelectedDate="{Binding FechaHasta, Mode=TwoWay}" Width="120" Margin="0,0,8,0" />
+                    </StackPanel>
+                    <Button Content="Generar Reporte" Command="{Binding GenerarReporteCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0" />
+                    <Button Content="Copiar" Command="{Binding CopiarPortapapelesCommand}"
+                            Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0" />
+                    <Button Content="Limpiar" Command="{Binding LimpiarCommand}"
+                            Style="{StaticResource SecondaryButtonStyle}" />
+                </WrapPanel>
+            </StackPanel>
+        </Border>
+
+        <Grid Grid.Row="2">
+            <TextBox Text="{Binding ReporteActual, Mode=OneWay}"
+                     IsReadOnly="True"
+                     AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Auto"
+                     HorizontalScrollBarVisibility="Auto"
+                     FontFamily="Courier New"
+                     FontSize="13"
+                     Background="#0A0E17"
+                     Foreground="{StaticResource DoradoBrush}"
+                     BorderBrush="{StaticResource BordeBrush}"
+                     BorderThickness="1"
+                     Padding="16" />
+
+            <Border Background="#80000000"
+                    Visibility="{Binding IsGenerando, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="Generando reporte..." Foreground="{StaticResource DoradoBrush}"
+                               FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
 </UserControl>

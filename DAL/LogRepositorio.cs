@@ -77,5 +77,58 @@ namespace DAL
                 Fecha = r.GetDateTime(8)
             };
         }
+
+        public IList<LogEvento> ObtenerConFiltrosYPaginacion(
+            string nivel, string tipo,
+            DateTime desde, DateTime hasta,
+            int pagina, int porPagina,
+            out int totalRegistros)
+    {
+        IList<LogEvento> lista = new List<LogEvento>();
+
+        string sqlCount = @"SELECT COUNT(*)
+FROM log_eventos l
+WHERE (:nivel IS NULL OR l.nivel = :nivel)
+  AND (:tipo IS NULL OR l.tipo_evento = :tipo)
+  AND l.fecha >= :desde AND l.fecha <= :hasta";
+
+        totalRegistros = Convert.ToInt32(EjecutarScalar<decimal>(sqlCount,
+            new[] {
+                (":nivel", (object)nivel ?? DBNull.Value),
+                (":tipo", (object)tipo ?? DBNull.Value),
+                (":desde", (object)desde),
+                (":hasta", (object)hasta)
+            }));
+
+        string sql = @"SELECT l.id_log, l.tipo_evento, l.nivel, l.id_usuario,
+                              u.username, l.ip_origen, l.modulo, l.descripcion, l.fecha
+                       FROM log_eventos l
+                       LEFT JOIN usuarios u ON l.id_usuario = u.id_usuario
+                       WHERE (:nivel IS NULL OR l.nivel = :nivel2)
+                         AND (:tipo IS NULL OR l.tipo_evento = :tipo2)
+                         AND l.fecha >= :desde2 AND l.fecha <= :hasta2
+                       ORDER BY l.fecha DESC
+                       OFFSET :offset ROWS FETCH NEXT :porPagina ROWS ONLY";
+
+        int offset = (pagina - 1) * porPagina;
+
+        using (OracleDataReader r = EjecutarConsulta(sql,
+            new[] {
+                (":nivel", (object)nivel ?? DBNull.Value),
+                (":tipo", (object)tipo ?? DBNull.Value),
+                (":desde", (object)desde),
+                (":hasta", (object)hasta),
+                (":nivel2", (object)nivel ?? DBNull.Value),
+                (":tipo2", (object)tipo ?? DBNull.Value),
+                (":desde2", (object)desde),
+                (":hasta2", (object)hasta),
+                (":offset", (object)offset),
+                (":porPagina", (object)porPagina)
+            }))
+            while (r.Read())
+                lista.Add(Mapear(r));
+
+        return lista;
     }
+}
 }

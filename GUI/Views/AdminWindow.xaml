@@ -14,6 +14,12 @@
         <DataTemplate DataType="{x:Type vm:GestionUsuariosViewModel}">
             <views:UcGestionUsuarios />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PartidasAdminViewModel}">
+            <views:UcPartidas />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TransaccionesAdminViewModel}">
+            <views:UcTransacciones />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:AdminGridViewModel}">
             <views:UcAdminGrid />
         </DataTemplate>
