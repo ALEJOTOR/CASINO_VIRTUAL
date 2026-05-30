@@ -98,6 +98,7 @@
     PROCEDURE pr_guardar_datos_bancarios(
         p_id_usuario     IN  NUMBER,
         p_banco_id       IN  VARCHAR2,
+        p_banco_nombre   IN  VARCHAR2,
         p_tipo_cuenta    IN  VARCHAR2,
         p_numero_cuenta  IN  VARCHAR2,
         p_tipo_doc       IN  VARCHAR2,

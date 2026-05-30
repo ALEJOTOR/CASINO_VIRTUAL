@@ -233,12 +233,12 @@
                                Foreground="{StaticResource TextoPrimarioBrush}"
                                FontSize="12" FontWeight="Bold"
                                Margin="0,0,0,4" />
-                    <ComboBox SelectedItem="{Binding TipoDocSeleccionado}" Margin="0,0,0,12" Height="36">
+                     <ComboBox SelectedValue="{Binding TipoDocSeleccionado}" SelectedValuePath="Content" Margin="0,0,0,12" Height="36">
                         <ComboBoxItem>CC</ComboBoxItem>
                         <ComboBoxItem>CE</ComboBoxItem>
                         <ComboBoxItem>NIT</ComboBoxItem>
                         <ComboBoxItem>TI</ComboBoxItem>
-                    </ComboBox>
+                     </ComboBox>
 
                     <!-- Número Documento -->
                     <TextBlock Text="Número de documento"
@@ -261,10 +261,10 @@
                                Foreground="{StaticResource TextoPrimarioBrush}"
                                FontSize="12" FontWeight="Bold"
                                Margin="0,0,0,4" />
-                    <ComboBox SelectedItem="{Binding TipoCuentaSeleccionada}" Margin="0,0,0,12" Height="36">
+                     <ComboBox SelectedValue="{Binding TipoCuentaSeleccionada}" SelectedValuePath="Content" Margin="0,0,0,12" Height="36">
                         <ComboBoxItem>CORRIENTE</ComboBoxItem>
                         <ComboBoxItem>AHORROS</ComboBoxItem>
-                    </ComboBox>
+                     </ComboBox>
 
                     <!-- Número Cuenta -->
                     <TextBlock Text="Número de cuenta"

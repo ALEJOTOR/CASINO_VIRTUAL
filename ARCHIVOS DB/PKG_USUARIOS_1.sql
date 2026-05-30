@@ -390,6 +390,7 @@
     PROCEDURE pr_guardar_datos_bancarios(
         p_id_usuario     IN  NUMBER,
         p_banco_id       IN  VARCHAR2,
+        p_banco_nombre   IN  VARCHAR2,
         p_tipo_cuenta    IN  VARCHAR2,
         p_numero_cuenta  IN  VARCHAR2,
         p_tipo_doc       IN  VARCHAR2,
@@ -409,10 +410,10 @@
         END IF;
 
         INSERT INTO datos_bancarios_usuario (
-            id_datos_bancarios, id_usuario, banco_id, tipo_cuenta,
+            id_datos_bancarios, id_usuario, banco_id, banco_nombre, tipo_cuenta,
             numero_cuenta, tipo_doc, numero_doc, nombre_titular, activo
         ) VALUES (
-            seq_datos_bancarios.NEXTVAL, p_id_usuario, p_banco_id, p_tipo_cuenta,
+            seq_datos_bancarios.NEXTVAL, p_id_usuario, p_banco_id, p_banco_nombre, p_tipo_cuenta,
             p_numero_cuenta, p_tipo_doc, p_numero_doc, p_nombre_titular, 1
         );
 

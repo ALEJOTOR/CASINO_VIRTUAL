@@ -118,8 +118,9 @@ namespace BLL
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"[WompiPagos] Error obteniendo bancos de cobros: {ex.GetType().Name}: {ex.Message}");
             }
 
             return BancosWompiDefecto.ObtenerListaDefecto();
@@ -171,76 +172,18 @@ namespace BLL
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"[WompiPayouts] Error obteniendo bancos: {ex.GetType().Name}: {ex.Message}");
             }
 
             return new List<WompiPayoutBank>();
         }
 
-        // Mapeo manual entre códigos de cobros y nombres de bancos para mejor búsqueda en Payouts
-        private static readonly Dictionary<string, string> _mapeoCodigosANombres = new Dictionary<string, string>
-        {
-            // Bancos principales de Colombia (códigos ASOBANCARIA)
-            { "1052", "BANCOLOMBIA" },           // Bancolombia
-            { "1040", "BANCO COMERCIAL COLOMBIANO" },  // BCC
-            { "1002", "BANCO DE OCCIDENTE" },   // Banco de Occidente
-            { "1006", "BANCO GANADERO" },       // Banco Ganadero (Agrario)
-            { "1012", "BANCO SANTANDER" },      // Banco Santander
-            { "1023", "BANCO CORP. DE INVERSIONES" },  // CORFICOLOMBIANA
-            { "1051", "BANCO SABADELL" },       // Banco Sabadell
-            { "1065", "BANCO BARCLAYS" },       // Banco Barclays
-            { "1066", "BANCO FALABELLA" },      // Banco Falabella
-            { "1069", "BANCO CAJA SOCIAL" },    // Banco Caja Social
-            { "1083", "BANCO VALORES" },        // Banco Valores
-            { "1087", "BANCOOMEVA" },           // Bancoomeva
-            { "1090", "BANCO FINAMEX" },        // Banco Finamex
-            { "1094", "BANCO DE LA REPUBLICA" }, // Banco de la República
-            { "1097", "BANCO COMPARTAMOS" },    // Banco Compartamos
-            { "1112", "BMONEX" },                // Monex
-            { "1113", "BMULTIVA" },              // Multiva
-            { "1116", "ING" },                   // ING
-            { "1124", "DEUTSCHE" },              // Deutsche Bank
-            { "1125", "LEHMAN BROTHERS" },       // Lehman Brothers
-            { "1128", "HSBC" },                  // HSBC
-            { "1130", "BANCO JP MORGAN" },       // JP Morgan
-            { "1143", "REFORMA" },               // Banco Reforma
-            { "1151", "MICROFINANZAS" },         // Banco Microfinanzas
-            { "1152", "UNIBANCO" },              // Unibanco
-            { "1154", "DAVIVIENDA" },            // Davivienda
-            { "1155", "BANCO W" },               // Banco W
-            { "1156", "BANCO BOGOTA" },          // Banco Bogotá
-            { "1157", "BANCO PAGATODO" },        // Banco Pagatodo
-            { "1158", "BANCO PICHINCHA" },       // Banco Pichincha
-            { "1201", "SCOTIABANK" },            // Scotiabank
-            { "1202", "BBVA" },                  // BBVA Bancomer
-            { "1203", "BANCO AV VILLAS" },       // Banco Av Villas
-            { "1205", "BANCO ACTINVER" },        // Actinver
-            { "1206", "INTERCAM" },              // Intercam
-            { "1207", "BANCAFE" },               // Bancafé
-            { "1208", "PROFESIONALES" },         // Banco de los Profesionales
-            { "1209", "SOFIMEX" },               // Sofimex
-            { "1210", "CONAVI" },                // Conavi
-            { "1211", "BANREGIO" },              // Banregio
-            { "1213", "INVEX" },                 // Invex
-            { "1214", "AFIRME" },                // Banco Afirme
-            { "1215", "INBURSA" },               // Inbursa
-            { "1219", "MIFELICITY" },            // Mifelicity
-            { "1220", "MIZUHO BANK" },           // Mizuho Bank
-            { "1221", "BANCO MONEX" },           // Banco Monex
-            { "1222", "BMULTIVA" },              // Banco Multiva
-            { "1224", "ICBC" },                  // ICBC
-            { "1226", "PAGMEX" },                // Pagmex
-            { "1227", "CREDIT SUISSE" },         // Credit Suisse
-            { "1228", "BAYSER" },                // Bayser
-            { "1229", "BARCLAYS" },              // Barclays
-            { "1230", "COMPARTAMOS BANCO" },     // Compartamos Banco
-        };
-
         /// <summary>
         /// Obtiene el UUID de un banco (necesario para Payouts) a partir del código de banco de cobros.
-        /// Busca en la lista de bancos de Payouts coincidencia por Code, Name o comparación flexible.
-        /// También intenta usar BancoNombre si está disponible en el objeto DatosBancarios.
+        /// Busca en la lista de bancos de Payouts coincidencia por Code o Name.
+        /// Requiere que BancoNombre esté poblado (desde BD tras corregir Bug #1).
         /// </summary>
         public async Task<string> ObtenerBankIdPayoutPorCodigoAsync(string codigoBanco, string nombreBanco = null)
         {
@@ -261,12 +204,6 @@ namespace BLL
             if (banco != null)
                 return banco.Id;
 
-            // Si el nombre del banco no viene, intentar mapeo manual del código
-            if (string.IsNullOrEmpty(nombreNormalizado) && _mapeoCodigosANombres.TryGetValue(codigoNormalizado, out var nombreMapeado))
-            {
-                nombreNormalizado = nombreMapeado;
-            }
-
             // Intentar match en Name con el nombre del banco
             if (!string.IsNullOrEmpty(nombreNormalizado))
             {
@@ -284,24 +221,6 @@ namespace BLL
                     return banco.Id;
             }
 
-            // Intentar match en Name con el código (ej: "BANCOLOMBIA" contiene "1052"? no, pero puede ser por otro mapeo)
-            banco = bancos.FirstOrDefault(b => 
-                b.Name != null && b.Name.Equals(codigoNormalizado, StringComparison.OrdinalIgnoreCase));
-
-            if (banco != null)
-                return banco.Id;
-
-            // Intentar match parcial (Contains) con el código
-            if (!string.IsNullOrEmpty(codigoNormalizado))
-            {
-                banco = bancos.FirstOrDefault(b => 
-                    b.Name != null && b.Name.ToUpper().Contains(codigoNormalizado));
-
-                if (banco != null)
-                    return banco.Id;
-            }
-
-            // Si no se encuentra, retornar null
             return null;
         }
 
@@ -474,11 +393,18 @@ namespace BLL
 
             try
             {
+                // Verificar que el servicio de Payouts esté disponible
+                var bancosDisponibles = await ObtenerBancosPayoutsAsync();
+                if (bancosDisponibles == null || bancosDisponibles.Count == 0)
+                {
+                    return (false, null, "Servicio de pagos temporalmente no disponible. Intente más tarde.");
+                }
+
                 // Obtener UUID del banco (es diferente al ID de cobros)
                 string bankIdUuid = await ObtenerBankIdPayoutPorCodigoAsync(datos.BancoId, datos.BancoNombre);
                 if (string.IsNullOrEmpty(bankIdUuid))
                 {
-                    return (false, null, $"Banco '{datos.BancoNombre ?? datos.BancoId}' no encontrado en sistemas de Payouts de Wompi.");
+                    return (false, null, $"Banco '{datos.BancoNombre ?? datos.BancoId}' no encontrado en sistema de Payouts de Wompi.");
                 }
 
                 long montoEnCentavos = (long)(monto * 100);
