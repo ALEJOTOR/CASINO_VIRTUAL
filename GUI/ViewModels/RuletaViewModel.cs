@@ -372,12 +372,16 @@ public class RuletaViewModel : ViewModelBase
                 return;
             }
 
-            var (mensaje, idPartida) = _servicio.RegistrarPartida(partida);
+            var (mensaje, idPartida, bonusExtra) = _servicio.RegistrarPartida(partida);
             if (mensaje != "Guardado correctamente.")
             {
                 MessageBox.Show(mensaje, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+
+            if (bonusExtra > 0)
+                MessageBox.Show($"¡Bono activo! Ganaste ${bonusExtra:N2} extra.", "¡Bono Aplicado!",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
 
             if (idPartida > 0)
             {

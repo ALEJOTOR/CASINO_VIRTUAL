@@ -1,5 +1,4 @@
 using System.Windows;
-using BLL;
 using ENTITY;
 using GUI.Commands;
 using GUI.Services;
@@ -10,8 +9,6 @@ namespace GUI.ViewModels;
 public class AdminViewModel : ViewModelBase
 {
     private readonly Usuario _admin;
-    private readonly PartidaServicio _partidaSvc = new();
-    private readonly TransaccionServicio _transSvc = new();
     private readonly INavigationService _navigationService;
     private string _nombreAdmin = "";
     private string _activeMenu = "";
@@ -39,6 +36,8 @@ public class AdminViewModel : ViewModelBase
         {
             if (tipo == typeof(DashboardAdminViewModel)) return new DashboardAdminViewModel();
             if (tipo == typeof(GestionUsuariosViewModel)) return new GestionUsuariosViewModel();
+            if (tipo == typeof(PartidasAdminViewModel)) return new PartidasAdminViewModel();
+            if (tipo == typeof(TransaccionesAdminViewModel)) return new TransaccionesAdminViewModel();
             if (tipo == typeof(AdminGridViewModel)) return new AdminGridViewModel();
             if (tipo == typeof(AdminReportesViewModel)) return new AdminReportesViewModel();
             if (tipo == typeof(BitacoraViewModel)) return new BitacoraViewModel();
@@ -79,17 +78,13 @@ public class AdminViewModel : ViewModelBase
     private void NavegarPartidas()
     {
         ActiveMenu = "Partidas";
-        var vm = new AdminGridViewModel();
-        vm.CargarPartidas(_partidaSvc.ObtenerTodasConNombres());
-        _navigationService.SetViewModel(vm);
+        _navigationService.NavigateTo<PartidasAdminViewModel>();
     }
 
     private void NavegarTransacciones()
     {
         ActiveMenu = "Transacciones";
-        var vm = new AdminGridViewModel();
-        vm.CargarTransacciones(_transSvc.ObtenerTodasConNombres());
-        _navigationService.SetViewModel(vm);
+        _navigationService.NavigateTo<TransaccionesAdminViewModel>();
     }
 
     private void CerrarSesion()

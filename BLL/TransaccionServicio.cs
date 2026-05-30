@@ -21,7 +21,7 @@ namespace BLL
             if (monto <= 0) return "El monto debe ser mayor a 0.";
             string resultado = _transRepo.RegistrarDepositoConSaldo(idUsuario, monto);
             if (resultado.Contains("correctamente"))
-                _logSvc.Registrar("deposito", "INFO", "BILLETERA", $"Deposito ${monto}", idUsuario);
+                _logSvc.Registrar(LogEventos.Deposito, LogEventos.Info, "BILLETERA", $"Deposito ${monto}", idUsuario);
             return resultado;
         }
 
@@ -29,7 +29,7 @@ namespace BLL
         {
             string resultado = _usuarioSvc.RetirarSaldo(idUsuario, monto);
             if (resultado.Contains("correctamente"))
-                _logSvc.Registrar("retiro", "INFO", "BILLETERA", $"Retiro ${monto}", idUsuario);
+                _logSvc.Registrar(LogEventos.Retiro, LogEventos.Info, "BILLETERA", $"Retiro ${monto}", idUsuario);
             return resultado;
         }
 
@@ -58,6 +58,24 @@ namespace BLL
                 Fecha = t.Fecha,
                 Descripcion = t.Descripcion ?? ""
             }).ToList();
+        }
+
+        public IList<TransaccionDisplayDto> ObtenerFiltradasConNombres(
+            DateTime? desde, DateTime? hasta, string tipo)
+        {
+            IList<TransaccionDisplayDto> todas = ObtenerTodasConNombres();
+
+            IEnumerable<TransaccionDisplayDto> filtradas = todas;
+
+            if (desde.HasValue)
+                filtradas = filtradas.Where(t => t.Fecha >= desde.Value);
+            if (hasta.HasValue)
+                filtradas = filtradas.Where(t => t.Fecha <= hasta.Value.AddDays(1));
+            if (!string.IsNullOrEmpty(tipo) && tipo != "Todos")
+                filtradas = filtradas.Where(t =>
+                    t.Tipo.Equals(tipo, StringComparison.OrdinalIgnoreCase));
+
+            return filtradas.ToList();
         }
 
         public IList<MovimientoResumen> ObtenerMovimientosResumen(

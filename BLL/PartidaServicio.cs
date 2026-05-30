@@ -14,24 +14,40 @@ namespace BLL
         private readonly JuegoServicio _juegoSvc = new JuegoServicio();
         private readonly LogServicio _logSvc = new LogServicio();
 
-        public (string mensaje, int idPartida) RegistrarPartida(Partida p)
+        public (string mensaje, int idPartida, decimal gananciaExtra) RegistrarPartida(Partida p)
         {
-            if (p.Apuesta <= 0) return ("La apuesta debe ser mayor a 0.", 0);
+            if (p.Apuesta <= 0) return ("La apuesta debe ser mayor a 0.", 0, 0);
 
             Usuario usuario = _usuarioSvc.ObtenerPorId(p.IdUsuario);
-            if (usuario == null) return ("Usuario no encontrado.", 0);
-            if (usuario.Saldo < p.Apuesta) return ("Saldo insuficiente.", 0);
+            if (usuario == null) return ("Usuario no encontrado.", 0, 0);
+            if (usuario.Saldo < p.Apuesta) return ("Saldo insuficiente.", 0, 0);
+
+            decimal gananciaExtra = 0;
+
+            if (p.IdEstado == 2 && p.Ganancia > 0)
+            {
+                decimal multiplicador = _partidaRepo.ObtenerMultiplicadorBono(p.IdUsuario);
+                if (multiplicador > 1m)
+                {
+                    decimal gananciaConBono = p.Ganancia * multiplicador;
+                    gananciaExtra = gananciaConBono - p.Ganancia;
+                    p.Ganancia = gananciaConBono;
+
+                    _logSvc.Registrar(LogEventos.BonoAplicado, LogEventos.Info, "JUEGOS",
+                        $"Bono aplicado en partida. Extra: ${gananciaExtra:N2}", p.IdUsuario);
+                }
+            }
 
             p.Fecha = DateTime.Now;
             var (mensaje, idPartida) = _partidaRepo.RegistrarConMovimientos(p);
 
             if (p.Apuesta > 5000)
             {
-                _logSvc.Registrar("apuesta_alta", "WARN", "JUEGOS",
+                _logSvc.Registrar(LogEventos.ApuestaAlta, LogEventos.Warn, "JUEGOS",
                     $"Apuesta de ${p.Apuesta:N2} en juego {p.IdJuego}", p.IdUsuario);
             }
 
-            return (mensaje, idPartida);
+            return (mensaje, idPartida, gananciaExtra);
         }
 
         public IList<Partida> ObtenerTodas()
@@ -63,6 +79,7 @@ namespace BLL
             return lista.Select(p => new PartidaDisplayDto
             {
                 IdPartida = p.IdPartida,
+                IdJuego = p.IdJuego,
                 Usuario = mapaUsuarios.ContainsKey(p.IdUsuario) ? mapaUsuarios[p.IdUsuario] : $"Usuario {p.IdUsuario}",
                 Juego = mapaJuegos.ContainsKey(p.IdJuego) ? mapaJuegos[p.IdJuego] : $"Juego {p.IdJuego}",
                 Estado = mapaEstados.ContainsKey(p.IdEstado) ? mapaEstados[p.IdEstado] : $"Estado {p.IdEstado}",
@@ -70,6 +87,26 @@ namespace BLL
                 Apuesta = p.Apuesta,
                 Ganancia = p.Ganancia
             }).ToList();
+        }
+
+        public IList<PartidaDisplayDto> ObtenerFiltradasConNombres(
+            DateTime? desde, DateTime? hasta,
+            int? idJuego, string resultado)
+        {
+            IList<PartidaDisplayDto> todas = ObtenerTodasConNombres();
+
+            IEnumerable<PartidaDisplayDto> filtradas = todas;
+
+            if (desde.HasValue)
+                filtradas = filtradas.Where(p => p.Fecha >= desde.Value);
+            if (hasta.HasValue)
+                filtradas = filtradas.Where(p => p.Fecha <= hasta.Value.AddDays(1));
+            if (idJuego.HasValue)
+                filtradas = filtradas.Where(p => p.IdJuego == idJuego.Value);
+            if (!string.IsNullOrEmpty(resultado) && resultado != "Todos")
+                filtradas = filtradas.Where(p => p.Estado.Equals(resultado, StringComparison.OrdinalIgnoreCase));
+
+            return filtradas.ToList();
         }
 
         public string GenerarReporte()

@@ -197,12 +197,16 @@ public class TragamonedasViewModel : ViewModelBase
                 return;
             }
 
-            var (resultado, _) = _servicio.RegistrarPartida(partida);
+            var (resultado, _, bonusExtra) = _servicio.RegistrarPartida(partida);
             if (resultado != "Guardado correctamente.")
             {
                 MessageBox.Show(resultado, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+
+            if (bonusExtra > 0)
+                MessageBox.Show($"¡Bono activo! Ganaste ${bonusExtra:N2} extra.", "¡Bono Aplicado!",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
 
             Usuario? actualizado = _usuarioSvc.ObtenerPorId(_usuario.IdUsuario);
             if (actualizado != null) _usuario.Saldo = actualizado.Saldo;

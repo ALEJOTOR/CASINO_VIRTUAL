@@ -1,16 +1,39 @@
 <UserControl x:Class="GUI.Views.UcDashboardAdmin"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:GUI.Converters"
              Background="{StaticResource BgPrincipalBrush}">
+    <UserControl.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <ScrollViewer>
-        <StackPanel Margin="24">
-            <TextBlock Text="{Binding Titulo}"
-                       Style="{StaticResource TitleStyle}" />
-            <TextBlock Text="{Binding Subtitulo}"
-                       Style="{StaticResource SubtitleStyle}"
-                       Margin="0,4,0,24" />
+        <Grid Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-            <Grid>
+            <StackPanel Grid.Row="0" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Dashboard de Administración" Style="{StaticResource TitleStyle}" />
+                        <TextBlock Text="Resumen general del sistema"
+                                   Style="{StaticResource SubtitleStyle}" />
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="Actualizar" Command="{Binding RefrescarCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            VerticalAlignment="Center" />
+                </Grid>
+            </StackPanel>
+
+            <Grid Grid.Row="1" Margin="0,0,0,16">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="12" />
@@ -19,42 +42,130 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <!-- Card 1 -->
                 <Border Grid.Column="0" Style="{StaticResource CardStyle}">
                     <StackPanel>
-                        <TextBlock Text="Usuarios Registrados"
-                                   Foreground="{StaticResource TextoSecundarioBrush}"
-                                   FontSize="12" />
-                        <TextBlock Text="--"
-                                   Foreground="{StaticResource DoradoBrush}"
-                                   FontSize="28" FontWeight="Bold" />
-                    </StackPanel>
-                </Border>
-
-                <!-- Card 2 -->
-                <Border Grid.Column="2" Style="{StaticResource CardStyle}">
-                    <StackPanel>
-                        <TextBlock Text="Partidas Hoy"
-                                   Foreground="{StaticResource TextoSecundarioBrush}"
-                                   FontSize="12" />
-                        <TextBlock Text="--"
+                        <TextBlock Text="Usuarios Activos"
+                                   Foreground="{StaticResource TextoSecundarioBrush}" FontSize="11" />
+                        <TextBlock Text="{Binding UsuariosActivos, StringFormat='{}{0:N0}'}"
                                    Foreground="{StaticResource VerdeBrush}"
                                    FontSize="28" FontWeight="Bold" />
                     </StackPanel>
                 </Border>
 
-                <!-- Card 3 -->
+                <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Total Usuarios"
+                                   Foreground="{StaticResource TextoSecundarioBrush}" FontSize="11" />
+                        <TextBlock Text="{Binding TotalUsuarios, StringFormat='{}{0:N0}'}"
+                                   Foreground="{StaticResource DoradoBrush}"
+                                   FontSize="28" FontWeight="Bold" />
+                    </StackPanel>
+                </Border>
+
                 <Border Grid.Column="4" Style="{StaticResource CardStyle}">
                     <StackPanel>
-                        <TextBlock Text="Ingresos Totales"
-                                   Foreground="{StaticResource TextoSecundarioBrush}"
-                                   FontSize="12" />
-                        <TextBlock Text="--"
+                        <TextBlock Text="Partidas Hoy"
+                                   Foreground="{StaticResource TextoSecundarioBrush}" FontSize="11" />
+                        <TextBlock Text="{Binding PartidasHoy, StringFormat='{}{0:N0}'}"
+                                   Foreground="{StaticResource AzulBrush}"
+                                   FontSize="28" FontWeight="Bold" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="2" Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Partidas Totales"
+                                   Foreground="{StaticResource TextoSecundarioBrush}" FontSize="11" />
+                        <TextBlock Text="{Binding PartidasTotal, StringFormat='{}{0:N0}'}"
+                                   Foreground="{StaticResource DoradoBrush}"
+                                   FontSize="28" FontWeight="Bold" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Ingresos Hoy"
+                                   Foreground="{StaticResource TextoSecundarioBrush}" FontSize="11" />
+                        <TextBlock Text="{Binding IngresosHoy, StringFormat='${0:N2}'}"
+                                   Foreground="{StaticResource VerdeBrush}"
+                                   FontSize="28" FontWeight="Bold" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="4" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Ganancia Casa Hoy"
+                                   Foreground="{StaticResource TextoSecundarioBrush}" FontSize="11" />
+                        <TextBlock Text="{Binding GananciaCasaHoy, StringFormat='${0:N2}'}"
                                    Foreground="{StaticResource DoradoBrush}"
                                    FontSize="28" FontWeight="Bold" />
                     </StackPanel>
                 </Border>
             </Grid>
-        </StackPanel>
+
+            <!-- Row 3: Two tables side by side -->
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Últimas 10 Partidas" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,8" />
+                    <DataGrid ItemsSource="{Binding UltimasPartidas}" IsReadOnly="True" AutoGenerateColumns="False" Height="300">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Usuario" Binding="{Binding Usuario}" Width="*" />
+                            <DataGridTextColumn Header="Juego" Binding="{Binding Juego}" Width="*" />
+                            <DataGridTextColumn Header="Apuesta" Binding="{Binding Apuesta, StringFormat='${0:N2}'}" Width="80" />
+                            <DataGridTextColumn Header="Ganancia" Binding="{Binding Ganancia, StringFormat='${0:N2}'}" Width="80" />
+                            <DataGridTextColumn Header="Fecha" Binding="{Binding Fecha, StringFormat='dd/MM'}" Width="70" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Top 5 Jugadores" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,8" />
+                    <DataGrid ItemsSource="{Binding TopJugadores}" IsReadOnly="True" AutoGenerateColumns="False" Height="300">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Usuario" Binding="{Binding NombreUsuario}" Width="*" />
+                            <DataGridTextColumn Header="Partidas" Binding="{Binding TotalPartidas}" Width="70" />
+                            <DataGridTextColumn Header="Apostado" Binding="{Binding TotalApostado, StringFormat='${0:N2}'}" Width="90" />
+                            <DataGridTextColumn Header="Ganado" Binding="{Binding TotalGanado, StringFormat='${0:N2}'}" Width="90" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Grid>
+
+            <StackPanel Grid.Row="4" Margin="0,16,0,0">
+                <TextBlock Text="Rentabilidad por Juego" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,8" />
+                <DataGrid ItemsSource="{Binding RentabilidadJuegos}" IsReadOnly="True" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Juego" Binding="{Binding Juego}" Width="*" />
+                        <DataGridTextColumn Header="Partidas" Binding="{Binding Partidas}" Width="80" />
+                        <DataGridTextColumn Header="Total Apostado" Binding="{Binding TotalApostado, StringFormat='${0:N2}'}" Width="120" />
+                        <DataGridTextColumn Header="Ganancia Casa" Binding="{Binding GananciaCasa, StringFormat='${0:N2}'}" Width="120" />
+                        <DataGridTextColumn Header="Margen %" Binding="{Binding Margen, StringFormat='{}{0:F2}%'}" Width="90" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+            <Border Grid.RowSpan="5" Background="#80000000"
+                    Visibility="{Binding IsCargando, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <TextBlock Text="Cargando..." Foreground="{StaticResource DoradoBrush}"
+                           FontSize="24" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+        </Grid>
     </ScrollViewer>
 </UserControl>

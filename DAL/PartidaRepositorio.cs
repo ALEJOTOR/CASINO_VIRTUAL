@@ -125,6 +125,19 @@ namespace DAL
             }
         }
 
+        public decimal ObtenerMultiplicadorBono(int idUsuario)
+        {
+            string sql = "SELECT FN_CALCULAR_GANANCIA_CON_BONO(:id, 1) FROM DUAL";
+            try
+            {
+                return EjecutarScalar<decimal>(sql, new[] { (":id", (object)idUsuario) });
+            }
+            catch
+            {
+                return 1m;
+            }
+        }
+
         private Partida Mapear(OracleDataReader r)
         {
             return new Partida

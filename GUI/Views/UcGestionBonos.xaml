@@ -1,18 +1,266 @@
 <UserControl x:Class="GUI.Views.UcGestionBonos"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:GUI.Converters"
              Background="{StaticResource BgPrincipalBrush}">
-    <ScrollViewer>
-        <StackPanel Margin="24">
-            <TextBlock Text="{Binding Titulo}"
-                       Style="{StaticResource TitleStyle}" />
-            <TextBlock Text="{Binding Subtitulo}"
-                       Style="{StaticResource SubtitleStyle}"
-                       Margin="0,4,0,24" />
+    <UserControl.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <TextBlock Text="Sección de gestión de bonos en construcción."
-                       Foreground="{StaticResource TextoSecundarioBrush}"
-                       FontSize="14" />
+        <StackPanel Grid.Row="0" Margin="0,0,0,12">
+            <TextBlock Text="Gestión de Bonos" Style="{StaticResource TitleStyle}" />
+            <TextBlock Text="Administra bonos y promociones del sistema"
+                       Style="{StaticResource SubtitleStyle}" />
         </StackPanel>
-    </ScrollViewer>
+
+        <TabControl Grid.Row="1" Background="{StaticResource BgPrincipalBrush}"
+                    BorderBrush="{StaticResource BordeBrush}">
+            <TabItem Header="Catálogo" Background="{StaticResource BgCardBrush}"
+                     Foreground="{StaticResource TextoPrimarioBrush}">
+                <Grid Margin="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="380" />
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid Grid.Column="0" ItemsSource="{Binding Bonos}"
+                              SelectedItem="{Binding BonoSeleccionado}"
+                              IsReadOnly="True" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="*" />
+                            <DataGridTextColumn Header="Tipo" Binding="{Binding Tipo}" Width="100" />
+                            <DataGridTextColumn Header="Valor" Binding="{Binding Valor, StringFormat='${0:N2}'}" Width="90" />
+                            <DataGridTextColumn Header="Inicio" Binding="{Binding FechaInicio, StringFormat='dd/MM/yyyy'}" Width="90" />
+                            <DataGridTextColumn Header="Fin" Binding="{Binding FechaFin, StringFormat='dd/MM/yyyy'}" Width="90" />
+                            <DataGridTemplateColumn Header="Activo" Width="70">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Activo, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                   HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Usos" Binding="{Binding UsosActuales}" Width="60" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <GridSplitter Grid.Column="1" Width="4" Margin="4,0"
+                                  HorizontalAlignment="Center" />
+
+                    <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding ModoEdicion, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                       Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,8" />
+                            <TextBlock Text="Nuevo Bono" Style="{StaticResource SectionTitleStyle}"
+                                       Visibility="{Binding ModoEdicion, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                       Margin="0,0,0,8" />
+                            <TextBlock Text="Editar Bono" Style="{StaticResource SectionTitleStyle}"
+                                       Visibility="{Binding ModoEdicion, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                       Margin="0,0,0,8" />
+
+                            <StackPanel Margin="0,0,0,8">
+                                <TextBlock Text="Nombre:" Foreground="{StaticResource TextoSecundarioBrush}" />
+                                <TextBox Text="{Binding NombreForm}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,0,0,8">
+                                <TextBlock Text="Tipo:" Foreground="{StaticResource TextoSecundarioBrush}" />
+                                <TextBox Text="{Binding TipoForm}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,0,0,8">
+                                <TextBlock Text="Valor:" Foreground="{StaticResource TextoSecundarioBrush}" />
+                                <TextBox Text="{Binding ValorForm}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,0,0,8">
+                                <TextBlock Text="Descripción:" Foreground="{StaticResource TextoSecundarioBrush}" />
+                                <TextBox Text="{Binding DescripcionForm}" TextWrapping="Wrap" MaxHeight="60" />
+                            </StackPanel>
+                            <StackPanel Margin="0,0,0,8">
+                                <TextBlock Text="Fecha Inicio:" Foreground="{StaticResource TextoSecundarioBrush}" />
+                                <DatePicker SelectedDate="{Binding FechaInicioForm, Mode=TwoWay}" />
+                            </StackPanel>
+                            <CheckBox IsChecked="{Binding TieneExpiracion}"
+                                      Content="Tiene fecha de expiración"
+                                      Foreground="{StaticResource TextoPrimarioBrush}"
+                                      Margin="0,0,0,4" />
+                            <StackPanel Margin="0,0,0,8"
+                                        Visibility="{Binding FinVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <TextBlock Text="Fecha Fin:" Foreground="{StaticResource TextoSecundarioBrush}" />
+                                <DatePicker SelectedDate="{Binding FechaFinForm, Mode=TwoWay}" />
+                            </StackPanel>
+                            <CheckBox IsChecked="{Binding ActivoForm}"
+                                      Content="Activo"
+                                      Foreground="{StaticResource TextoPrimarioBrush}"
+                                      Margin="0,0,0,8" />
+
+                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                <Button Content="Guardar" Command="{Binding GuardarBonoCommand}"
+                                        Style="{StaticResource SuccessButtonStyle}" Margin="0,0,8,0" />
+                                <Button Content="Cancelar" Command="{Binding CancelarCommand}"
+                                        Style="{StaticResource SecondaryButtonStyle}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Asignados" Background="{StaticResource BgCardBrush}"
+                     Foreground="{StaticResource TextoPrimarioBrush}">
+                <Grid Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <WrapPanel Grid.Row="0" Margin="0,0,0,8">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,16,0">
+                            <TextBlock Text="Estado:" VerticalAlignment="Center" Margin="0,0,4,0" />
+                            <ComboBox ItemsSource="{Binding EstadosFiltro}"
+                                      SelectedItem="{Binding EstadoFiltro}" Width="110" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,16,0">
+                            <TextBlock Text="Buscar:" VerticalAlignment="Center" Margin="0,0,4,0" />
+                            <TextBox Text="{Binding TextoBusqueda, UpdateSourceTrigger=PropertyChanged}" Width="180" />
+                        </StackPanel>
+                        <Button Content="Filtrar" Command="{Binding AplicarFiltroAsignadosCommand}"
+                                Style="{StaticResource PrimaryButtonStyle}" />
+                    </WrapPanel>
+
+                    <DataGrid Grid.Row="1" ItemsSource="{Binding BonosAsignados}"
+                              SelectedItem="{Binding BonoAsignadoSeleccionado}"
+                              IsReadOnly="True" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Usuario" Binding="{Binding NombreUsuario}" Width="140" />
+                            <DataGridTextColumn Header="Bono" Binding="{Binding NombreBono}" Width="140" />
+                            <DataGridTextColumn Header="Monto" Binding="{Binding MontoAplicado, StringFormat='${0:N2}'}" Width="100" />
+                            <DataGridTextColumn Header="Aplicado" Binding="{Binding FechaAplicado, StringFormat='dd/MM/yyyy'}" Width="90" />
+                            <DataGridTextColumn Header="Expira" Binding="{Binding FechaExpiracion, StringFormat='dd/MM/yyyy'}" Width="90" />
+                            <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="90" />
+                            <DataGridTemplateColumn Header="Vigencia" Width="90">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border CornerRadius="4" Padding="6,2" HorizontalAlignment="Center">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Background" Value="{StaticResource BgCardBrush}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding EstadoVigencia}" Value="Vigente">
+                                                            <Setter Property="Background" Value="{StaticResource VerdeBrush}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding EstadoVigencia}" Value="Expirado">
+                                                            <Setter Property="Background" Value="{StaticResource RojoBrush}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding EstadoVigencia}" Value="Permanente">
+                                                            <Setter Property="Background" Value="{StaticResource AzulBrush}" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <TextBlock Text="{Binding EstadoVigencia}" FontSize="11" FontWeight="Bold"
+                                                       Foreground="White" />
+                                        </Border>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Border Grid.Row="2" Style="{StaticResource CardStyle}" Margin="0,8,0,0">
+                        <StackPanel>
+                            <TextBlock Text="Asignar Bono a Usuario" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,8" />
+                            <WrapPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
+                                    <TextBlock Text="Usuario:" VerticalAlignment="Center" Margin="0,0,4,0" />
+                                    <ComboBox ItemsSource="{Binding UsuariosDisponibles}"
+                                              DisplayMemberPath="Username"
+                                              SelectedValuePath="IdUsuario"
+                                              SelectedValue="{Binding IdUsuarioAsignar}"
+                                              Width="150" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
+                                    <TextBlock Text="Bono:" VerticalAlignment="Center" Margin="0,0,4,0" />
+                                    <ComboBox ItemsSource="{Binding BonosDisponibles}"
+                                              DisplayMemberPath="Nombre"
+                                              SelectedValuePath="IdBono"
+                                              SelectedValue="{Binding IdBonoAsignar}"
+                                              Width="140" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
+                                    <TextBlock Text="Monto:" VerticalAlignment="Center" Margin="0,0,4,0" />
+                                    <TextBox Text="{Binding MontoAsignar}" Width="90" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
+                                    <TextBlock Text="Expira:" VerticalAlignment="Center" Margin="0,0,4,0" />
+                                    <DatePicker SelectedDate="{Binding FechaExpiracionAsignar, Mode=TwoWay}" Width="120" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
+                                    <TextBlock Text="Desc:" VerticalAlignment="Center" Margin="0,0,4,0" />
+                                    <TextBox Text="{Binding DescripcionAsignar}" Width="140" />
+                                </StackPanel>
+                                <Button Content="Asignar" Command="{Binding AplicarBonoAUsuarioCommand}"
+                                        Style="{StaticResource SuccessButtonStyle}" />
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Resumen" Background="{StaticResource BgCardBrush}"
+                     Foreground="{StaticResource TextoPrimarioBrush}">
+                <Grid Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <WrapPanel Grid.Row="0" Margin="0,0,0,16">
+                        <Border Style="{StaticResource CardStyle}" Width="200" Margin="0,0,12,0">
+                            <StackPanel>
+                                <TextBlock Text="Bonos en Catálogo" Foreground="{StaticResource TextoSecundarioBrush}" FontSize="12" />
+                                <TextBlock Text="{Binding TotalBonosCatalogo, StringFormat='{}{0:N0}'}"
+                                           Foreground="{StaticResource DoradoBrush}" FontSize="26" FontWeight="Bold" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource CardStyle}" Width="200" Margin="0,0,12,0">
+                            <StackPanel>
+                                <TextBlock Text="Bonos Activos" Foreground="{StaticResource TextoSecundarioBrush}" FontSize="12" />
+                                <TextBlock Text="{Binding BonosActivosCount, StringFormat='{}{0:N0}'}"
+                                           Foreground="{StaticResource VerdeBrush}" FontSize="26" FontWeight="Bold" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource CardStyle}" Width="200" Margin="0,0,12,0">
+                            <StackPanel>
+                                <TextBlock Text="Monto Bonificado" Foreground="{StaticResource TextoSecundarioBrush}" FontSize="12" />
+                                <TextBlock Text="{Binding MontoTotalBonificado, StringFormat='${0:N2}'}"
+                                           Foreground="{StaticResource DoradoBrush}" FontSize="26" FontWeight="Bold" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource CardStyle}" Width="200">
+                            <StackPanel>
+                                <TextBlock Text="Usuarios con Bono" Foreground="{StaticResource TextoSecundarioBrush}" FontSize="12" />
+                                <TextBlock Text="{Binding TotalUsuariosConBono, StringFormat='{}{0:N0}'}"
+                                           Foreground="{StaticResource VioletaBrush}" FontSize="26" FontWeight="Bold" />
+                            </StackPanel>
+                        </Border>
+                    </WrapPanel>
+
+                    <DataGrid Grid.Row="1" ItemsSource="{Binding BonosPorTipo}"
+                              IsReadOnly="True" AutoGenerateColumns="False"
+                              HeadersVisibility="Column">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Tipo de Bono" Binding="{Binding Tipo}" Width="200" />
+                            <DataGridTextColumn Header="Cantidad" Binding="{Binding Cantidad}" Width="120" />
+                            <DataGridTextColumn Header="Monto Bonificado" Binding="{Binding Monto, StringFormat='${0:N2}'}" Width="200" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
 </UserControl>

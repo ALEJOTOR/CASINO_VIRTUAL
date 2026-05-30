@@ -35,7 +35,7 @@ namespace BLL
 
             if (resultado == "Guardado correctamente.")
             {
-                _logSvc.Registrar("deposito", "INFO", "BILLETERA",
+                _logSvc.Registrar(LogEventos.Deposito, LogEventos.Info, "BILLETERA",
                     $"Solicitud de deposito ${monto} creada (ID: {idDeposito})", idUsuario);
             }
 
@@ -67,7 +67,7 @@ namespace BLL
 
             if (resultado == "Guardado correctamente.")
             {
-                _logSvc.Registrar("retiro", "INFO", "BILLETERA",
+                _logSvc.Registrar(LogEventos.Retiro, LogEventos.Info, "BILLETERA",
                     $"Solicitud de retiro ${monto} creada (ID: {idRetiro})", idUsuario);
             }
 
@@ -126,7 +126,7 @@ namespace BLL
 
                 if (!okWompi)
                 {
-                    _logSvc.Registrar("retiro", "ERROR", "WOMPI",
+                    _logSvc.Registrar(LogEventos.Retiro, LogEventos.Error, "WOMPI",
                         $"Payout rechazado para usuario {idUsuario}: {errorWompi}", idUsuario);
                     return (false, $"Wompi rechazó el pago: {errorWompi}", 0);
                 }
@@ -137,7 +137,7 @@ namespace BLL
 
                 if (resultadoSolicitud != "Guardado correctamente.")
                 {
-                    _logSvc.Registrar("retiro", "ERROR", "BD",
+                    _logSvc.Registrar(LogEventos.Retiro, LogEventos.Error, "BD",
                         $"Error insertar retiro en BD: {resultadoSolicitud}. Payout ya fue enviado: {payoutId}", idUsuario);
                     // Nota: en producción, habría que considerar una tabla de errores para reconciliación
                     return (false, 
@@ -150,12 +150,12 @@ namespace BLL
 
                 if (!resultadoAprobacion.Contains("correctamente"))
                 {
-                    _logSvc.Registrar("retiro", "ERROR", "BD",
+                    _logSvc.Registrar(LogEventos.Retiro, LogEventos.Error, "BD",
                         $"Error aprobar retiro en BD: {resultadoAprobacion}. Payout: {payoutId}", idUsuario);
                     return (false, $"Error al procesar retiro: {resultadoAprobacion}", 0);
                 }
 
-                _logSvc.Registrar("retiro", "INFO", "WOMPI",
+                _logSvc.Registrar(LogEventos.Retiro, LogEventos.Info, "WOMPI",
                     $"Retiro ${monto:N2} procesado exitosamente. Payout Wompi: {payoutId}", idUsuario);
 
                 return (true, 
@@ -165,7 +165,7 @@ namespace BLL
             }
             catch (Exception ex)
             {
-                _logSvc.Registrar("retiro", "ERROR", "EXCEPTION",
+                _logSvc.Registrar(LogEventos.Retiro, LogEventos.Error, "EXCEPTION",
                     $"Excepción en SolicitarRetiroConWompiAsync: {ex.Message}", idUsuario);
                 return (false, $"Error inesperado: {ex.Message}", 0);
             }
@@ -268,7 +268,7 @@ namespace BLL
                 var (ok, payoutId, error) = await _wompiSvc.CrearPagoTerceroAsync(retiro.Monto, datos, referencia);
                 if (!ok)
                 {
-                    _logSvc.Registrar("retiro", "ERROR", "WOMPI",
+                    _logSvc.Registrar(LogEventos.Retiro, LogEventos.Error, "WOMPI",
                         $"Pago a tercero fallido para retiro {idRetiro}: {error}", idAdmin);
                     return (false, $"Wompi rechazo el pago: {error}");
                 }
@@ -276,7 +276,7 @@ namespace BLL
                 string resultado = _retiroRepo.Aprobar(idRetiro, idAdmin, payoutId);
                 bool exito = resultado.Contains("correctamente");
 
-                _logSvc.Registrar("retiro", exito ? "INFO" : "ERROR", "WOMPI",
+                _logSvc.Registrar(LogEventos.Retiro, exito ? LogEventos.Info : LogEventos.Error, "WOMPI",
                     exito
                         ? $"Retiro {idRetiro} aprobado con Payout Wompi: {payoutId}"
                         : $"Retiro {idRetiro} aprobado en BD pero error: {resultado}",
@@ -286,7 +286,7 @@ namespace BLL
             }
             catch (Exception ex)
             {
-                _logSvc.Registrar("retiro", "ERROR", "WOMPI",
+                _logSvc.Registrar(LogEventos.Retiro, LogEventos.Error, "WOMPI",
                     $"Excepcion en AprobarRetiroConWompiAsync: {ex.Message}", idAdmin);
                 return (false, $"Error interno: {ex.Message}");
             }

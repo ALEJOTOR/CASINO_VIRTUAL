@@ -47,11 +47,11 @@ namespace BLL
 
             if (u != null && u.Password == hash && u.Estado == "activo")
             {
-                _logSvc.Registrar("login", "INFO", "AUTH", $"Login exitoso: {username}", u.IdUsuario);
+                _logSvc.Registrar(LogEventos.Login, LogEventos.Info, "AUTH", $"Login exitoso: {username}", u.IdUsuario);
                 return u;
             }
 
-            _logSvc.Registrar("login_fallido", "WARN", "AUTH", $"Intento fallido para: {username}");
+            _logSvc.Registrar(LogEventos.LoginFallido, LogEventos.Warn, "AUTH", $"Intento fallido para: {username}");
             return null;
         }
 
@@ -83,7 +83,7 @@ namespace BLL
 
             if (resultado == "Guardado correctamente.")
             {
-                _logSvc.Registrar("registro_usuario", "INFO", "USUARIOS", $"Nuevo usuario: {u.Username}", u.IdUsuario);
+                _logSvc.Registrar(LogEventos.RegistroUsuario, LogEventos.Info, "USUARIOS", $"Nuevo usuario: {u.Username}", u.IdUsuario);
 
                 try { new BonoServicio().AplicarBonoBienvenida(u.IdUsuario); }
                 catch { /* no bloquear registro si falla el bono */ }
@@ -162,7 +162,7 @@ namespace BLL
 
             if (resultado == "Guardado correctamente." && nuevoEstado == "suspendido")
             {
-                _logSvc.Registrar("bloqueo_usuario", "WARN", "USUARIOS",
+                _logSvc.Registrar(LogEventos.BloqueoUsuario, LogEventos.Warn, "USUARIOS",
                     $"Usuario {idUsuario} suspendido");
             }
 
